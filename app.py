@@ -7,6 +7,7 @@ app = Flask(__name__)
 def hello_world():  # put application's code here
     print('testing')
     print('pls work')
+    print('test3')
     return 'Hello World!'
 
 
