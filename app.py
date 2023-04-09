@@ -3,15 +3,17 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
-#@app.route('/')
+# @app.route('/')
 def hello_world():  # put application's code here
     print('testing')
     print('pls work')
     print('test3')
+    print('hi taylor!!')
     return 'Hello World!'
 
 
-@app.route('/') # this defines the entrance to your code. my_website.com goes HERE as well as my_website.com/home
+# this defines the entrance to your code. my_website.com goes HERE as well as my_website.com/home
+@app.route('/')
 @app.route('/home')
 def home():
     return render_template("index.html")
