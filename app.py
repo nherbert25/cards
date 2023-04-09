@@ -28,5 +28,10 @@ def result():
     return render_template('index.html', name=name)
 
 
+@app.route('/black_jack')
+def black_jack():
+    return render_template("black_jack.html")
+
+
 if __name__ == '__main__':
     app.run()
