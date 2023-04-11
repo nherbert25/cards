@@ -20,7 +20,7 @@
 
           {% endif %}
 
-          <label for="name">Enter you name:</label>
+          <label for="name">Enter your name:</label>
           <input type="text" id="name" name="name">
 
           <center><input class="file_submit" type="Submit"></center>
@@ -29,7 +29,14 @@
 
 
 
-
+        <form action="/join_game" method="post">
+                <h1>Join Game</h1>
+                <label for="ip_address">IP Address:</label>
+                <input type="text" id="ip_address" name="ip_address"><br><br>
+                <label for="port">Port:</label>
+                <input type="text" id="port" name="port"><br><br>
+                <input type="submit" value="Join">
+        </form>
 
 
         <br>

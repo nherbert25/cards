@@ -7,7 +7,7 @@ server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 # Get IP Address from current machine
 hostname = socket.gethostname()
-ip_address = socket.gethostbyname(hostname)
+IP = socket.gethostbyname(hostname)
 
 # Define the server port
 PORT = 5001
@@ -17,6 +17,7 @@ server_socket.bind((IP, PORT))
 
 # Listen for incoming connections
 server_socket.listen()
+print('Server started. Waiting for incoming connections...')
 
 # List of connected clients
 clients = []
@@ -50,6 +51,7 @@ def handle_client(client_socket, client_address):
 while True:
     # Wait for incoming client connections
     client_socket, client_address = server_socket.accept()
+    print(f'New client connected: {client_address}')
 
     # Create a new thread to handle the client connection
     client_thread = threading.Thread(target=handle_client, args=(client_socket, client_address))

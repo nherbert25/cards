@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import socket
 
 app = Flask(__name__)
 
@@ -31,6 +32,31 @@ def result():
 @app.route('/black_jack')
 def black_jack():
     return render_template("black_jack.html")
+
+
+@app.route('/join_game', methods=['POST'])
+def join_game():
+    ip_address = request.form['ip_address']
+    port = int(request.form['port'])
+
+    # Connect to the game server
+    try:
+        # Create a socket
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        # Connect to the server
+        client_socket.connect((ip_address, port))
+
+        while True:
+            # Send a message to the server
+            message = input("Enter message to send to server: ")
+            client_socket.sendall(message.encode())
+
+            # Receive a response from the server
+            data = client_socket.recv(1024)
+            print(f"Received from server: {data.decode()}")
+    except Exception as e:
+        return 'Error: {}'.format(e)
 
 
 if __name__ == '__main__':
