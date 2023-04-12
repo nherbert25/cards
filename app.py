@@ -47,14 +47,15 @@ def join_game():
         # Connect to the server
         client_socket.connect((ip_address, port))
 
-        while True:
-            # Send a message to the server
-            message = input("Enter message to send to server: ")
-            client_socket.sendall(message.encode())
+        # Ask player for their name
+        player_name = input("Enter your player name: ")
+        client_socket.sendall(player_name.encode())
 
-            # Receive a response from the server
-            data = client_socket.recv(1024)
-            print(f"Received from server: {data.decode()}")
+        # Receive a response from the server
+        data = client_socket.recv(1024)
+        print(f"Received from server: {data.decode()}")
+
+        return render_template('black_jack.html', player_name=player_name)
     except Exception as e:
         return 'Error: {}'.format(e)
 
