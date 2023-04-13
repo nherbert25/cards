@@ -14,17 +14,21 @@
 <body>
     <h2>Dealer: <span id="dealer-sum"></span></h2>
     <div id="dealer-cards">
-        <!-- <img src="C:\Users\Nate\Documents\GitHub\cards\cards\BANK.png" alt="dealer card"> -->
-        <!--img src="../cards2/BACK.png" alt="dealer card"-->
         <img src="{{ url_for('static', filename='cards2/BACK.png') }}" alt="dealer card">
     </div>
 
     <h2>You: <span id="your-sum"></span></h2>
-    <div id="your-cards"></div>
+    <div id="your-cards">
+        {{player_card}}
+    </div>
 
     <br>
-    <button id="hit">Hit</button>
-    <button id="stay">Stay</button>
+    <form method="post" action="/player_choice">
+        <button type="submit" id='hit' name="hit" value="Hit">Hit</button>
+        <button type="submit" id='stay' name="stay" value="Stay">Stay</button>
+    </form>
+
+
     <p id="results">
     <p> Welcome {{player_name}}! </p>
 </body>

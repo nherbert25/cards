@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, session
 from client import Client
 import socket
+import random
 
 app = Flask(__name__)
+app.secret_key = 'anA194$38@na.dn0832A'
 
 
 # @app.route('/')
@@ -46,15 +48,29 @@ def join_game():
         client = Client(server_ip=ip_address, server_port=port)
 
         # Ask for player name
-        player_name = input("Enter your player name: ")
-        client.send_data(player_name)
+        session['player_name'] = input("Enter your player name: ")
+        client.send_data(session['player_name'])
 
         # Receive a response from the server
         data = client.receive_data()
 
-        return render_template('black_jack.html', player_name=player_name)
+        return render_template('black_jack.html', player_name=session['player_name'])
     except Exception as e:
         return 'Error: {}'.format(e)
+
+
+@app.route('/player_choice', methods=['POST'])
+def player_choice():
+    player_card = "{{ url_for('static', filename='cards2/BACK.png') }}"
+    if request.form.get('hit') == 'Hit':
+        print('Player chose to hit!')
+        player_name = session.get('player_name')
+        return render_template('black_jack.html', player_name=session['player_name'])
+
+    elif request.form.get('stay') == 'Stay':
+        print('Player chose to stay!')
+        player_name = session.get('player_name')
+        return render_template('black_jack.html', player_name=session['player_name'])
 
 
 if __name__ == '__main__':
