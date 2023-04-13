@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session
-from client import Client
+from networking.client import Client
 import socket
 import random
 
@@ -63,9 +63,10 @@ def join_game():
 def player_choice():
     player_card = "{{ url_for('static', filename='cards2/BACK.png') }}"
     if request.form.get('hit') == 'Hit':
+        hit = True
         print('Player chose to hit!')
         player_name = session.get('player_name')
-        return render_template('black_jack.html', player_name=session['player_name'])
+        return render_template('black_jack.html', player_name=session['player_name'], hit=hit)
 
     elif request.form.get('stay') == 'Stay':
         print('Player chose to stay!')

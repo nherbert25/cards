@@ -49,7 +49,7 @@ def handle_client(client_socket, client_address):
 
 # Main loop to handle incoming client connections
 while True:
-    # Wait for incoming client connections
+    # Wait for incoming client connectionsnetwo
     client_socket, client_address = server_socket.accept()
     print(f'New client connected: {client_address}')
 

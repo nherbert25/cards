@@ -19,7 +19,9 @@
 
     <h2>You: <span id="your-sum"></span></h2>
     <div id="your-cards">
-        {{player_card}}
+        {% if hit %}
+        <img src="{{ url_for('static', filename='cards2/BACK.png') }}" alt="dealer card">
+        {% endif %}
     </div>
 
     <br>
