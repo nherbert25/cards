@@ -1,23 +1,30 @@
 import socket
 
-# Define the server's IP address and port
-SERVER_IP = '192.168.68.115'
-SERVER_PORT = 5001
 
-# Create a socket object
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+class Client:
+    def __init__(self, server_ip, server_port):
+        self.server_ip = server_ip
+        self.server_port = server_port
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.connect((server_ip, server_port))
 
-# Connect to the server
-client_socket.connect((SERVER_IP, SERVER_PORT))
+    def send_data(self, data):
+        self.socket.sendall(data.encode())
 
-while True:
-    # Send a message to the server
-    message = input("Enter message to send to server: ")
-    client_socket.sendall(message.encode())
+    def receive_data(self):
+        return self.socket.recv(1024).decode()
 
-    # Receive a response from the server
-    data = client_socket.recv(1024)
-    print(f"Received from server: {data.decode()}")
+    def close(self):
+        self.socket.close()
 
-# Close the socket
-client_socket.close()
+
+# Create a Client instance
+# client = Client('localhost', 12345)
+#
+# # Send and receive data with the server
+# client.send_data('Hello, server!')
+# response = client.receive_data()
+# print(f'Response from server: {response}')
+#
+# # Close the connection
+# client.close()

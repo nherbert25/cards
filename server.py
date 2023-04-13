@@ -53,6 +53,8 @@ while True:
     client_socket, client_address = server_socket.accept()
     print(f'New client connected: {client_address}')
 
+
     # Create a new thread to handle the client connection
     client_thread = threading.Thread(target=handle_client, args=(client_socket, client_address))
     client_thread.start()
+    # clients.append(client_address)

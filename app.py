@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from client import Client
 import socket
 
 app = Flask(__name__)
@@ -42,18 +43,14 @@ def join_game():
     # Connect to the game server
     try:
         # Create a socket
-        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client = Client(server_ip=ip_address, server_port=port)
 
-        # Connect to the server
-        client_socket.connect((ip_address, port))
-
-        # Ask player for their name
+        # Ask for player name
         player_name = input("Enter your player name: ")
-        client_socket.sendall(player_name.encode())
+        client.send_data(player_name)
 
         # Receive a response from the server
-        data = client_socket.recv(1024)
-        print(f"Received from server: {data.decode()}")
+        data = client.receive_data()
 
         return render_template('black_jack.html', player_name=player_name)
     except Exception as e:
