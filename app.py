@@ -16,7 +16,7 @@ def hello_world():  # put application's code here
     return 'Hello World!'
 
 
-# this defines the entrance to your code. my_website.com goes HERE as well as my_website.com/home
+# this defines the entrance to your code. my_website.com goes HERE (because @app.route('/')) as well as my_website.com/home (because @app.route('/home'))
 @app.route('/')
 @app.route('/home')
 def home():
