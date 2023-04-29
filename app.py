@@ -1,9 +1,14 @@
 from flask import Flask, render_template, request, redirect, session
+
+#import black_jack
+from black_jack.routes import black_jack_blueprint
 from networking.client import Client
 
 
 app = Flask(__name__)
 app.secret_key = 'anA194$38@na.dn0832A'
+
+app.register_blueprint(black_jack_blueprint)
 
 
 # this defines the entrance to your code. my_website.com goes HERE (because @app.route('/')) as well as my_website.com/home (because @app.route('/home'))
@@ -20,11 +25,6 @@ def result():
     name = output["name"]
 
     return render_template('index.html', name=name)
-
-
-@app.route('/black_jack')
-def black_jack():
-    return render_template("black_jack.html")
 
 
 @app.route('/join_game', methods=['POST'])
