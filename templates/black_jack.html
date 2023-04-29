@@ -6,21 +6,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/black_jack.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/black_jack.css">
     <title>Black Jack</title>
-    <script src="../js/black_jack.js"></script>
+    <script type="text/javascript" src="/static/black_jack.js"></script>
 </head>
 
 <body>
-    <h2>Dealer: <span id="dealer-sum"></span></h2>
+<h2>Dealer: <span id="dealer-sum"></span></h2>
     <div id="dealer-cards">
-        <img src="{{ url_for('static', filename='cards2/BACK.png') }}" alt="dealer card">
+<!--        <img id="hidden" src="/static/images/playing_cards/BACK.png" alt="dealer card">-->
+        <img id="hidden" src="{{ url_for('static', filename='images/playing_cards/BACK.png') }}" alt="dealer card">
     </div>
 
     <h2>You: <span id="your-sum"></span></h2>
     <div id="your-cards">
         {% if hit %}
-        <img src="{{ url_for('static', filename='cards2/BACK.png') }}" alt="dealer card">
+        <img src="{{ url_for('static', filename='images/playing_cards/BACK.png') }}" alt="dealer card">
         {% endif %}
     </div>
 
@@ -33,6 +34,7 @@
 
     <p id="results">
     <p> Welcome {{player_name}}! </p>
+
 </body>
 
 </html>

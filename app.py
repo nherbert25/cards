@@ -1,19 +1,9 @@
 from flask import Flask, render_template, request, redirect, session
 from networking.client import Client
-import socket
-import random
+
 
 app = Flask(__name__)
 app.secret_key = 'anA194$38@na.dn0832A'
-
-
-# @app.route('/')
-def hello_world():  # put application's code here
-    print('testing')
-    print('pls work')
-    print('test3')
-    print('hi taylor!!')
-    return 'Hello World!'
 
 
 # this defines the entrance to your code. my_website.com goes HERE (because @app.route('/')) as well as my_website.com/home (because @app.route('/home'))
@@ -61,7 +51,7 @@ def join_game():
 
 @app.route('/player_choice', methods=['POST'])
 def player_choice():
-    player_card = "{{ url_for('static', filename='cards2/BACK.png') }}"
+    # player_card = "{{ url_for('static', filename='playing_cards/BACK.png') }}"
     if request.form.get('hit') == 'Hit':
         hit = True
         print('Player chose to hit!')
