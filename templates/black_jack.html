@@ -26,7 +26,8 @@
     </div>
 
     <br>
-    <form method="post" action="/player_choice">
+
+    <form method="get" action="{{ url_for('black_jack.hit') }}">
         <button type="submit" id='hit' name="hit" value="Hit">Hit</button>
         <button type="submit" id='stay' name="stay" value="Stay">Stay</button>
     </form>
