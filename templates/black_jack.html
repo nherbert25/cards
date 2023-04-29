@@ -14,15 +14,19 @@
 <body>
 <h2>Dealer: <span id="dealer-sum">{{ dealer_sum }}</span></h2>
     <div id="dealer-cards">
-<!--        <img id="hidden" src="/static/images/playing_cards/BACK.png" alt="dealer card">-->
         <img id="hidden" src="{{ url_for('static', filename='images/playing_cards/BACK.png') }}" alt="dealer card">
     </div>
 
     <h2>You: <span id="your-sum"></span></h2>
     <div id="your-cards">
-        {% if hit %}
-        <img src="{{ url_for('static', filename='images/playing_cards/BACK.png') }}" alt="dealer card">
-        {% endif %}
+
+        {% for cards in your_cards %}
+            <img src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}" alt="dealer card">
+        {% endfor %}
+
+        {% for cards in test_cards %}
+            <img src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}" alt="dealer card">
+        {% endfor %}
     </div>
 
     <br>
