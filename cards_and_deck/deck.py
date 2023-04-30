@@ -1,4 +1,5 @@
 from card import Card
+import random
 
 
 class Deck:
@@ -19,10 +20,10 @@ class Deck:
 
     def shuffle(self):
         """
-        Some method that does something with the Card object.
-        :return:
+        Randomly shuffles the cards in the deck.
+        :return: Returns shuffled cards.
         """
-        pass
+        random.shuffle(self.cards)
 
     def method_two(self):
         """
