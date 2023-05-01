@@ -31,18 +31,31 @@ class Deck:
 def start_new_game():
     deck = Deck()
     deck.shuffle()
-    return deck
+    dealer_cards = [deck.cards.pop()]
+    dealer_sum = calculate_black_jack_sum(dealer_cards)
+    your_cards = [deck.cards.pop(), deck.cards.pop()]
+    your_sum = calculate_black_jack_sum(your_cards)
+    return deck, dealer_cards, dealer_sum, your_cards, your_sum
+
+
+def calculate_black_jack_sum(card_list: list[Card]) -> int:
+    my_sum = 0
+    ace_count = 0
+    for card in card_list:
+        if card.rank == 'A':
+            ace_count += 1
+        else:
+            if card.rank in ['J', 'Q', 'K']:
+                value = 10
+            else:
+                value = int(card.rank)
+            my_sum += value
+    for i in range(ace_count):
+        if my_sum + 11 > 21:
+            my_sum += 1
+        else:
+            my_sum += 11
+    return my_sum
 
 
 player_name = 'Taylor'
-dealer_sum = 1
-your_sum = 0
-
-dealer_ace_count = 0
-your_ace_count = 0
-
-
-your_cards = []
-
-
-test_cards = [Card(rank='9', suit='S'), Card(rank='7', suit='D')]
