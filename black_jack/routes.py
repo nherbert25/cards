@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request
 import black_jack.black_jack as bj
 
 black_jack_blueprint = Blueprint('black_jack', __name__)
@@ -17,10 +17,20 @@ def black_jack():
                            your_cards=bj.your_cards, test_cards=bj.test_cards)
 
 
-@black_jack_blueprint.route('/hit', methods=['GET'])
-def hit():
-    bj.dealer_sum += 1
-    bj.your_cards.append(bj.Card(rank='A', suit='S'))
+@black_jack_blueprint.route('/buttons', methods=['GET', 'POST'])
+def buttons():
+
+    if request.method == 'POST':
+
+        # print(request.form, request.form.get('button_pressed'))
+
+        if request.form.get('button_pressed') == 'Hit':
+            bj.dealer_sum += 1
+            bj.your_cards.append(bj.Card(rank='A', suit='S'))
+
+        if request.form.get('button_pressed') == 'Stay':
+            bj.dealer_sum -= 1
+
     return redirect(url_for('black_jack.black_jack'))
 
     # this will render the black_jack.html BUT leave the url as http://127.0.0.1:5000/hit?hit=Hit, meaning if you refresh the page it will rerun this route
