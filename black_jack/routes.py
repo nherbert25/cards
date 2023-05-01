@@ -30,6 +30,9 @@ def buttons():
         if request.form.get('button_pressed') == 'Stay':
             pass
 
+        if request.form.get('button_pressed') == 'New Game':
+            black_jack_blueprint.game_exists = False
+
     return redirect(url_for('black_jack.black_jack'))
 
     # this will render the black_jack.html BUT leave the url as http://127.0.0.1:5000/hit?hit=Hit, meaning if you refresh the page it will rerun this route
