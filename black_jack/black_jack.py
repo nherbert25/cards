@@ -28,6 +28,12 @@ class Deck:
         r_shuffle(self.cards)
 
 
+def start_new_game():
+    deck = Deck()
+    deck.shuffle()
+    return deck
+
+
 player_name = 'Taylor'
 dealer_sum = 1
 your_sum = 0
