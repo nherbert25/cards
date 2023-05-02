@@ -15,25 +15,24 @@
 <h2>Dealer: <span id="dealer-sum">{{ dealer_sum }}</span></h2>
     <div id="dealer-cards">
         <img id="hidden" src="{{ url_for('static', filename='images/playing_cards/BACK.png') }}" alt="dealer card">
-    </div>
-
-    <h2>You: <span id="your-sum"></span></h2>
-    <div id="your-cards">
-
-        {% for cards in your_cards %}
+        {% for cards in dealer_cards %}
             <img src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}" alt="dealer card">
         {% endfor %}
+    </div>
 
-        {% for cards in test_cards %}
+    <h2>You: <span id="your-sum">{{ your_sum }}</span></h2>
+    <div id="your-cards">
+        {% for cards in your_cards %}
             <img src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}" alt="dealer card">
         {% endfor %}
     </div>
 
     <br>
 
-    <form method="get" action="{{ url_for('black_jack.hit') }}">
-        <button type="submit" id='hit' name="hit" value="Hit">Hit</button>
-        <button type="submit" id='stay' name="stay" value="Stay">Stay</button>
+    <form method="post" action="{{ url_for('black_jack.buttons') }}">
+        <button type="submit" id='hit' name="button_pressed" value="Hit">Hit</button>
+        <button type="submit" id='stay' name="button_pressed" value="Stay">Stay</button>
+        <button type="submit" id='new_game' name="button_pressed" value="New Game">New Game</button>
     </form>
 
 
