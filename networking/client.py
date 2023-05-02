@@ -17,14 +17,5 @@ class Client:
     def close(self):
         self.socket.close()
 
+# tests
 
-# Create a Client instance
-# client = Client('localhost', 12345)
-#
-# # Send and receive data with the server
-# client.send_data('Hello, server!')
-# response = client.receive_data()
-# print(f'Response from server: {response}')
-#
-# # Close the connection
-# client.close()

@@ -21,7 +21,7 @@ class Deck:
     def shuffle(self):
         """
         Randomly shuffles the cards in the deck.
-        :return: Returns shuffled cards.
+        :return: Returns shuffled deck of cards.
         """
         random.shuffle(self.cards)
 
