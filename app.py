@@ -1,17 +1,18 @@
-from flask import Flask, render_template, request, redirect, session
-
-#import black_jack
+from flask import Flask, render_template, request, redirect, session, url_for
+from flask_sqlalchemy import SQLAlchemy
+# import black_jack
 from black_jack.routes import black_jack_blueprint
 from networking.client import Client
+from forms import RegistrationForm, LoginForm
 
 
 app = Flask(__name__)
 app.secret_key = 'anA194$38@na.dn0832A'
-
 app.register_blueprint(black_jack_blueprint)
 
 
-# this defines the entrance to your code. my_website.com goes HERE (because @app.route('/')) as well as my_website.com/home (because @app.route('/home'))
+# this defines the entrance to your code. my_website.com goes HERE
+# (because @app.route('/')) as well as my_website.com/home (because @app.route('/home'))
 @app.route('/')
 @app.route('/home')
 def home():
@@ -62,6 +63,18 @@ def player_choice():
         print('Player chose to stay!')
         player_name = session.get('player_name')
         return render_template('black_jack.html', player_name=session['player_name'])
+
+
+@app.route("/register")
+def register():
+    form = RegistrationForm('/register')
+    return render_template('register.html', title='Register', form=form)
+
+
+@app.route("/login")
+def login():
+    form = LoginForm('/login')
+    return render_template('login.html', title='login', form=form)
 
 
 if __name__ == '__main__':

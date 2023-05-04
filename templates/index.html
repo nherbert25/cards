@@ -1,49 +1,25 @@
-<html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--{% extends "layout.html" %}-->
+<!--{% block content %}-->
+<form class="grid" action="/result" method="POST">
 
-		<link rel="stylesheet" type="text/css" href="../static/index.css">
+  {% if name %}
 
+      <h3 style="color: blue;" class="let_space">Hello {{name}}, How was your day!!</h3>
 
+  {% endif %}
 
+  <label for="name">Enter your name:</label>
+  <input type="text" id="name" name="name">
 
-	</head>
+  <center><input class="file_submit" type="Submit"></center>
 
-	<body>
-
-        <form class="grid" action="/result" method="POST">
-
-          {% if name %}
-            <center>
-              <h3 style="color: blue;" class="let_space">Hello {{name}}, How was your day!!</h3>
-            </center>
-
-          {% endif %}
-
-          <label for="name">Enter your name:</label>
-          <input type="text" id="name" name="name">
-
-          <center><input class="file_submit" type="Submit"></center>
-
-        </form>
-
-
-
-        <form action="/join_game" method="post">
-                <h1>Join Game</h1>
-                <label for="ip_address">IP Address:</label>
-                <input type="text" id="ip_address" name="ip_address"><br><br>
-                <label for="port">Port:</label>
-                <input type="text" id="port" name="port"><br><br>
-                <input type="submit" value="Join">
-        </form>
-
-
-        <br>
-        <br>
-        <br>
-
-
-    </body>
-
-</html>
+</form>
+<form action="/join_game" method="post">
+        <h1>Join Game</h1>
+        <label for="ip_address">IP Address:</label>
+        <input type="text" id="ip_address" name="ip_address"><br><br>
+        <label for="port">Port:</label>
+        <input type="text" id="port" name="port"><br><br>
+        <input type="submit" value="Join">
+</form>
+<!--{% endblock content %}-->

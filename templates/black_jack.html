@@ -1,29 +1,41 @@
 <!-- blackjack tutorial -> https://www.youtube.com/watch?v=bMYCWccL-3U -->
 
-<!DOCTYPE html>
-<html>
+<!--<!DOCTYPE html>-->
+<!--<html>-->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/static/css/black_jack.css">
-    <title>Black Jack</title>
-    <script type="text/javascript" src="/static/black_jack.js"></script>
-</head>
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <link rel="stylesheet" type="text/css" href="/static/css/black_jack.css">-->
+<!--    <title>Black Jack</title>-->
+<!--    <script type="text/javascript" src="/static/black_jack.js"></script>-->
+<!--</head>-->
 
-<body>
+{% extends "layout.html" %}
+{% block cards %}
+<title>Black Jack</title>
+<div class="col-md-8 offset-md-2">
 <h2>Dealer: <span id="dealer-sum">{{ dealer_sum }}</span></h2>
     <div id="dealer-cards">
-        <img id="hidden" src="{{ url_for('static', filename='images/playing_cards/BACK.png') }}" alt="dealer card">
+        <img id="hidden" src="{{ url_for('static', filename='images/playing_cards/BACK.png') }}"
+             alt="dealer card"
+             width="125"
+             height="182">
         {% for cards in dealer_cards %}
-            <img src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}" alt="dealer card">
+            <img class="" src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}"
+                 alt="dealer card"
+                 width="125"
+                 height="182">
         {% endfor %}
     </div>
 
     <h2>You: <span id="your-sum">{{ your_sum }}</span></h2>
     <div id="your-cards">
         {% for cards in your_cards %}
-            <img src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}" alt="dealer card">
+            <img class="" src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}"
+                 alt="player card"
+                 width="125"
+                 height="182">
         {% endfor %}
     </div>
 
@@ -38,7 +50,5 @@
 
     <p id="results">
     <p> Welcome {{player_name}}! </p>
-
-</body>
-
-</html>
+</div>
+{% endblock cards %}
