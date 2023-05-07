@@ -12,7 +12,7 @@ class Card:
 
     """
 
-    def __init__(self, rank, suit, image=None):
+    def __init__(self, rank: str, suit: str, image=None):
         self.rank = rank
         self.suit = suit
         self.image = image
@@ -51,11 +51,16 @@ def calculate_black_jack_sum(card_list: list[Card]) -> int:
             else:
                 value = int(card.rank)
             my_sum += value
-    for i in range(ace_count):
+    if ace_count == 1:
         if my_sum + 11 > 21:
-            my_sum += 1
+            return my_sum + 1
         else:
-            my_sum += 11
+            return my_sum + 11
+    elif ace_count > 1:
+        if my_sum + 11 + ace_count - 1 > 21:
+            return my_sum + ace_count
+        else:
+            return my_sum + 11 + ace_count - 1
     return my_sum
 
 
