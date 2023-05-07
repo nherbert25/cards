@@ -1,4 +1,5 @@
 <!-- blackjack tutorial -> https://www.youtube.com/watch?v=bMYCWccL-3U -->
+<!--Trying to overwrite default template, this seems close: https://stackoverflow.com/questions/20721248/how-can-i-override-bootstrap-css-styles-->
 
 <!--<!DOCTYPE html>-->
 <!--<html>-->
@@ -29,7 +30,13 @@
         {% endfor %}
     </div>
 
-    <h2>You: <span id="your-sum">{{ your_sum }}</span></h2>
+    <h2>You: <span id="your-sum">{{ your_sum }}</span>
+
+        {% if your_sum > 21 %}
+            <b>{% print('You Bust!') %}</b>
+        {% endif %}
+
+    </h2>
     <div id="your-cards">
         {% for cards in your_cards %}
             <img class="" src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}"

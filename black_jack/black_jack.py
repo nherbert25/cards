@@ -38,7 +38,6 @@ def start_new_game():
     return deck, dealer_cards, dealer_sum, your_cards, your_sum
 
 
-# TODO write a test. There's a bug!!! A + A + 10 != 22  !!
 def calculate_black_jack_sum(card_list: list[Card]) -> int:
     my_sum = 0
     ace_count = 0
