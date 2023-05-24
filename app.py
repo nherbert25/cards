@@ -4,11 +4,13 @@ from black_jack.routes import black_jack_blueprint
 from networking.client import Client
 from forms import RegistrationForm, LoginForm
 from flask_login import UserMixin
+from flask_bcrypt import Bcrypt
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 app.secret_key = 'anA194$38@na.dn0832A'
 app.register_blueprint(black_jack_blueprint)
 
@@ -78,9 +80,13 @@ def player_choice():
 def register():
     form = RegistrationForm()
     if request.method == 'POST' and form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!', 'success')
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        flash('Account created, please login!', 'success')
         print('Form validated!')
-        return redirect(url_for('black_jack.black_jack'))
+        return redirect(url_for('login'))
     else:
         print('Error validating registration form!')
         print(form.errors)
