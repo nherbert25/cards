@@ -13,8 +13,9 @@ def black_jack():
     if not black_jack_blueprint.game_exists:
         bj.deck, bj.dealer_cards, bj.dealer_sum, bj.your_cards, bj.your_sum = bj.start_new_game()
         black_jack_blueprint.game_exists = True
-    return render_template("black_jack.html", deck=bj.deck, dealer_cards=bj.dealer_cards, dealer_sum=bj.dealer_sum, your_sum=bj.your_sum,
-                           player_name=bj.player_name, your_cards=bj.your_cards)
+    print(type(bj.your_sum), bj.your_sum)
+    return render_template("black_jack.html", deck=bj.deck, dealer_cards=bj.dealer_cards, dealer_sum=bj.dealer_sum,
+                           your_sum=bj.your_sum, player_name=bj.player_name, your_cards=bj.your_cards)
 
 
 @black_jack_blueprint.route('/buttons', methods=['GET', 'POST'])
@@ -25,7 +26,7 @@ def buttons():
 
         if request.form.get('button_pressed') == 'Hit':
             bj.your_cards.append(bj.deck.cards.pop())
-            bj.your_sum = str(bj.calculate_black_jack_sum(bj.your_cards))
+            bj.your_sum = bj.calculate_black_jack_sum(bj.your_cards)
 
         if request.form.get('button_pressed') == 'Stay':
             pass
@@ -35,5 +36,5 @@ def buttons():
 
     return redirect(url_for('black_jack.black_jack'))
 
-    # this will render the black_jack.html BUT leave the url as http://127.0.0.1:5000/hit?hit=Hit, meaning if you refresh the page it will rerun this route
-    # return render_template("black_jack.html", deck=bj.deck, dealer_sum=bj.dealer_sum, player_name=bj.player_name, your_cards=bj.your_cards, test_cards=bj.test_cards)
+    # the following will render the black_jack.html BUT leave the url as http://127.0.0.1:5000/buttons?hit=Hit, meaning if you refresh the page it will rerun this route
+    # return render_template("black_jack.html", deck=bj.deck, etc.)
