@@ -8,7 +8,8 @@ from black_jack.black_jack import Card, calculate_black_jack_sum
 #     expected_result = 6
 #     assert result == expected_result
 
-# working test with parametrization (allows you to run the same test with multiple inputs) note that 'test_input, expected_output' is a SINGLE string!
+# working test with parametrization (allows you to run the same test with multiple inputs) note that 'test_input,
+# expected_output' is a SINGLE string!
 @pytest.mark.parametrize('test_input, expected_output', [([], 0),
                                                          ([Card('10', 'C')], 10),
                                                          ([Card('3', 'C'), Card('3', 'C')], 6),

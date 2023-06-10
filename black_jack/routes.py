@@ -7,13 +7,12 @@ black_jack_blueprint = Blueprint('black_jack', __name__)
 black_jack_blueprint.game_exists = False
 
 
-# routes
 @black_jack_blueprint.route('/black_jack')
 def black_jack():
     if not black_jack_blueprint.game_exists:
         bj.deck, bj.dealer_cards, bj.dealer_sum, bj.your_cards, bj.your_sum = bj.start_new_game()
         black_jack_blueprint.game_exists = True
-    print(type(bj.your_sum), bj.your_sum)
+    # print(type(bj.your_sum), bj.your_sum)
     return render_template("black_jack.html", deck=bj.deck, dealer_cards=bj.dealer_cards, dealer_sum=bj.dealer_sum,
                            your_sum=bj.your_sum, player_name=bj.player_name, your_cards=bj.your_cards)
 
@@ -22,6 +21,7 @@ def black_jack():
 def buttons():
     if request.method == 'POST':
 
+        # uncomment for debugging
         # print(request.form, request.form.get('button_pressed'))
 
         if request.form.get('button_pressed') == 'Hit':
