@@ -1,5 +1,5 @@
 import pytest
-from black_jack.black_jack import Card, calculate_black_jack_sum
+from black_jack.blackjack_model import Card, BlackjackModel
 
 
 # example test without parametrization
@@ -8,6 +8,7 @@ from black_jack.black_jack import Card, calculate_black_jack_sum
 #     expected_result = 6
 #     assert result == expected_result
 
+# TODO: This test is broken after converting function to method
 # working test with parametrization (allows you to run the same test with multiple inputs) note that 'test_input,
 # expected_output' is a SINGLE string!
 @pytest.mark.parametrize('test_input, expected_output', [([], 0),
@@ -19,5 +20,5 @@ from black_jack.black_jack import Card, calculate_black_jack_sum
                                                          ([Card('A', 'C'), Card('J', 'D')], 21),
                                                          ([Card('A', 'C'), Card('A', 'D'), Card('Q', 'D')], 12)])
 def test_calculate_black_jack_sum(test_input, expected_output):
-    result = calculate_black_jack_sum(test_input)
+    result = BlackjackModel.calculate_black_jack_sum(test_input)
     assert result == expected_output

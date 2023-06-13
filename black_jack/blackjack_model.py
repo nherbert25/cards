@@ -31,18 +31,27 @@ class Deck:
 # Model class for Blackjack game
 class BlackjackModel:
     def __init__(self):
+        self.your_sum = None
+        self.your_cards = None
+        self.dealer_sum = None
+        self.dealer_cards = None
         self.deck = Deck()
         self.player_name = 'Taylor'
         self.game_exists: bool = False
 
     def start_new_game(self):
-        deck = Deck()
-        deck.shuffle()
-        dealer_cards = [deck.cards.pop()]
-        dealer_sum = self.calculate_black_jack_sum(dealer_cards)
-        your_cards = [deck.cards.pop(), deck.cards.pop()]
-        your_sum = self.calculate_black_jack_sum(your_cards)
-        return deck, dealer_cards, dealer_sum, your_cards, your_sum
+        self.deck = Deck()
+        self.deck.shuffle()
+        self.dealer_cards = [self.deck.cards.pop()]
+        self.dealer_sum = self.calculate_black_jack_sum(self.dealer_cards)
+        self.your_cards = [self.deck.cards.pop(), self.deck.cards.pop()]
+        self.your_sum = self.calculate_black_jack_sum(self.your_cards)
+        self.game_exists = True
+        return
+
+    def hit(self):
+        self.your_cards.append(self.deck.cards.pop())
+        self.your_sum = self.calculate_black_jack_sum(self.your_cards)
 
     def calculate_black_jack_sum(self, card_list: list[Card]) -> int:
         my_sum = 0

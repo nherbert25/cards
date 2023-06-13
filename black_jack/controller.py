@@ -7,13 +7,16 @@ class BlackjackController:
     def __init__(self):
         self.blackjack_model = BlackjackModel()
 
-    # TODO: the controller should pull variables from the routes and SEND them to the model. NOT modify the model
-    #  directly!!!!
+    # TODO: since the controller should pull variables from the routes and send them to the model, NOT modify it
+    #  directly... it should likely not have logic such as "if not self.blackjack_model.game_exists" either?
+    #  or is it okay to have the 'brain' direct traffic based on the state of the model?
+    # TODO: rewrite the buttons scripts and frontend displayed variables with javascript
+    # TODO: rewrite these endpoints to return JSON, to then be picked up by javascript
+    # TODO: write the 'Stay' button as a javascript ajax thing that returns JSON from the server
+    # TODO: how to unit test these buttons, make sure the page still loads, etc.?
     def blackjack(self):
         if not self.blackjack_model.game_exists:
-            self.blackjack_model.deck, self.blackjack_model.dealer_cards, self.blackjack_model.dealer_sum, self.blackjack_model.your_cards, self.blackjack_model.your_sum = self.blackjack_model.start_new_game()
-            self.blackjack_model.game_exists = True
-        # print(type(self.blackjack_model.your_sum), self.blackjack_model.your_sum)
+            self.blackjack_model.start_new_game()
         return render_template("black_jack.html", deck=self.blackjack_model.deck, dealer_cards=self.blackjack_model.dealer_cards, dealer_sum=self.blackjack_model.dealer_sum,
                                your_sum=self.blackjack_model.your_sum, player_name=self.blackjack_model.player_name, your_cards=self.blackjack_model.your_cards)
 
@@ -24,14 +27,13 @@ class BlackjackController:
             # print(request.form, request.form.get('button_pressed'))
 
             if request.form.get('button_pressed') == 'Hit':
-                self.blackjack_model.your_cards.append(self.blackjack_model.deck.cards.pop())
-                self.blackjack_model.your_sum = self.blackjack_model.calculate_black_jack_sum(self.blackjack_model.your_cards)
+                self.blackjack_model.hit()
 
             if request.form.get('button_pressed') == 'Stay':
                 pass
 
             if request.form.get('button_pressed') == 'New Game':
-                self.blackjack_model.game_exists = False
+                self.blackjack_model.start_new_game()
 
         return redirect(url_for('black_jack.black_jack'))
 
