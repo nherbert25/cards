@@ -23,7 +23,6 @@ class User(db.Model, UserMixin):
 
 
 # this defines the entrance to your code. my_website.com goes HERE
-# (because @app.route('/')) as well as my_website.com/home (because @app.route('/home'))
 @app.route('/')
 @app.route('/home')
 def home():
