@@ -17,5 +17,3 @@ class Client:
     def close(self):
         self.socket.close()
 
-# tests
-

@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
+from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 from black_jack.routes import black_jack_blueprint
 from networking.client import Client
@@ -13,6 +14,7 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.secret_key = 'anA194$38@na.dn0832A'
 app.register_blueprint(black_jack_blueprint)
+socketio = SocketIO(app)
 
 
 class User(db.Model, UserMixin):
@@ -105,4 +107,5 @@ def login():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
+    # app.run(debug=True)
