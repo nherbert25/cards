@@ -54,6 +54,35 @@
         <button type="submit" id='new_game' name="button_pressed" value="New Game">New Game</button>
     </form>
 
+    <br>
+
+<br>
+
+<!-- Buttons for pressing -->
+<button onclick="pressButton(1)">Press Button 1</button>
+<button onclick="pressButton(2)">Press Button 2</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    // Function to press a button
+    function pressButton(buttonNumber) {
+        var game_id = prompt("Enter the game ID to press the button:");
+        var player_name = prompt("Enter your name:");
+        var buttonEvent = (buttonNumber === 1) ? 'press_button_1' : 'press_button_2';
+
+        socket.emit(buttonEvent, { 'player_name': player_name, 'game_id': game_id });
+    }
+
+    socket.on('update_button_counts', function(data) {
+        // Handle button count updates for the selected game
+        if (data.game_id) {
+            console.log(data.counts);
+        }
+    });
+</script>
+
 
     <p id="results">
     <p> Welcome {{player_name}}! </p>
