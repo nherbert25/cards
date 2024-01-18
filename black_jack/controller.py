@@ -38,5 +38,5 @@ class BlackjackController:
         return redirect(url_for('black_jack.black_jack'))
 
         # the following will render the black_jack.html BUT leave the url as http://127.0.0.1:5000/buttons?hit=Hit,
-        # meaning if you refresh the page it will rerun this route return render_template("black_jack.html",
-        # deck=self.blackjack_model.deck, etc.)
+        # meaning if you refresh the page it will rerun this route
+        # return render_template("black_jack.html", deck=self.blackjack_model.deck, etc.)
