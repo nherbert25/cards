@@ -43,17 +43,17 @@ class BlackjackModel:
         self.deck = Deck()
         self.deck.shuffle()
         self.dealer_cards = [self.deck.cards.pop()]
-        self.dealer_sum = self.calculate_black_jack_sum(self.dealer_cards)
+        self.dealer_sum = self.calculate_blackjack_sum(self.dealer_cards)
         self.your_cards = [self.deck.cards.pop(), self.deck.cards.pop()]
-        self.your_sum = self.calculate_black_jack_sum(self.your_cards)
+        self.your_sum = self.calculate_blackjack_sum(self.your_cards)
         self.game_exists = True
         return
 
     def hit(self):
         self.your_cards.append(self.deck.cards.pop())
-        self.your_sum = self.calculate_black_jack_sum(self.your_cards)
+        self.your_sum = self.calculate_blackjack_sum(self.your_cards)
 
-    def calculate_black_jack_sum(self, card_list: list[Card]) -> int:
+    def calculate_blackjack_sum(self, card_list: list[Card]) -> int:
         my_sum = 0
         ace_count = 0
         for card in card_list:

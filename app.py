@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
-from black_jack.routes import black_jack_blueprint
+from blackjack.routes import blackjack_blueprint
 from networking.client import Client
 from forms import RegistrationForm, LoginForm
 from flask_login import UserMixin
@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.secret_key = 'anA194$38@na.dn0832A'
-app.register_blueprint(black_jack_blueprint)
+app.register_blueprint(blackjack_blueprint)
 socketio = SocketIO(app)
 
 
@@ -57,7 +57,7 @@ def join_game():
         # Receive a response from the server
         data = client.receive_data()
 
-        return render_template('black_jack.html', player_name=session['player_name'])
+        return render_template('blackjack.html', player_name=session['player_name'])
     except Exception as e:
         return 'Error: {}'.format(e)
 
@@ -69,12 +69,12 @@ def player_choice():
         hit = True
         print('Player chose to hit!')
         player_name = session.get('player_name')
-        return render_template('black_jack.html', player_name=session['player_name'], hit=hit)
+        return render_template('blackjack.html', player_name=session['player_name'], hit=hit)
 
     elif request.form.get('stay') == 'Stay':
         print('Player chose to stay!')
         player_name = session.get('player_name')
-        return render_template('black_jack.html', player_name=session['player_name'])
+        return render_template('blackjack.html', player_name=session['player_name'])
 
 
 @app.route("/register", methods=['GET', 'POST'])

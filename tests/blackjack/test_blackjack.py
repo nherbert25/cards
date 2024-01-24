@@ -1,10 +1,10 @@
 import pytest
-from black_jack.blackjack_model import Card, BlackjackModel #, # calculate_black_jack_sum
+from blackjack.blackjack_model import Card, BlackjackModel #, # calculate_blackjack_sum
 
 
 # example test without parametrization
-# def test_calculate_black_jack_sum():
-#     result = calculate_black_jack_sum([Card('3', 'C'), Card('3', 'C')])
+# def test_calculate_blackjack_sum():
+#     result = calculate_blackjack_sum([Card('3', 'C'), Card('3', 'C')])
 #     expected_result = 6
 #     assert result == expected_result
 
@@ -21,8 +21,8 @@ from black_jack.blackjack_model import Card, BlackjackModel #, # calculate_black
                                                          ([Card('A', 'C'), Card('A', 'D'), Card('A', 'D')], 13),
                                                          ([Card('A', 'C'), Card('J', 'D')], 21),
                                                          ([Card('A', 'C'), Card('A', 'D'), Card('Q', 'D')], 12)))
-def test_calculate_black_jack_sum(test_input, expected_output):
+def test_calculate_blackjack_sum(test_input, expected_output):
     model = BlackjackModel()
-    result = model.calculate_black_jack_sum(test_input)
+    result = model.calculate_blackjack_sum(test_input)
     assert result == expected_output
 

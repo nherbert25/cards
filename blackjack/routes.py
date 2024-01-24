@@ -4,14 +4,14 @@ from blackjack.controller import BlackjackController
 blackjack_blueprint = Blueprint('blackjack', __name__)
 
 # initialize blueprint
-# black_jack_blueprint.game_exists = False
+# blackjack_blueprint.game_exists = False
 
 # Create an instance of the BlackjackController
 blackjack_controller = BlackjackController()
 
 
 @blackjack_blueprint.route('/blackjack')
-def blackjack():  # black_jack_route
+def blackjack():  # blackjack_route
     return blackjack_controller.blackjack()
 
 
