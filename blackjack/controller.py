@@ -6,6 +6,7 @@ from blackjack.blackjack_model import BlackjackModel
 class BlackjackController:
     def __init__(self):
         self.blackjack_model = BlackjackModel()
+        self.counts = {'button1': 0, 'button2': 0}
 
     # TODO: since the controller should pull variables from the routes and send them to the model, NOT modify it
     #  directly... it should likely not have logic such as "if not self.blackjack_model.game_exists" either?
@@ -18,7 +19,7 @@ class BlackjackController:
         if not self.blackjack_model.game_exists:
             self.blackjack_model.start_new_game()
         return render_template("blackjack.html", deck=self.blackjack_model.deck, dealer_cards=self.blackjack_model.dealer_cards, dealer_sum=self.blackjack_model.dealer_sum,
-                               your_sum=self.blackjack_model.your_sum, player_name=self.blackjack_model.player_name, your_cards=self.blackjack_model.your_cards)
+                               your_sum=self.blackjack_model.your_sum, player_name=self.blackjack_model.player_name, your_cards=self.blackjack_model.your_cards, button1_count=self.counts['button1'], button2_count=self.counts['button2'])
 
     def buttons(self, request):
         if request.method == 'POST':
