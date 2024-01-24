@@ -64,7 +64,18 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
 <script>
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
+<!--    var socket = io.connect('http://' + document.domain + ':' + location.port);-->
+    var socket = io();
+
+    // Log when the client is connected
+    socket.on('connect', function() {
+        console.log('Connected to server');
+    });
+
+    // Log all incoming events
+    socket.onAny((event, ...args) => {
+        console.log(event, args);
+    });
 
     // Function to press a button
     function pressButton(buttonNumber) {
@@ -73,11 +84,11 @@
         var buttonEvent = (buttonNumber === 1) ? 'press_button_1' : 'press_button_2';
 
         socket.emit(buttonEvent, { 'player_name': player_name, 'game_id': game_id, 'buttonEvent': buttonEvent });
-    }
+    };
 
     socket.on('update_button_counts', function(data) {
         // Handle button count updates for the selected game
-            console.log(data.counts);
+        console.log(data.counts);
     });
 </script>
 

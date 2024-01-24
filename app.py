@@ -2,19 +2,21 @@ from flask import Flask, render_template, request, redirect, session, url_for, f
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 from blackjack.routes import blackjack_blueprint
+from app_setup import create_app, socketio
 from networking.client import Client
 from forms import RegistrationForm, LoginForm
 from flask_login import UserMixin
 from flask_bcrypt import Bcrypt
 
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app = create_app(debug=True)
+
+# app = Flask(__name__)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-app.secret_key = 'anA194$38@na.dn0832A'
-app.register_blueprint(blackjack_blueprint)
-socketio = SocketIO(app)
+
+# app.register_blueprint(blackjack_blueprint)
+# socketio = SocketIO(app)
 
 
 class User(db.Model, UserMixin):
@@ -107,5 +109,5 @@ def login():
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
+    socketio.run(app, allow_unsafe_werkzeug=True)
     # app.run(debug=True)
