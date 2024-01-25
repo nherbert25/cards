@@ -1,4 +1,5 @@
 from random import shuffle as r_shuffle
+from typing import List
 
 
 class Card:
@@ -53,7 +54,7 @@ class BlackjackModel:
         self.your_cards.append(self.deck.cards.pop())
         self.your_sum = self.calculate_blackjack_sum(self.your_cards)
 
-    def calculate_blackjack_sum(self, card_list: list[Card]) -> int:
+    def calculate_blackjack_sum(self, card_list: List[Card]) -> int:
         my_sum = 0
         ace_count = 0
         for card in card_list:
