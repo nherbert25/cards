@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
-from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
-from blackjack.routes import blackjack_blueprint
 from app_setup import create_app, socketio
 from networking.client import Client
 from forms import RegistrationForm, LoginForm
