@@ -4,7 +4,7 @@ from flask_socketio import SocketIO
 socketio = SocketIO()
 
 
-def create_app(debug=False):
+def create_app():
     """Create an application."""
     app = Flask(__name__)
     app.config["DEBUG"] = True  # comment out for pycharm debug mode (ironic, isn't it?)

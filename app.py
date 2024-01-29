@@ -7,14 +7,9 @@ from flask_login import UserMixin
 from flask_bcrypt import Bcrypt
 
 
-app = create_app(debug=True)
-
-# app = Flask(__name__)
+app = create_app()
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-
-# app.register_blueprint(blackjack_blueprint)
-# socketio = SocketIO(app)
 
 
 class User(db.Model, UserMixin):
