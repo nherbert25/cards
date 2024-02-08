@@ -3,7 +3,7 @@ from flask_socketio import SocketIO
 
 socketio = SocketIO()
 
-
+# create app pattern:  https://flask.palletsprojects.com/en/3.0.x/patterns/appfactories/
 def create_app():
     """Create an application."""
     app = Flask(__name__)
