@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, session
 from flask_socketio import emit
 from app_setup import socketio
 
@@ -9,12 +9,16 @@ blackjack_blueprint = Blueprint('blackjack', __name__)
 # initialize blueprint
 # blackjack_blueprint.game_exists = False
 
-# Create an instance of the BlackjackController
+
 blackjack_controller = BlackjackController()
 
 
 @blackjack_blueprint.route('/blackjack')
-def blackjack():  # blackjack_route
+def blackjack():
+    # Create an instance of the BlackjackController if not already in session
+    # if 'blackjack_controller' not in session:
+    #     session['blackjack_controller'] = BlackjackController()
+    # return session['blackjack_controller'].blackjack()
     return blackjack_controller.blackjack()
 
 

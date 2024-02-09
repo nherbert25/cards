@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
+from flask_bcrypt import Bcrypt
 from app_setup import create_app, socketio
 from networking.client import Client
 from forms import RegistrationForm, LoginForm
-from flask_login import UserMixin
-from flask_bcrypt import Bcrypt
 
-
+# application factory pattern
+sess = Session()
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 app = create_app()
