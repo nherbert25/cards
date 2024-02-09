@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_socketio import SocketIO
 
-socketio = SocketIO()
+socketio = SocketIO(ping_interval=50, ping_timeout=50)
 
 # create app pattern:  https://flask.palletsprojects.com/en/3.0.x/patterns/appfactories/
 def create_app():
