@@ -10,12 +10,18 @@ def create_app():
     app.config["DEBUG"] = True  # comment out for pycharm debug mode (ironic, isn't it?)
     app.config["SECRET_KEY"] = 'anA194$38@na.dn0832A'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+    app.config['SESSION_TYPE'] = 'sqlalchemy'
 
+    from app import sess
     from app import db
     from app import bcrypt
     db.init_app(app)
     bcrypt.init_app(app)
+    app.config['SESSION_SQLALCHEMY'] = db
+    sess.init_app(app)
 
+    with app.app_context():
+        db.create_all()
 
     from blackjack.routes import blackjack_blueprint
     app.register_blueprint(blackjack_blueprint)

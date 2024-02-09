@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, jsonify
+from flask import Blueprint, render_template, redirect, url_for, request, jsonify, session
 from blackjack.blackjack_model import BlackjackModel
 
 
@@ -18,7 +18,7 @@ class BlackjackController:
     # https://testdriven.io/blog/flask-server-side-sessions/
     # flask session tutorial:  https://www.youtube.com/watch?v=lvKjQhQ8Fwk&t=14s
     def blackjack(self):
-        blackjack_controller = session['blackjack_controller']
+        # blackjack_controller = session['blackjack_controller']
         if not self.blackjack_model.game_exists:
             self.blackjack_model.start_new_game()
         return render_template("blackjack.html", deck=self.blackjack_model.deck, dealer_cards=self.blackjack_model.dealer_cards, dealer_sum=self.blackjack_model.dealer_sum,
