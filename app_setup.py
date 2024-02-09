@@ -11,6 +11,12 @@ def create_app():
     app.config["SECRET_KEY"] = 'anA194$38@na.dn0832A'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
+    from app import db
+    from app import bcrypt
+    db.init_app(app)
+    bcrypt.init_app(app)
+
+
     from blackjack.routes import blackjack_blueprint
     app.register_blueprint(blackjack_blueprint)
 
