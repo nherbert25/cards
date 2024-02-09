@@ -7,9 +7,9 @@ from flask_login import UserMixin
 from flask_bcrypt import Bcrypt
 
 
+db = SQLAlchemy()
+bcrypt = Bcrypt()
 app = create_app()
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
 
 
 class User(db.Model, UserMixin):
@@ -102,5 +102,6 @@ def login():
 
 
 if __name__ == '__main__':
+    # socketio.run encapsulates app.run but includes web socket functionality
     socketio.run(app, allow_unsafe_werkzeug=True)
     # app.run(debug=True)
