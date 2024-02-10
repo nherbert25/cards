@@ -3,6 +3,7 @@ networking/__pycache__/
 .venv/
 *.pyc
 .idea/
+instance/
 #__pycache__
 #/networking/__pycache__
 #/networking/__pycache__/
