@@ -66,8 +66,9 @@
 <p>Button 1 Presses: <span id="button1-count">{{ button1_count }}</span></p>
 <p>Button 2 Presses: <span id="button2-count">{{ button2_count }}</span></p>
 
-<script>
-    var socket = io();
+<script type = "text/javascript">
+
+    const socket = io();
 
     // Log when the client is connected
     socket.on('connect', function() {
@@ -92,6 +93,7 @@
         document.getElementById('button2-count').innerText = data.counts.button2;
         console.log(data.counts);
     });
+
 </script>
 
 

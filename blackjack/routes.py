@@ -41,3 +41,8 @@ def handle_press_button_2(data):
     button_number = data['buttonNumber']
     blackjack_controller.counts[f'button{button_number}'] += 1
     emit('update_button_counts', {'counts': blackjack_controller.counts}, broadcast=True)
+
+
+@socketio.on("connect")
+def handle_connection():
+    print("Client connected! Python output.")
