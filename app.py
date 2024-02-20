@@ -1,24 +1,11 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
-from flask_session import Session
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
-from flask_bcrypt import Bcrypt
 from app_setup import create_app, socketio
 from networking.client import Client
 from forms import RegistrationForm, LoginForm
+from database.models import User
 
 # application factory pattern
-sess = Session()
-db = SQLAlchemy()
-bcrypt = Bcrypt()
-app = create_app()
-
-
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(30), nullable=False, unique=True)
-    password = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(120), nullable=False, unique=True)
+app, db, sess, bcrypt = create_app()
 
 
 # this defines the entrance to your code. my_website.com goes HERE

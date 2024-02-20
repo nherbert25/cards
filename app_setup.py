@@ -1,5 +1,7 @@
 from flask import Flask
 from flask_socketio import SocketIO
+from flask_session import Session
+from flask_bcrypt import Bcrypt
 
 socketio = SocketIO(ping_interval=50, ping_timeout=50)
 
@@ -13,13 +15,15 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
     app.config['SESSION_TYPE'] = 'sqlalchemy'
 
-    from app import sess
-    from app import db
-    from app import bcrypt
+    from database.models import db
     db.init_app(app)
-    bcrypt.init_app(app)
     app.config['SESSION_SQLALCHEMY'] = db
+
+    sess = Session()
     sess.init_app(app)
+
+    bcrypt = Bcrypt()
+    bcrypt.init_app(app)
 
     with app.app_context():
         db.create_all()
@@ -28,4 +32,4 @@ def create_app():
     app.register_blueprint(blackjack_blueprint)
 
     socketio.init_app(app)
-    return app
+    return app, db, sess, bcrypt
