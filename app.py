@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
+from flask_bcrypt import check_password_hash
 from app_setup import create_app, socketio
 from networking.client import Client
 from forms import RegistrationForm, LoginForm
@@ -8,7 +9,6 @@ from database.models import User
 app, db, sess, bcrypt = create_app()
 
 
-# this defines the entrance to your code. my_website.com goes HERE
 @app.route('/')
 @app.route('/home')
 def home():
@@ -82,7 +82,9 @@ def register():
 def login():
     form = LoginForm()
     if form.validate():
-        if form.email.data == 'admin@blog.com' and form.password.data == 'password':
+        db_user = User.query.filter_by(email=form.email.data).first()
+
+        if db_user is not None and check_password_hash(db_user.password, form.password.data):
             flash('You have been logged in!', 'success')
             return redirect(url_for('home'))
         else:

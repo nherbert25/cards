@@ -14,7 +14,6 @@ def create_app():
     app = Flask(__name__)
     app.config["DEBUG"] = True  # comment out for pycharm debug mode (ironic, isn't it?)
     app.config["SECRET_KEY"] = 'anA194$38@na.dn0832A'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
     app.config['SESSION_TYPE'] = 'sqlalchemy'
 
     # Load configuration based on environment
@@ -39,9 +38,11 @@ def create_app():
     bcrypt = Bcrypt()
     bcrypt.init_app(app)
 
+    # Not sure how app_context works
     with app.app_context():
         db.create_all()
 
+    # Load blueprints, these must be imported here to avoid circular imports. See Flask documentation
     from blackjack.routes import blackjack_blueprint
     app.register_blueprint(blackjack_blueprint)
 
