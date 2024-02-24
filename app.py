@@ -64,6 +64,8 @@ def player_choice():
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+
+    # TODO: check if email/login already exist in db. If so, return error.
     if request.method == 'POST' and form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
