@@ -2,6 +2,8 @@ from flask import Flask
 from flask_socketio import SocketIO
 from flask_session import Session
 from flask_bcrypt import Bcrypt
+import os
+from config import DevelopmentConfig, TestingConfig, ProductionConfig
 
 socketio = SocketIO(ping_interval=50, ping_timeout=50)
 
@@ -12,16 +14,28 @@ def create_app():
     app = Flask(__name__)
     app.config["DEBUG"] = True  # comment out for pycharm debug mode (ironic, isn't it?)
     app.config["SECRET_KEY"] = 'anA194$38@na.dn0832A'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
     app.config['SESSION_TYPE'] = 'sqlalchemy'
 
+    # Load configuration based on environment
+    env = os.environ.get('FLASK_ENV', 'development')
+    if env == 'production':
+        app.config.from_object(ProductionConfig)
+    elif env == 'testing':
+        app.config.from_object(TestingConfig)
+    else:
+        app.config.from_object(DevelopmentConfig)
+
+    # Load database configurations
     from database.models import db
     db.init_app(app)
     app.config['SESSION_SQLALCHEMY'] = db
 
+    # Load Session configurations
     sess = Session()
     sess.init_app(app)
 
+    # Load bcrypt configurations
     bcrypt = Bcrypt()
     bcrypt.init_app(app)
 
