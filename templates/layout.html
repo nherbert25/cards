@@ -34,7 +34,6 @@
     </div>
   </nav>
 </header>
-<!--{% block content %}{% endblock %}-->
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% for category, message in messages %}
@@ -44,6 +43,7 @@
         {% endfor %}
     {% endif %}
 {% endwith %}
+<!--{% block content %}{% endblock %}-->
 {% block cards %} {% endblock %}
 </main>
  <!-- Optional JavaScript -->

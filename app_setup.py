@@ -22,7 +22,7 @@ def create_app():
         app.config.from_object(ProductionConfig)
     elif env == 'testing':
         app.config.from_object(TestingConfig)
-    else:
+    elif env == 'development':
         app.config.from_object(DevelopmentConfig)
 
     # Load database configurations

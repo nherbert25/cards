@@ -65,15 +65,23 @@ def player_choice():
 def register():
     form = RegistrationForm()
 
-    # TODO: check if email/login already exist in db. If so, return error.
     if request.method == 'POST' and form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
-        flash('Account created, please login!', 'success')
-        print('Form validated!')
-        return redirect(url_for('login'))
+        if db.session.query(db.session.query(User).filter_by(username=form.username.data).exists()).scalar():
+            flash('Username has already been taken', 'danger')
+            return render_template('register.html', title='Register', form=form)
+
+        elif db.session.query(db.session.query(User).filter_by(email=form.email.data).exists()).scalar():
+            flash('Email has already been taken', 'danger')
+            return render_template('register.html', title='Register', form=form)
+
+        else:
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+            db.session.add(user)
+            db.session.commit()
+            flash('Account created, please login!', 'success')
+            print('Form validated!')
+            return redirect(url_for('login'))
     else:
         print('Error validating registration form!')
         print(form.errors)
@@ -83,7 +91,7 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    if form.validate():
+    if request.method == 'POST' and form.validate():
         db_user = User.query.filter_by(email=form.email.data).first()
 
         if db_user is not None and check_password_hash(db_user.password, form.password.data):
