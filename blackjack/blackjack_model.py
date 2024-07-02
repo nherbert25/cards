@@ -38,6 +38,7 @@ class BlackjackModel:
         self.dealer_cards = None
         self.deck = Deck()
         self.player_name = 'Taylor'
+        self.player_coins = 500
         self.game_exists: bool = False
 
     def start_new_game(self):

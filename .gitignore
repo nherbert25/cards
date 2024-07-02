@@ -3,4 +3,4 @@ networking/__pycache__/
 .venv/
 *.pyc
 .idea/
-#instance/  --database folder, uncomment when ready. Saving a DB in github is an antipattern.
+instance/
