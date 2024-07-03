@@ -15,10 +15,10 @@ from sqlalchemy.orm import Session
 #         yield mock
 
 
-@patch("database.user_service.UserService.get_user_by_username", return_value='nate')
+@patch("database.user_table_DAO.UserTableDAO.get_user_by_username", return_value='nate')
 def test_get_user_by_username(mock_get_user_by_username):
     my_service = UserTableDAO(Session)
-    assert my_service.get_user_by_username('test') == 'naate'
+    assert my_service.get_user_by_username('test') == 'nate'
 
 #
 #
