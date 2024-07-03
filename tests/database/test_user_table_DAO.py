@@ -1,7 +1,33 @@
 import pytest
 from unittest.mock import MagicMock
-from database.user_table_DAO import UserTableDAO  # Adjust the import based on your actual project structure
-from database.models import User  # Adjust the import based on your actual project structure
+from database.user_table_DAO import UserTableDAO
+from database.models import User
+
+"""
+Explanation
+
+Fixtures:
+    mock_db_session: Creates a mock object for the database session.
+    user_table_dao: Initializes the UserTableDAO with the mocked database session.
+
+Test Function:
+    test_get_user_by_username: Tests the get_user_by_username method.
+
+Arrange:
+    mock_username: A test username.
+    mock_user: A mock User object.
+    mock_query: Mocks the query method of the database session.
+    Configures the mock to return mock_user when filter_by and first methods are called.
+
+Act:
+    Calls get_user_by_username on the user_table_dao with the mock username.
+
+Assert:
+    Checks that the result is the expected mock_user.
+    Verifies that the appropriate methods on the mock objects were called.
+
+This setup allows you to test the UserTableDAO class without requiring a real database, making your tests faster and more reliable.
+"""
 
 
 @pytest.fixture
@@ -29,32 +55,6 @@ def test_get_user_by_username(user_table_dao, mock_db_session):
     mock_db_session.query.assert_called_once_with(User)
     mock_query.filter_by.assert_called_once_with(username=mock_username)
     mock_query.filter_by.return_value.first.assert_called_once()
-
-"""
-Explanation
-
-Fixtures:
-    mock_db_session: Creates a mock object for the database session.
-    user_table_dao: Initializes the UserTableDAO with the mocked database session.
-
-Test Function:
-    test_get_user_by_username: Tests the get_user_by_username method.
-
-Arrange:
-    mock_username: A test username.
-    mock_user: A mock User object.
-    mock_query: Mocks the query method of the database session.
-    Configures the mock to return mock_user when filter_by and first methods are called.
-
-Act:
-    Calls get_user_by_username on the user_table_dao with the mock username.
-
-Assert:
-    Checks that the result is the expected mock_user.
-    Verifies that the appropriate methods on the mock objects were called.
-
-This setup allows you to test the UserTableDAO class without requiring a real database, making your tests faster and more reliable.
-"""
 
 
 def test_get_user_by_email(user_table_dao, mock_db_session):
