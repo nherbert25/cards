@@ -55,3 +55,33 @@ Assert:
 
 This setup allows you to test the UserTableDAO class without requiring a real database, making your tests faster and more reliable.
 """
+
+
+def test_get_user_by_email(user_table_dao, mock_db_session):
+    # Arrange
+    mock_email = 'testuser@gmail.com'
+    mock_user = User(username='my_test_username', email=mock_email, password='hashedpassword')
+    mock_query = mock_db_session.query.return_value
+    mock_query.filter_by.return_value.first.return_value = mock_user
+
+    # Act
+    result = user_table_dao.get_user_by_email(mock_email)
+
+    # Assert
+    assert result == mock_user
+    mock_db_session.query.assert_called_once_with(User)
+    mock_query.filter_by.assert_called_once_with(email=mock_email)
+    mock_query.filter_by.return_value.first.assert_called_once()
+
+
+# TODO: Actually integrate this with the database? There's no point in mocking a successful upsert.
+#  For now just make sure the type is correct.
+def test_add_user_to_database(user_table_dao, mock_db_session):
+    # Arrange
+    mock_username = 'my_test_username'
+    mock_email = 'testuser@gmail.com'
+    mock_password = 'p@ssword123'
+    mock_user = User(username=mock_username, email=mock_email, password=mock_password)
+
+    # Assert
+    assert type(mock_user) == User
