@@ -3,9 +3,11 @@ from unittest.mock import MagicMock
 from database.user_table_DAO import UserTableDAO  # Adjust the import based on your actual project structure
 from database.models import User  # Adjust the import based on your actual project structure
 
+
 @pytest.fixture
 def mock_db_session():
     return MagicMock()
+
 
 @pytest.fixture
 def user_table_dao(mock_db_session):
