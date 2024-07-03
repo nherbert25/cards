@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from database.models import User
-from database.user_service import UserTableDAO
+from database.user_table_DAO import UserTableDAO
 from sqlalchemy.orm import Session
 
 # @pytest.fixture

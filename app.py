@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from flask_bcrypt import check_password_hash
 from app_setup import create_app, socketio
-from database.user_service import UserTableDAO
+from database.user_table_DAO import UserTableDAO
 from networking.client import Client
 from forms import RegistrationForm, LoginForm
 from database.models import User
