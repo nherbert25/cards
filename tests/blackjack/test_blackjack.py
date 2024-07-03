@@ -1,5 +1,5 @@
 import pytest
-from blackjack.blackjack_model import Card, BlackjackModel #, # calculate_blackjack_sum
+from blackjack.blackjack_model import Card, BlackjackModel
 
 
 # example test without parametrization

@@ -1,12 +1,16 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from flask_bcrypt import check_password_hash
 from app_setup import create_app, socketio
+from database.user_service import UserTableDAO
 from networking.client import Client
 from forms import RegistrationForm, LoginForm
 from database.models import User
 
 # application factory pattern
 app, db, sess, bcrypt = create_app()
+
+# initializing local classes
+MyUserTableDAO = UserTableDAO(db.session)
 
 
 @app.route('/')
@@ -66,21 +70,19 @@ def register():
     form = RegistrationForm()
 
     if request.method == 'POST' and form.validate_on_submit():
-        if db.session.query(db.session.query(User).filter_by(username=form.username.data).exists()).scalar():
+        if MyUserTableDAO.get_user_by_username(username=form.username.data):
             flash('Username has already been taken', 'danger')
             return render_template('register.html', title='Register', form=form)
 
-        elif db.session.query(db.session.query(User).filter_by(email=form.email.data).exists()).scalar():
+        elif MyUserTableDAO.get_user_by_email(email=form.email.data):
             flash('Email has already been taken', 'danger')
             return render_template('register.html', title='Register', form=form)
 
         else:
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-            db.session.add(user)
-            db.session.commit()
+            MyUserTableDAO.add_user_to_database(user)
             flash('Account created, please login!', 'success')
-            print('Form validated!')
             return redirect(url_for('login'))
     else:
         print('Error validating registration form!')
@@ -92,7 +94,7 @@ def register():
 def login():
     form = LoginForm()
     if request.method == 'POST' and form.validate():
-        db_user = User.query.filter_by(email=form.email.data).first()
+        db_user = MyUserTableDAO.get_user_by_email(email=form.email.data)
 
         if db_user is not None and check_password_hash(db_user.password, form.password.data):
             flash('You have been logged in!', 'success')
