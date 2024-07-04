@@ -14,21 +14,32 @@
 // https://www.youtube.com/watch?v=AMp6hlA8xKA   using websockets instead of fetch and callbacks
 
 
-var dealer_sum = 0;
-var your_sum = 0;
 
-var dealer_ace_count = 0;
-var your_ace_count = 0;
+const socket = io();
 
+// Log when the client is connected
+socket.on('connect', function() {
+    console.log('Connected to server');
+});
 
-var hidden;
-var deck;
+// Log all incoming events
+socket.onAny((event, ...args) => {
+    console.log(event, args);
+});
 
+// Function to press a button
+function pressButton(buttonNumber) {
+    var buttonEvent = (buttonNumber === 1) ? 'press_button_1' : 'press_button_2';
 
-var can_hit = true;  //allows the player to draw while your_sum <= 21
+    socket.emit(buttonEvent, { 'buttonEvent': buttonEvent, 'buttonNumber': buttonNumber });
+};
 
-
-
+socket.on('update_button_counts', function(data) {
+    // Handle button count updates for the selected game
+    document.getElementById('button1-count').innerText = data.counts.button1;
+    document.getElementById('button2-count').innerText = data.counts.button2;
+    console.log(data.counts);
+});
 
 //
 //
