@@ -1,4 +1,4 @@
-from database.models import User
+from cards.database.models import User
 from sqlalchemy.orm import Session
 from flask_bcrypt import check_password_hash
 

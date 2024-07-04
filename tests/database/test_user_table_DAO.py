@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock
-from database.user_table_DAO import UserTableDAO
-from database.models import User
+from cards.database.user_table_DAO import UserTableDAO
+from cards.database.models import User
 
 """
 Explanation

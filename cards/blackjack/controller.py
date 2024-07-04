@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, redirect, url_for, request, jsonify, session
-from blackjack.blackjack_model import BlackjackModel
+from flask import render_template, redirect, url_for
+from cards.blackjack.blackjack_model import BlackjackModel
 
 
 # Controller class for Blackjack game

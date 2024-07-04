@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, redirect, session, url_for, flash
+from flask import render_template, request, redirect, session, url_for, flash
 from flask_bcrypt import check_password_hash
-from app_setup import create_app, socketio
-from database.user_table_DAO import UserTableDAO
-from networking.client import Client
-from forms import RegistrationForm, LoginForm
-from database.models import User
+from cards.app_setup import create_app, socketio
+from cards.database.user_table_DAO import UserTableDAO
+from cards.networking.client import Client
+from cards.forms import RegistrationForm, LoginForm
+from cards.database.models import User
 
 # application factory pattern
 app, db, sess, bcrypt = create_app()

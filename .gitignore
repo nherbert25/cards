@@ -1,5 +1,6 @@
 __pycache__/
-networking/__pycache__/
+.pytest_cache/
+cards/networking/__pycache__/
 .venv/
 *.pyc
 .idea/

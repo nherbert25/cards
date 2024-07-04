@@ -3,7 +3,7 @@ from flask_socketio import SocketIO
 from flask_session import Session
 from flask_bcrypt import Bcrypt
 import os
-from config import DevelopmentConfig, TestingConfig, ProductionConfig
+from cards.configs.config import DevelopmentConfig, TestingConfig, ProductionConfig
 
 socketio = SocketIO(ping_interval=50, ping_timeout=50)
 
@@ -26,7 +26,7 @@ def create_app():
         app.config.from_object(DevelopmentConfig)
 
     # Load database configurations
-    from database.models import db
+    from cards.database.models import db
     db.init_app(app)
     app.config['SESSION_SQLALCHEMY'] = db
 
@@ -43,7 +43,7 @@ def create_app():
         db.create_all()
 
     # Load blueprints, these must be imported here to avoid circular imports. See Flask documentation
-    from blackjack.routes import blackjack_blueprint
+    from cards.blackjack.routes import blackjack_blueprint
     app.register_blueprint(blackjack_blueprint)
 
     socketio.init_app(app)

@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, redirect, url_for, request, session
+from flask import Blueprint, request
 from flask_socketio import emit
-from app_setup import socketio
+from cards.app_setup import socketio
 
-from blackjack.controller import BlackjackController
+from cards.blackjack.controller import BlackjackController
 
 blackjack_blueprint = Blueprint('blackjack', __name__)
 
