@@ -6,3 +6,4 @@ venv/
 *.pyc
 .idea/
 cards/instance/
+.python-version
