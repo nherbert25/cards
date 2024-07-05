@@ -21,10 +21,22 @@ class BlackjackController:
         # blackjack_controller = session['blackjack_controller']
         if not self.blackjack_model.game_exists:
             self.blackjack_model.start_new_game()
-        return render_template("blackjack.html", deck=self.blackjack_model.deck, dealer_cards=self.blackjack_model.dealer_cards, dealer_sum=self.blackjack_model.dealer_sum,
-                               your_sum=self.blackjack_model.your_sum, player_name=self.blackjack_model.player_name, your_cards=self.blackjack_model.your_cards, button1_count=self.counts['button1'], button2_count=self.counts['button2'])
+
+        context = {
+            'deck': self.blackjack_model.deck,
+            'dealer_cards': self.blackjack_model.dealer_cards,
+            'dealer_sum': self.blackjack_model.dealer_sum,
+            'your_sum': self.blackjack_model.your_sum,
+            'player_name': self.blackjack_model.player_name,
+            'your_cards': self.blackjack_model.your_cards,
+            'button1_count': self.counts['button1'],
+            'button2_count': self.counts['button2']
+        }
+
+        return render_template("blackjack.html", **context)
 
     def buttons(self, request):
+
         if request.method == 'POST':
 
             # uncomment for debugging
@@ -41,6 +53,6 @@ class BlackjackController:
 
         return redirect(url_for('blackjack.blackjack'))
 
-        # the following will render the blackjack.html BUT leave the url as http://127.0.0.1:5000/buttons?hit=Hit,
-        # meaning if you refresh the page it will rerun this route
-        # return render_template("blackjack.html", deck=self.blackjack_model.deck, etc.)
+    # the following will render the blackjack.html BUT leave the url as http://127.0.0.1:5000/buttons?hit=Hit,
+    # meaning if you refresh the page it will rerun this route
+    # return render_template("blackjack.html", deck=self.blackjack_model.deck, etc.)
