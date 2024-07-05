@@ -40,6 +40,7 @@ class BlackjackModel:
         self.deck = Deck()
         self.player_name = 'Taylor'
         self.game_exists: bool = False
+        self.has_stayed: bool = False
 
     def start_new_game(self):
         self.deck = Deck()
@@ -49,6 +50,7 @@ class BlackjackModel:
         self.your_cards = [self.deck.cards.pop(), self.deck.cards.pop()]
         self.your_sum = self.calculate_blackjack_sum(self.your_cards)
         self.game_exists = True
+        self.has_stayed = False
         return
 
     def hit(self):
@@ -60,24 +62,18 @@ class BlackjackModel:
     def stay(self):
         # reveal dealer card and have dealer do logic to draw cards
 
-        #compare dealer with user score
-            #if you win, gain coins
-            #if you lose, lose coins
+        self.has_stayed = True
+
         if self.your_sum > self.dealer_sum:
             self.you_win()
         else:
             self.you_lose()
 
-        #reset board
-        self.start_new_game()
-
     def you_win(self):
         self.your_coins += 50
-        return
 
     def you_lose(self):
         self.your_coins -= 50
-        return
 
     def calculate_blackjack_sum(self, card_list: List[Card]) -> int:
         my_sum = 0
