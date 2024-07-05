@@ -22,6 +22,11 @@ def blackjack():
     return blackjack_controller.blackjack()
 
 
+@blackjack_blueprint.route('/update_page_data')
+def update_page_data():
+    return blackjack_controller.blackjack()
+
+
 @blackjack_blueprint.route('/buttons', methods=['GET', 'POST'])
 def buttons():
     return blackjack_controller.buttons(request)

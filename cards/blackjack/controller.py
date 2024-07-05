@@ -21,8 +21,13 @@ class BlackjackController:
         # blackjack_controller = session['blackjack_controller']
         if not self.blackjack_model.game_exists:
             self.blackjack_model.start_new_game()
+        return render_template("blackjack.html", **self.prepare_blackjack_html_data())
 
-        context = {
+    def update_page_data(self):
+        return render_template("blackjack.html", **self.prepare_blackjack_html_data())
+
+    def prepare_blackjack_html_data(self):
+        result = {
             'deck': self.blackjack_model.deck,
             'dealer_cards': self.blackjack_model.dealer_cards,
             'dealer_sum': self.blackjack_model.dealer_sum,
@@ -34,8 +39,7 @@ class BlackjackController:
             'button1_count': self.counts['button1'],
             'button2_count': self.counts['button2']
         }
-
-        return render_template("blackjack.html", **context)
+        return result
 
     def buttons(self, request):
 

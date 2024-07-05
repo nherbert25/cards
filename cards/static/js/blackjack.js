@@ -29,3 +29,31 @@ socket.on('update_button_counts', function (data) {
 function pressButton(buttonNumber) {
     socket.emit('press_button', {'buttonNumber': buttonNumber});
 };
+
+
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    socket.on('update_page_data', function (data) {
+        for (const [key, value] of Object.entries(data)) {
+            // replaces python syntax 'your_coins' with html syntax 'your-coins'
+            key.replace(/_/g, '-')
+            const element = document.getElementById(key);
+            if (element) {
+                element.innerText = value;
+            }
+        }
+        console.log(data);
+    });
+});
+
+
+// document.addEventListener('DOMContentLoaded', (event) => {
+//     socket.on('update_game_state', function (data) {
+//         document.getElementById('dealer-cards').innerHTML = generateCardImages(data.dealer_cards);
+//         document.getElementById('player-cards').innerHTML = generateCardImages(data.player_cards);
+//         document.getElementById('message').innerText = data.message;
+//         document.getElementById('hit').disabled = !data.can_hit;
+//         document.getElementById('stay').disabled = !data.can_stay;
+//     });
+// });
