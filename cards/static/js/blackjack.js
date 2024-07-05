@@ -1,5 +1,3 @@
-//document.body.innerHTML = "<h1>Today's date is " + d + "</h1>"
-
 // https://www.youtube.com/watch?v=4K33w-0-p2c   good video on xml http requests  (callbacks?)
 // https://www.youtube.com/watch?v=23hrM4saaMk    rebuilding the last video with the fetch api instead (it's more modern)
 // look up async/await. I *think* they're built on top of promises. They're a wrapper that makes the code more readable, yet under the hood they're still promises.
@@ -20,13 +18,6 @@ socket.onAny((event, ...args) => {
     console.log(event, args);
 });
 
-// Function to press a button
-function pressButton(buttonNumber) {
-    const buttonEvent = (buttonNumber === 1) ? 'press_button_1' : 'press_button_2';
-
-    socket.emit(buttonEvent, {'buttonEvent': buttonEvent, 'buttonNumber': buttonNumber});
-};
-
 socket.on('update_button_counts', function (data) {
     // Handle button count updates for the selected game
     document.getElementById('button1-count').innerText = data.counts.button1;
@@ -34,32 +25,12 @@ socket.on('update_button_counts', function (data) {
     console.log(data.counts);
 });
 
-//
-//
-//let response = await fetch('static/testing.json');
-//
-//if (response.ok) { // if HTTP-status is 200-299
-//  // get the response body (the method explained below)
-//  let json = await response.json();
-//} else {
-//  alert("HTTP-Error: " + response.status);
-//}
-
-
-//
-//
-//
-/////////////////////////////////////////////////////////////////////////////
-//window.onload = function() {
-//    build_deck();
-//}
-//
-//function build_deck{
-//    let values = ["A", "2", "3", "4"];
-//    let types = ["C", "D", "H", "S"];
-//    deck = [];
-//
-//    for (let i = 0; i < types.length; i++) {
-//        let j = Math.floor(Math.random())
-//
-//}
+// Function to press a button
+function pressButton(buttonNumber) {
+    let buttonEvent;
+    if (buttonNumber === 1) {
+        buttonEvent = 'press_button_1';}
+    if (buttonNumber === 2) {
+        buttonEvent = 'press_button_2';}
+    socket.emit(buttonEvent, {'buttonEvent': buttonEvent, 'buttonNumber': buttonNumber});
+};
