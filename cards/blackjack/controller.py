@@ -29,6 +29,7 @@ class BlackjackController:
             'your_sum': self.blackjack_model.your_sum,
             'player_name': self.blackjack_model.player_name,
             'your_cards': self.blackjack_model.your_cards,
+            'your_coins': self.blackjack_model.your_coins,
             'button1_count': self.counts['button1'],
             'button2_count': self.counts['button2']
         }
@@ -39,14 +40,11 @@ class BlackjackController:
 
         if request.method == 'POST':
 
-            # uncomment for debugging
-            # print(request.form, request.form.get('button_pressed'))
-
             if request.form.get('button_pressed') == 'Hit':
                 self.blackjack_model.hit()
 
             if request.form.get('button_pressed') == 'Stay':
-                pass
+                self.blackjack_model.stay()
 
             if request.form.get('button_pressed') == 'New Game':
                 self.blackjack_model.start_new_game()

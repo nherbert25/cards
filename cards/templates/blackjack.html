@@ -26,12 +26,13 @@
         </div>
 
         <h2>You: <span id="your-sum">{{ your_sum }}</span>
-
             {% if your_sum > 21 %}
                 <b>{% print('You Bust!') %}</b>
             {% endif %}
-
+            <br>
+            Coins: <span id="your-coins">{{ your_coins }}</span>
         </h2>
+
         <div id="your-cards">
             {% for cards in your_cards %}
                 <img class=""
