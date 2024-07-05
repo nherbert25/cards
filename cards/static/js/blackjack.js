@@ -27,10 +27,5 @@ socket.on('update_button_counts', function (data) {
 
 // Function to press a button
 function pressButton(buttonNumber) {
-    let buttonEvent;
-    if (buttonNumber === 1) {
-        buttonEvent = 'press_button_1';}
-    if (buttonNumber === 2) {
-        buttonEvent = 'press_button_2';}
-    socket.emit(buttonEvent, {'buttonEvent': buttonEvent, 'buttonNumber': buttonNumber});
+    socket.emit('press_button', {'buttonNumber': buttonNumber});
 };

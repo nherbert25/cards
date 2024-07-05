@@ -27,16 +27,9 @@ def buttons():
     return blackjack_controller.buttons(request)
 
 
-@socketio.on('press_button_1')
-def press_button_1(data):
-    button_number = data['buttonNumber']
-    blackjack_controller.counts[f'button{button_number}'] += 1
-    emit('update_button_counts', {'counts': blackjack_controller.counts}, broadcast=True)
-
-
-@socketio.on('press_button_2')
-def press_button_2(data):
-    button_number = data['buttonNumber']
+@socketio.on('press_button')
+def press_button(button_data_from_client):
+    button_number = button_data_from_client['buttonNumber']
     blackjack_controller.counts[f'button{button_number}'] += 1
     emit('update_button_counts', {'counts': blackjack_controller.counts}, broadcast=True)
 
