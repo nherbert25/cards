@@ -22,14 +22,15 @@ def blackjack():
     return blackjack_controller.blackjack()
 
 
-@blackjack_blueprint.route('/update_page_data')
-def update_page_data():
-    return blackjack_controller.blackjack()
-
-
 @blackjack_blueprint.route('/buttons', methods=['GET', 'POST'])
 def buttons():
     return blackjack_controller.buttons(request)
+
+
+@socketio.on('update_page_data')
+def update_page_data():
+    print('pressed refresh on server')
+    emit('update_page_data', blackjack_controller.prepare_blackjack_socket_data())
 
 
 @socketio.on('press_button')

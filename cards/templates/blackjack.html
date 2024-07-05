@@ -31,6 +31,8 @@
             {% endif %}
             <br>
             Coins: <span id="your-coins">{{ your_coins }}</span>
+            <br>
+            Testing: <span id="testing-coins"></span>
         </h2>
 
         <div id="your-cards">
@@ -61,6 +63,7 @@
         <!-- Buttons for pressing -->
         <button onclick="pressButton(1)">Press Button 1</button>
         <button onclick="pressButton(2)">Press Button 2</button>
+        <button onclick="refresh_data()">Refresh Data</button>
         <p>Button 1 Presses: <span id="button1-count">{{ button1_count }}</span></p>
         <p>Button 2 Presses: <span id="button2-count">{{ button2_count }}</span></p>
 
