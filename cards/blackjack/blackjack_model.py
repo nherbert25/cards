@@ -54,6 +54,8 @@ class BlackjackModel:
     def hit(self):
         self.your_cards.append(self.deck.cards.pop())
         self.your_sum = self.calculate_blackjack_sum(self.your_cards)
+        if self.your_sum > 21:
+            self.you_lose()
 
     def stay(self):
         # reveal dealer card and have dealer do logic to draw cards
