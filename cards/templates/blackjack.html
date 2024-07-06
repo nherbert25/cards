@@ -16,13 +16,6 @@
                  alt="dealer card"
                  width="125"
                  height="182">
-            {% for cards in dealer_cards %}
-                <img class=""
-                     src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}"
-                     alt="dealer card"
-                     width="125"
-                     height="182">
-            {% endfor %}
         </div>
 
         <h2>You: <span id="your-sum"></span><span id="win-or-lose-message"></span>
@@ -33,13 +26,13 @@
         </h2>
 
         <div id="your-cards">
-            {% for cards in your_cards %}
-                <img class=""
-                     src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}"
-                     alt="player card"
-                     width="125"
-                     height="182">
-            {% endfor %}
+{#            {% for cards in your_cards %}#}
+{#                <img class=""#}
+{#                     src="{{ url_for('static', filename='images/playing_cards/'+cards.rank+'-'+cards.suit+'.png') }}"#}
+{#                     alt="player card"#}
+{#                     width="125"#}
+{#                     height="182">#}
+{#            {% endfor %}#}
         </div>
 
         <br>

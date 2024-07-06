@@ -46,7 +46,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const htmlKey = key.replace(/_/g, '-')
             const element = document.getElementById(htmlKey);
             if (element) {
-                element.innerText = value;
+                if (htmlKey.includes('cards')) {
+                    element.innerHTML = generateCardImages(value)
+                } else {
+                    element.innerText = value;
+                }
             }
 
             const hit_button = document.getElementById('hit-button');
@@ -63,5 +67,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         console.log(data);
     });
 
-
+    // Function to generate card images
+    function generateCardImages(cards) {
+        return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
+    }
 });

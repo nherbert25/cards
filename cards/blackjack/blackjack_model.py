@@ -9,14 +9,21 @@ class Card:
     Attributes:
         rank (str): Represents the point value of each card (2 - Ace).
         suit (str): Represents the suit of each card (Hearts, Diamonds, Clubs, Spades).
-        image (str): Represents the filepath to each card image that is displayed on the page.
+        image_path (str): Represents the filepath to each card image that is displayed on the page.
 
     """
 
-    def __init__(self, rank: str, suit: str, image=None):
+    def __init__(self, rank: str, suit: str, hidden=False):
         self.rank = rank
         self.suit = suit
-        self.image = image
+        self.image_path = 'images/playing_cards/BACK.png' if hidden else f"images/playing_cards/{self.rank}-{self.suit}.png "
+
+    def to_dict(self):
+        return {
+            'rank': self.rank,
+            'suit': self.suit,
+            'image_path': self.image_path
+        }
 
 
 class Deck:
@@ -45,7 +52,7 @@ class BlackjackModel:
     def start_new_game(self):
         self.deck = Deck()
         self.deck.shuffle()
-        self.dealer_cards = [self.deck.cards.pop()]
+        self.dealer_cards = [Card('0', 'None', hidden=True), self.deck.cards.pop()]
         self.dealer_sum = self.calculate_blackjack_sum(self.dealer_cards)
         self.your_cards = [self.deck.cards.pop(), self.deck.cards.pop()]
         self.your_sum = self.calculate_blackjack_sum(self.your_cards)
@@ -60,7 +67,7 @@ class BlackjackModel:
             self.you_lose()
 
     def stay(self):
-        # reveal dealer card and have dealer do logic to draw cards
+        # TODO: reveal dealer card and have dealer do logic to draw cards
 
         self.has_stayed = True
 
