@@ -13,7 +13,7 @@ class Card:
 
     """
 
-    def __init__(self, rank: str, suit: str, hidden=False):
+    def __init__(self, rank: str, suit: str, hidden: bool = False):
         self.rank = rank
         self.suit = suit
         self.image_path = 'images/playing_cards/BACK.png' if hidden else f"images/playing_cards/{self.rank}-{self.suit}.png "
