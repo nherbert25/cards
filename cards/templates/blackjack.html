@@ -25,12 +25,9 @@
             {% endfor %}
         </div>
 
-        <h2>You: <span id="your-sum">{{ your_sum }}</span>
-            {% if your_sum > 21 %}
-                <b>{% print('You Bust!') %}</b>
-            {% endif %}
+        <h2>You: <span id="your-sum"></span><span id="win-or-lose-message"></span>
             <br>
-            Coins: <span id="your-coins">{{ your_coins }}</span>
+            Coins: <span id="your-coins"></span>
             <br>
             Testing: <span id="testing-coins"></span>
         </h2>
@@ -48,13 +45,11 @@
         <br>
 
         <form method="post" action="{{ url_for('blackjack.buttons') }}">
-            <button type="submit" id='hit' name="button_pressed" value="Hit"
-                    {% if your_sum > 21 or has_stayed %}disabled{% endif %}>Hit
+            <button type="submit" id='hit-button' name="button_pressed" value="Hit">Hit
             </button>
-            <button type="submit" id='stay' name="button_pressed" value="Stay"
-                    {% if your_sum > 21 or has_stayed %}disabled{% endif %}>Stay
+            <button type="submit" id='stay-button' name="button_pressed" value="Stay">Stay
             </button>
-            <button type="submit" id='new_game' name="button_pressed" value="New Game">New Game</button>
+            <button type="submit" id='new_game-button' name="button_pressed" value="New Game">New Game</button>
         </form>
 
         <br>

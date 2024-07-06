@@ -31,8 +31,16 @@ function refresh_data() {
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
+    refresh_data()
+
+    let pageData;
+
     socket.on('update_page_data', function (data) {
+
+        // Update HTML elements based on received data
         for (const [key, value] of Object.entries(data)) {
+
+            pageData = data;
 
             // replaces python syntax with html syntax. Ex: 'your_coins' to 'your-coins'
             const htmlKey = key.replace(/_/g, '-')
@@ -40,7 +48,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
             if (element) {
                 element.innerText = value;
             }
+
+            const hit_button = document.getElementById('hit-button');
+            if (pageData.your_sum > 21 || pageData.has_stayed) {
+            hit_button.disabled = true;
+            };
+
+            const stay_button = document.getElementById('stay-button');
+            if (pageData.your_sum > 21 || pageData.has_stayed) {
+            stay_button.disabled = true;
+            };
+
         }
         console.log(data);
     });
+
+
 });

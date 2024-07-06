@@ -30,13 +30,13 @@ class BlackjackController:
         result = {
             'dealer_cards': self.blackjack_model.dealer_cards,
             'dealer_sum': self.blackjack_model.dealer_sum,
-            'your_sum': self.blackjack_model.your_sum,
-            'player_name': self.blackjack_model.player_name,
             'your_cards': self.blackjack_model.your_cards,
-            'your_coins': self.blackjack_model.your_coins,
-            'has_stayed': self.blackjack_model.has_stayed,
-            'button1_count': self.counts['button1'],
-            'button2_count': self.counts['button2'],
+            # 'your_sum': self.blackjack_model.your_sum,
+            # 'player_name': self.blackjack_model.player_name,
+            # 'your_coins': self.blackjack_model.your_coins,
+            # 'has_stayed': self.blackjack_model.has_stayed,
+            # 'button1_count': self.counts['button1'],
+            # 'button2_count': self.counts['button2'],
             # 'testing_coins': 200
         }
         return result
