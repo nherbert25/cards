@@ -21,10 +21,10 @@ class BlackjackController:
         # blackjack_controller = session['blackjack_controller']
         if not self.blackjack_model.game_exists:
             self.blackjack_model.start_new_game()
-        return render_template("blackjack.html", **self.prepare_blackjack_html_data())
+        return render_template("blackjack.html", **self.prepare_blackjack_socket_data())
 
     def update_page_data(self):
-        return render_template("blackjack.html", **self.prepare_blackjack_html_data())
+        return render_template("blackjack.html", **self.prepare_blackjack_socket_data())
 
     def prepare_blackjack_html_data(self):
         result = {
