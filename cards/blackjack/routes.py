@@ -15,10 +15,6 @@ blackjack_controller = BlackjackController()
 
 @blackjack_blueprint.route('/blackjack')
 def blackjack():
-    # Create an instance of the BlackjackController if not already in session
-    # if 'blackjack_controller' not in session:
-    #     session['blackjack_controller'] = BlackjackController()
-    # return session['blackjack_controller'].blackjack()
     return blackjack_controller.blackjack()
 
 
