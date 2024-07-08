@@ -11,9 +11,6 @@ class BlackjackController:
     # TODO: since the controller should pull variables from the routes and send them to the model, NOT modify it
     #  directly... it should likely not have logic such as "if not self.blackjack_model.game_exists" either?
     #  or is it okay to have the 'brain' direct traffic based on the state of the model?
-    # TODO: rewrite the buttons scripts and frontend displayed variables with javascript
-    # TODO: rewrite these endpoints to return JSON, to then be picked up by javascript
-    # TODO: write the 'Stay' button as a javascript ajax thing that returns JSON from the server
     # TODO: how to unit test these buttons, make sure the page still loads, etc.?
     # https://testdriven.io/blog/flask-server-side-sessions/
     # flask session tutorial:  https://www.youtube.com/watch?v=lvKjQhQ8Fwk&t=14s
@@ -57,20 +54,33 @@ class BlackjackController:
         }
         return result
 
-    def buttons(self, request):
+    # def buttons(self, request):
+    #
+    #     if request.method == 'POST':
+    #
+    #         if request.form.get('button_pressed') == 'Hit':
+    #             self.blackjack_model.hit()
+    #
+    #         if request.form.get('button_pressed') == 'Stay':
+    #             self.blackjack_model.stay()
+    #
+    #         if request.form.get('button_pressed') == 'New Game':
+    #             self.blackjack_model.start_new_game()
+    #
+    #     return redirect(url_for('blackjack.blackjack'))
 
-        if request.method == 'POST':
+    def buttons(self, button_name):
 
-            if request.form.get('button_pressed') == 'Hit':
-                self.blackjack_model.hit()
+        if button_name == 'hit':
+            self.blackjack_model.hit()
 
-            if request.form.get('button_pressed') == 'Stay':
-                self.blackjack_model.stay()
+        if button_name == 'stay':
+            self.blackjack_model.stay()
 
-            if request.form.get('button_pressed') == 'New Game':
-                self.blackjack_model.start_new_game()
+        if button_name == 'new_game':
+            self.blackjack_model.start_new_game()
 
-        return redirect(url_for('blackjack.blackjack'))
+        return
 
     # the following will render the blackjack.html BUT leave the url as http://127.0.0.1:5000/buttons?hit=Hit,
     # meaning if you refresh the page it will rerun this route

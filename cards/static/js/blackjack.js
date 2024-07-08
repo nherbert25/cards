@@ -24,6 +24,10 @@ function pressSocketTestingButtons(buttonNumber) {
     socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
 };
 
+function pressButtons(buttonName) {
+    socket.emit('press_buttons', buttonName);
+};
+
 function refresh_data() {
     socket.emit('update_page_data');
     console.log('Asking server to refresh');
@@ -56,12 +60,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const hit_button = document.getElementById('hit-button');
             if (pageData.your_sum > 21 || pageData.has_stayed) {
             hit_button.disabled = true;
-            };
+            } else {hit_button.disabled = false};
 
             const stay_button = document.getElementById('stay-button');
             if (pageData.your_sum > 21 || pageData.has_stayed) {
             stay_button.disabled = true;
-            };
+            } else {stay_button.disabled = false};
 
         }
         console.log('Updating page content: ', data);

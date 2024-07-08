@@ -18,9 +18,23 @@ def blackjack():
     return blackjack_controller.blackjack()
 
 
-@blackjack_blueprint.route('/buttons', methods=['GET', 'POST'])
-def buttons():
-    return blackjack_controller.buttons(request)
+# @blackjack_blueprint.route('/buttons', methods=['GET', 'POST'])
+# def buttons():
+#     return blackjack_controller.buttons(request)
+
+
+
+
+
+@socketio.on('press_buttons')
+def press_buttons(button_name):
+    blackjack_controller.buttons(button_name)
+    emit('update_page_data', blackjack_controller.prepare_blackjack_socket_data(), broadcast=True)
+
+
+
+
+
 
 
 @socketio.on('update_page_data')
