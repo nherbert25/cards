@@ -29,8 +29,8 @@ def update_page_data():
     emit('update_page_data', blackjack_controller.prepare_blackjack_socket_data(), broadcast=True)
 
 
-@socketio.on('press_button')
-def press_button(button_data_from_client):
+@socketio.on('press_socket_testing_buttons')
+def press_socket_testing_buttons(button_data_from_client):
     button_number = button_data_from_client['buttonNumber']
     blackjack_controller.counts[f'button{button_number}'] += 1
     emit('update_button_counts', {'counts': blackjack_controller.counts}, broadcast=True)

@@ -20,8 +20,8 @@ socket.on('update_button_counts', function (data) {
     console.log(data.counts);
 });
 
-function pressButton(buttonNumber) {
-    socket.emit('press_button', {'buttonNumber': buttonNumber});
+function pressSocketTestingButtons(buttonNumber) {
+    socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
 };
 
 function refresh_data() {
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             };
 
         }
-        console.log(data);
+        console.log('Updating page content: ', data);
     });
 
     // Function to generate card images
