@@ -54,21 +54,6 @@ class BlackjackController:
         }
         return result
 
-    # def buttons(self, request):
-    #
-    #     if request.method == 'POST':
-    #
-    #         if request.form.get('button_pressed') == 'Hit':
-    #             self.blackjack_model.hit()
-    #
-    #         if request.form.get('button_pressed') == 'Stay':
-    #             self.blackjack_model.stay()
-    #
-    #         if request.form.get('button_pressed') == 'New Game':
-    #             self.blackjack_model.start_new_game()
-    #
-    #     return redirect(url_for('blackjack.blackjack'))
-
     def buttons(self, button_name):
 
         if button_name == 'hit':

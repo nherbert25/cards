@@ -1,15 +1,10 @@
-from flask import Blueprint, request
+from flask import Blueprint
 from flask_socketio import emit
 from cards.app_setup import socketio
 
 from cards.blackjack.controller import BlackjackController
 
 blackjack_blueprint = Blueprint('blackjack', __name__)
-
-# initialize blueprint
-# blackjack_blueprint.game_exists = False
-
-
 blackjack_controller = BlackjackController()
 
 
@@ -18,23 +13,10 @@ def blackjack():
     return blackjack_controller.blackjack()
 
 
-# @blackjack_blueprint.route('/buttons', methods=['GET', 'POST'])
-# def buttons():
-#     return blackjack_controller.buttons(request)
-
-
-
-
-
 @socketio.on('press_buttons')
 def press_buttons(button_name):
     blackjack_controller.buttons(button_name)
     emit('update_page_data', blackjack_controller.prepare_blackjack_socket_data(), broadcast=True)
-
-
-
-
-
 
 
 @socketio.on('update_page_data')
