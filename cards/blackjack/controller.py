@@ -50,7 +50,7 @@ class BlackjackController:
             'has_stayed': self.blackjack_model.has_stayed,
             'button1_count': self.counts['button1'],
             'button2_count': self.counts['button2'],
-            'testing_coins': 200
+            'win_or_lose_message': self.blackjack_model.win_or_lose_message
         }
         return result
 

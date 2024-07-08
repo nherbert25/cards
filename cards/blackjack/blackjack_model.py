@@ -36,7 +36,6 @@ class Deck:
         r_shuffle(self.cards)
 
 
-# Model class for Blackjack game
 class BlackjackModel:
     def __init__(self):
         self.your_sum = None
@@ -48,6 +47,8 @@ class BlackjackModel:
         self.player_name = 'Taylor'
         self.game_exists: bool = False
         self.has_stayed: bool = False
+        self.BET = 50
+        self.win_or_lose_message = None
 
     def start_new_game(self):
         self.deck = Deck()
@@ -58,6 +59,7 @@ class BlackjackModel:
         self.your_sum = self.calculate_blackjack_sum(self.your_cards)
         self.game_exists = True
         self.has_stayed = False
+        self.win_or_lose_message = None
         return
 
     def hit(self):
@@ -67,23 +69,41 @@ class BlackjackModel:
             self.you_lose()
 
     def stay(self):
-        # TODO: reveal dealer card and have dealer do logic to draw cards
-
         self.has_stayed = True
+        self.dealer_sum = self.resolve_dealer_turn(self.dealer_cards)
+        self.resolve_winner(self.your_sum, self.dealer_sum)
 
-        if self.your_sum > self.dealer_sum:
+    def resolve_winner(self, your_sum, dealer_sum):
+        if your_sum > 21:
+            self.you_lose()
+        elif dealer_sum > 21:
+            self.you_win()
+        elif your_sum > dealer_sum:
             self.you_win()
         else:
             self.you_lose()
 
     def you_win(self):
-        self.your_coins += 50
+        self.your_coins += self.BET
+        self.win_or_lose_message = f'You win! +{self.BET} coins!'
 
     def you_lose(self):
-        self.your_coins -= 50
+        self.your_coins -= self.BET
+        self.win_or_lose_message = f'You lose! -{self.BET} coins!'
+
+    def resolve_dealer_turn(self, dealer_cards: List[Card]) -> int:
+        flip_face_down_card = self.deck.cards.pop()
+        dealer_cards[0] = flip_face_down_card
+
+        dealer_sum = self.calculate_blackjack_sum(dealer_cards)
+        while dealer_sum < 17:
+            dealer_cards.append(self.deck.cards.pop())
+            dealer_sum = self.calculate_blackjack_sum(dealer_cards)
+
+        return dealer_sum
 
     def calculate_blackjack_sum(self, card_list: List[Card]) -> int:
-        my_sum = 0
+        result = 0
         ace_count = 0
         for card in card_list:
             if card.rank == 'A':
@@ -93,15 +113,15 @@ class BlackjackModel:
                     value = 10
                 else:
                     value = int(card.rank)
-                my_sum += value
+                result += value
         if ace_count == 1:
-            if my_sum + 11 > 21:
-                return my_sum + 1
+            if result + 11 > 21:
+                return result + 1
             else:
-                return my_sum + 11
+                return result + 11
         elif ace_count > 1:
-            if my_sum + 11 + ace_count - 1 > 21:
-                return my_sum + ace_count
+            if result + 11 + ace_count - 1 > 21:
+                return result + ace_count
             else:
-                return my_sum + 11 + ace_count - 1
-        return my_sum
+                return result + 11 + ace_count - 1
+        return result
