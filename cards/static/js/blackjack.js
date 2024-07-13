@@ -38,22 +38,6 @@ function initializeButtonCountsListener() {
     });
 }
 
-
-function pressSocketTestingButtons(buttonNumber) {
-    socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
-};
-
-function pressButtons(buttonName) {
-    socket.emit('press_buttons', buttonName);
-};
-
-function refresh_data() {
-    socket.emit('update_page_data');
-    console.log('Asking server to refresh');
-};
-
-
-
 function initializeUpdatePageListener() {
     let pageData;
 
@@ -91,6 +75,19 @@ function initializeUpdatePageListener() {
         console.log('Updating page content: ', data);
     });
 }
+
+function pressSocketTestingButtons(buttonNumber) {
+    socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
+};
+
+function pressButtons(buttonName) {
+    socket.emit('press_buttons', buttonName);
+};
+
+function refresh_data() {
+    socket.emit('update_page_data');
+    console.log('Asking server to refresh');
+};
 
 function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
