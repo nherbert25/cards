@@ -11,7 +11,7 @@ const socket = io();
 document.addEventListener('DOMContentLoaded', (event) => {
     refresh_data();
     initializeOnConnectionListener();
-    // initializeRequestGameDataListener();
+    // initializeRequestGameDataPromise();
     initializeUpdatePageListener();
     initializePlayerJoinListener();
     initializeButtonCountsListener();
@@ -121,7 +121,7 @@ function createPlayerDiv(playerName = 'Taylor', gameData) {
 }
 
 // todo: refactor this function as this is NOT a normal event listener. This is a generate promise function thing
-function initializeRequestGameDataListener() {
+function initializeRequestGameDataPromise() {
     return new Promise((resolve, reject) => {
         socket.on('request_game_data', function (data) {
             console.log("TESTING TESTING TESTING Returned the following data:");
@@ -140,7 +140,7 @@ async function requestGameData() {
     try {
         const data = await new Promise((resolve, reject) => {
             socket.emit('request_game_data');
-            initializeRequestGameDataListener().then(resolve).catch(reject);
+            initializeRequestGameDataPromise().then(resolve).catch(reject);
         });
         return data;
     } catch (error) {
@@ -149,10 +149,11 @@ async function requestGameData() {
     }
 }
 
-
+// todo: remove this once we have player creation set up. Or refactor it to only be ran if a guest joins
+// todo: This is functionally similar to initializePlayerJoinListener
 requestGameData().then(data => {
     console.log("Attempting to create player div")
-    let playerDiv = createPlayerDiv('Taylor', data)
+    const playerDiv = createPlayerDiv('Taylor', data)
     document.getElementById('player-container').appendChild(playerDiv);
 }).catch(error => {
     console.error('Failed to fetch game data:', error);
