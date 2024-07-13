@@ -34,13 +34,25 @@ function refresh_data() {
 };
 
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    refresh_data()
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    refresh_data();
+    initializeUpdatePageListener();
+    // initializePlayerJoinListener();
+});
+
+function initializePlayerJoinListener() {
+    socket.on('player_joined', function (data) {
+        const playerDiv = createPlayerDiv(data.player_name, data.game_data);
+        document.getElementById('game-container').appendChild(playerDiv);
+    });
+}
+
+
+function initializeUpdatePageListener() {
     let pageData;
 
     socket.on('update_page_data', function (data) {
-
         // Update HTML elements based on received data
         for (const [key, value] of Object.entries(data)) {
 
@@ -59,20 +71,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             const hit_button = document.getElementById('hit-button');
             if (pageData.your_sum > 21 || pageData.has_stayed) {
-            hit_button.disabled = true;
-            } else {hit_button.disabled = false};
+                hit_button.disabled = true;
+            } else {
+                hit_button.disabled = false;
+            }
 
             const stay_button = document.getElementById('stay-button');
             if (pageData.your_sum > 21 || pageData.has_stayed) {
-            stay_button.disabled = true;
-            } else {stay_button.disabled = false};
-
+                stay_button.disabled = true;
+            } else {
+                stay_button.disabled = false;
+            }
         }
         console.log('Updating page content: ', data);
     });
+}
 
-    // Function to generate card images
-    function generateCardImages(cards) {
-        return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
-    }
-});
+function generateCardImages(cards) {
+    return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
+}
