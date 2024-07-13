@@ -5,20 +5,39 @@
 // in the definition, aka: "async function myFunction() { ...my code ..  await myPromise() ... my code ..  }"
 // https://www.youtube.com/watch?v=AMp6hlA8xKA   using websockets instead of fetch and callbacks
 
-
 const socket = io();
 
-// Log when the client is connected
-socket.on('connect', function () {
-    console.log('Connected to server');
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    refresh_data();
+    initializeOnConnectionListener();
+    initializeUpdatePageListener();
+    initializePlayerJoinListener();
+    initializeButtonCountsListener();
 });
 
-socket.on('update_button_counts', function (data) {
-    // Handle button count updates for the selected game
-    document.getElementById('button1-count').innerText = data.counts.button1;
-    document.getElementById('button2-count').innerText = data.counts.button2;
-    console.log(data.counts);
-});
+function initializeOnConnectionListener() {
+    socket.on('connect', function () {
+        console.log('Connected to server');
+    })
+}
+
+function initializePlayerJoinListener() {
+    socket.on('player_joined', function (data) {
+        const playerDiv = createPlayerDiv(data.player_name, data.game_data);
+        document.getElementById('game-container').appendChild(playerDiv);
+    });
+}
+
+function initializeButtonCountsListener() {
+    socket.on('update_button_counts', function (data) {
+        // Handle button count updates for the selected game
+        document.getElementById('button1-count').innerText = data.counts.button1;
+        document.getElementById('button2-count').innerText = data.counts.button2;
+        console.log(data.counts);
+    });
+}
+
 
 function pressSocketTestingButtons(buttonNumber) {
     socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
@@ -33,20 +52,6 @@ function refresh_data() {
     console.log('Asking server to refresh');
 };
 
-
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    refresh_data();
-    initializeUpdatePageListener();
-    // initializePlayerJoinListener();
-});
-
-function initializePlayerJoinListener() {
-    socket.on('player_joined', function (data) {
-        const playerDiv = createPlayerDiv(data.player_name, data.game_data);
-        document.getElementById('game-container').appendChild(playerDiv);
-    });
-}
 
 
 function initializeUpdatePageListener() {
@@ -89,4 +94,19 @@ function initializeUpdatePageListener() {
 
 function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
+}
+
+function createPlayerDiv(playerName, gameData) {
+    const div = document.createElement('div');
+    div.className = 'player';
+    div.id = `player-${playerName}`;
+    div.innerHTML = `
+        <h2>${playerName}: <span id="your-sum-${playerName}">${gameData.your_sum[playerName]}</span></h2>
+        <div id="your-cards-${playerName}"></div>
+        <button onclick="pressButtons('hit', '${playerName}')">Hit</button>
+        <button onclick="pressButtons('stay', '${playerName}')">Stay</button>
+        <button onclick="pressButtons('new_game', '${playerName}')">New Game</button>
+        <p>Coins: <span id="your-coins-${playerName}">${gameData.your_coins[playerName]}</span></p>
+    `;
+    return div;
 }
