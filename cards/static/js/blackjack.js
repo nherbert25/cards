@@ -11,6 +11,7 @@ const socket = io();
 document.addEventListener('DOMContentLoaded', (event) => {
     refresh_data();
     initializeOnConnectionListener();
+    // initializeRequestGameDataListener();
     initializeUpdatePageListener();
     initializePlayerJoinListener();
     initializeButtonCountsListener();
@@ -43,6 +44,10 @@ function initializeUpdatePageListener() {
 
     socket.on('update_page_data', function (data) {
         // Update HTML elements based on received data
+
+        console.log("UpdatePageData returned the following data:");
+        console.dir(data);
+
         for (const [key, value] of Object.entries(data)) {
 
             pageData = data;
@@ -93,17 +98,62 @@ function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 }
 
-function createPlayerDiv(playerName, gameData) {
+// TODO: update function by adding "-${playerName}" to all ids. for example: id='hit-button' goes to id='hit-button-${playerName}' once users are implemented
+function createPlayerDiv(playerName = 'Taylor', gameData) {
+    console.log("Debugging createPlayerDiv gameData:");
+    console.dir(gameData)
+
     const div = document.createElement('div');
     div.className = 'player';
     div.id = `player-${playerName}`;
     div.innerHTML = `
-        <h2>${playerName}: <span id="your-sum-${playerName}">${gameData.your_sum[playerName]}</span></h2>
-        <div id="your-cards-${playerName}"></div>
-        <button onclick="pressButtons('hit', '${playerName}')">Hit</button>
-        <button onclick="pressButtons('stay', '${playerName}')">Stay</button>
-        <button onclick="pressButtons('new_game', '${playerName}')">New Game</button>
-        <p>Coins: <span id="your-coins-${playerName}">${gameData.your_coins[playerName]}</span></p>
+        <h2>${playerName}: <span id="your-sum">${gameData.your_sum}</span> <span id="win-or-lose-message"></span>
+            <br>
+            Coins: <span id="your-coins">${gameData.your_coins}</span>
+            <br>
+        </h2>
+        <div id="your-cards"></div>
+        <button id='hit-button' onclick="pressButtons('hit', '${playerName}')">Hit</button>
+        <button id='stay-button' onclick="pressButtons('stay', '${playerName}')">Stay</button>
+        <button id='new-game-button' onclick="pressButtons('new_game', '${playerName}')">New Game</button>
     `;
     return div;
 }
+
+
+function initializeRequestGameDataListener() {
+    return new Promise((resolve, reject) => {
+        socket.on('request_game_data', function (data) {
+            console.log("TESTING TESTING TESTING Returned the following data:");
+            console.dir(data);
+            resolve(data); // Resolve the promise with the received data
+        });
+
+        // Optional: Handle errors if needed
+        socket.on('request_game_data_error', function (error) {
+            reject(error); // Reject the promise with the error
+        });
+    });
+}
+
+async function requestGameData() {
+    try {
+        const data = await new Promise((resolve, reject) => {
+            socket.emit('request_game_data');
+            initializeRequestGameDataListener().then(resolve).catch(reject);
+        });
+        return data; // Return the data received from the server
+    } catch (error) {
+        console.error('Error requesting game data:', error);
+        throw error; // Propagate the error if needed
+    }
+}
+
+
+requestGameData().then(data => {
+    console.log("Attempting to create player div")
+    let playerDiv = createPlayerDiv('Taylor', data)
+    document.getElementById('game-container').appendChild(playerDiv);
+}).catch(error => {
+    console.error('Failed to fetch game data:', error);
+});

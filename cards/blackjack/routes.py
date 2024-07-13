@@ -19,6 +19,20 @@ def press_buttons(button_name):
     emit('update_page_data', blackjack_controller.prepare_blackjack_socket_data(), broadcast=True)
 
 
+@socketio.on('request_game_data')
+def press_buttons(button_name):
+    blackjack_controller.buttons(button_name)
+    emit('request_game_data', blackjack_controller.prepare_blackjack_socket_data(), broadcast=True)
+
+
+
+@socketio.on('request_game_data')
+def handle_request_game_data():
+    try:
+        emit('request_game_data', blackjack_controller.prepare_blackjack_socket_data(), broadcast=True)
+    except Exception as e:
+        emit('request_game_data_error', str(e))
+
 @socketio.on('update_page_data')
 def update_page_data():
     print('pressed refresh on server')
