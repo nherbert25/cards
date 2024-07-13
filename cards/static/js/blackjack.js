@@ -11,7 +11,7 @@ const socket = io();
 document.addEventListener('DOMContentLoaded', (event) => {
     refresh_data();
     initializeOnConnectionListener();
-    // initializeRequestGameDataPromise();
+    // requestGameDataPromise();
     initializeUpdatePageListener();
     initializePlayerJoinListener();
     initializeButtonCountsListener();
@@ -121,28 +121,25 @@ function createPlayerDiv(playerName = 'Taylor', gameData) {
 }
 
 // todo: refactor this function as this is NOT a normal event listener. This is a generate promise function thing
-function initializeRequestGameDataPromise() {
+function requestGameDataPromise() {
     return new Promise((resolve, reject) => {
         socket.on('request_game_data', function (data) {
-            console.log("TESTING TESTING TESTING Returned the following data:");
+            console.log("request_game_data returned the following data:");
             console.dir(data);
-            resolve(data); // Resolve the promise with the received data
+            resolve(data);
         });
 
-        // Optional: Handle errors if needed
         socket.on('request_game_data_error', function (error) {
-            reject(error); // Reject the promise with the error
+            reject(error);
         });
     });
 }
 
 async function requestGameData() {
     try {
-        const data = await new Promise((resolve, reject) => {
-            socket.emit('request_game_data');
-            initializeRequestGameDataPromise().then(resolve).catch(reject);
-        });
-        return data;
+        socket.emit('request_game_data');
+        const gameData = await requestGameDataPromise();
+        return gameData;
     } catch (error) {
         console.error('Error requesting game data:', error);
         throw error;
