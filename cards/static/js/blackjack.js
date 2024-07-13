@@ -26,7 +26,7 @@ function initializeOnConnectionListener() {
 function initializePlayerJoinListener() {
     socket.on('player_joined', function (data) {
         const playerDiv = createPlayerDiv(data.player_name, data.game_data);
-        document.getElementById('game-container').appendChild(playerDiv);
+        document.getElementById('player-container').appendChild(playerDiv);
     });
 }
 
@@ -120,7 +120,7 @@ function createPlayerDiv(playerName = 'Taylor', gameData) {
     return div;
 }
 
-
+// todo: refactor this function as this is NOT a normal event listener. This is a generate promise function thing
 function initializeRequestGameDataListener() {
     return new Promise((resolve, reject) => {
         socket.on('request_game_data', function (data) {
@@ -142,10 +142,10 @@ async function requestGameData() {
             socket.emit('request_game_data');
             initializeRequestGameDataListener().then(resolve).catch(reject);
         });
-        return data; // Return the data received from the server
+        return data;
     } catch (error) {
         console.error('Error requesting game data:', error);
-        throw error; // Propagate the error if needed
+        throw error;
     }
 }
 
@@ -153,7 +153,7 @@ async function requestGameData() {
 requestGameData().then(data => {
     console.log("Attempting to create player div")
     let playerDiv = createPlayerDiv('Taylor', data)
-    document.getElementById('game-container').appendChild(playerDiv);
+    document.getElementById('player-container').appendChild(playerDiv);
 }).catch(error => {
     console.error('Failed to fetch game data:', error);
 });

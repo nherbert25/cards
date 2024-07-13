@@ -9,26 +9,14 @@
 
 {% extends "layout.html" %}
 {% block content %}
-    <div class="col-md-8 offset-md-2">
-        <h2>Dealer: <span id="dealer-sum">{{ dealer_sum }}</span></h2>
-        <div id="dealer-cards"></div>
+    <div id="game-container" class="col-md-8 offset-md-2">
 
-        <div id="game-container"></div>
+        <div id="dealer-container">
+            <h2>Dealer: <span id="dealer-sum">{{ dealer_sum }}</span></h2>
+            <div id="dealer-cards"></div>
+        </div>
 
-
-{#        <h2>You: <span id="your-sum"></span> <span id="win-or-lose-message"></span>#}
-{#            <br>#}
-{#            Coins: <span id="your-coins"></span>#}
-{#            <br>#}
-{#        </h2>#}
-{##}
-{#        <div id="your-cards"></div>#}
-{##}
-{#        <br>#}
-{##}
-{#        <button id='hit-button' onclick="pressButtons('hit')">Hit</button>#}
-{#        <button id='stay-button' onclick="pressButtons('stay')">Stay</button>#}
-{#        <button id='new-game-button' onclick="pressButtons('new_game')">New Game</button>#}
+        <div id="player-container"></div>
 
         <br>
         <br>
@@ -39,10 +27,9 @@
         <button onclick="refresh_data()">Refresh Data</button>
         <p>Button 1 Presses: <span id="button1-count">{{ button1_count }}</span></p>
         <p>Button 2 Presses: <span id="button2-count">{{ button2_count }}</span></p>
-
-        <p id="results">
         <p> Welcome {{ player_name }}! </p>
     </div>
+
     <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"
             integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4"
             crossorigin="anonymous"></script>
