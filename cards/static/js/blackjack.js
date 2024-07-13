@@ -11,7 +11,6 @@ const socket = io();
 document.addEventListener('DOMContentLoaded', (event) => {
     refresh_data();
     initializeOnConnectionListener();
-    // requestGameDataPromise();
     initializeUpdatePageListener();
     initializePlayerJoinListener();
     initializeButtonCountsListener();
@@ -43,7 +42,6 @@ function initializeUpdatePageListener() {
     let pageData;
 
     socket.on('update_page_data', function (data) {
-        // Update HTML elements based on received data
 
         console.log("UpdatePageData returned the following data:");
         console.dir(data);
@@ -120,7 +118,6 @@ function createPlayerDiv(playerName = 'Taylor', gameData) {
     return div;
 }
 
-// todo: refactor this function as this is NOT a normal event listener. This is a generate promise function thing
 function requestGameDataPromise() {
     return new Promise((resolve, reject) => {
         socket.on('request_game_data', function (data) {
