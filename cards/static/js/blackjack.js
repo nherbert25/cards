@@ -52,33 +52,37 @@ function initializeUpdatePageListener() {
 
             // replaces python syntax with html syntax. Ex: 'your_coins' to 'your-coins'
             const htmlKey = key.replace(/_/g, '-')
-            const element = document.getElementById(htmlKey);
-            console.log("element: ", element, " htmlkey: ", htmlKey)
-            if (element) {
-                if (htmlKey.includes('cards') || htmlKey.includes('hand')) {
-                    element.innerHTML = generateCardImages(value)
-                } else {
-                    element.innerText = value;
+
+            if (Number.isInteger(htmlKey)) {
+                parsePlayerData(value)
+            } else {
+                const element = document.getElementById(htmlKey);
+                console.log("element: ", element, " htmlkey: ", htmlKey)
+                if (element) {
+                    if (htmlKey.includes('cards') || htmlKey.includes('hand')) {
+                        element.innerHTML = generateCardImages(value)
+                    } else {
+                        element.innerText = value;
+                    }
                 }
             }
-        }
 
-        const hit_button = document.getElementById('hit-button');
-        if (pageData.your_sum > 21 || pageData.has_stayed) {
-            hit_button.disabled = true;
-        } else {
-            hit_button.disabled = false;
+            // const hit_button = document.getElementById('hit-button');
+            // if (pageData.your_sum > 21 || pageData.has_stayed) {
+            //     hit_button.disabled = true;
+            // } else {
+            //     hit_button.disabled = false;
+            // }
+            //
+            // const stay_button = document.getElementById('stay-button');
+            // if (pageData.your_sum > 21 || pageData.has_stayed) {
+            //     stay_button.disabled = true;
+            // } else {
+            //     stay_button.disabled = false;
+            // }
         }
-
-        const stay_button = document.getElementById('stay-button');
-        if (pageData.your_sum > 21 || pageData.has_stayed) {
-            stay_button.disabled = true;
-        } else {
-            stay_button.disabled = false;
-        }
-        console.log('Updating page content: ', data);
-    });
-}
+    })
+};
 
 function pressSocketTestingButtons(buttonNumber) {
     socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
@@ -97,8 +101,21 @@ function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 }
 
-function parsePlayerData(cards) {
-    return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
+function parsePlayerData(playerObjectData) {
+    for (const [key, value] of Object.entries(playerObjectData)) {
+
+        // replaces python syntax with html syntax. Ex: 'your_coins' to 'your-coins'
+        const htmlKey = key.replace(/_/g, '-')
+        const element = document.getElementById(htmlKey);
+        console.log("element: ", element, " htmlkey: ", htmlKey)
+        if (element) {
+            if (htmlKey.includes('cards') || htmlKey.includes('hand')) {
+                element.innerHTML = generateCardImages(value)
+            } else {
+                element.innerText = value;
+            }
+        }
+    }
 }
 
 // TODO: update function by adding "-${playerName}" to all ids. for example: id='hit-button' goes to id='hit-button-${playerName}' once users are implemented
