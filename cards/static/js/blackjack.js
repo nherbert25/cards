@@ -39,8 +39,6 @@ function initializeButtonCountsListener() {
 }
 
 function initializeUpdatePageListener() {
-    let pageData;
-
     socket.on('update_page_data', function (data) {
 
         console.log("UpdatePageData returned the following data:");
@@ -52,9 +50,8 @@ function initializeUpdatePageListener() {
             const htmlKey = key.replace(/_/g, '-')
 
             if (htmlKey === "players-data-object") {
-
                 for (const [playerID, player_value] of Object.entries(value)) {
-                    parsePlayerData(playerID, player_value);
+                    updatePlayerContainer(playerID, player_value);
                 }
 
             } else {
@@ -69,19 +66,7 @@ function initializeUpdatePageListener() {
                 }
             }
 
-            // const hit_button = document.getElementById('hit-button');
-            // if (pageData.your_sum > 21 || pageData.has_stayed) {
-            //     hit_button.disabled = true;
-            // } else {
-            //     hit_button.disabled = false;
-            // }
-            //
-            // const stay_button = document.getElementById('stay-button');
-            // if (pageData.your_sum > 21 || pageData.has_stayed) {
-            //     stay_button.disabled = true;
-            // } else {
-            //     stay_button.disabled = false;
-            // }
+
         }
     })
 };
@@ -103,15 +88,12 @@ function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 }
 
-function parsePlayerData(playerID, player_data) {
+function updatePlayerContainer(playerID, player_data) {
     for (const [key, value] of Object.entries(player_data)) {
 
-        // console.log(key, value)
         // replaces python syntax with html syntax, then add playerID. Ex: 'player_coins' to 'player-coins-7'
         const htmlKey = key.replace(/_/g, '-') + '-' + playerID
-        console.log(key, value, htmlKey)
         const element = document.getElementById(htmlKey);
-        // console.log("element: ", element, " htmlkey: ", htmlKey)
         if (element) {
             if (htmlKey.includes('cards') || htmlKey.includes('hand')) {
                 element.innerHTML = generateCardImages(value)
@@ -119,6 +101,20 @@ function parsePlayerData(playerID, player_data) {
                 element.innerText = value;
             }
         }
+    }
+
+    const hit_button = document.getElementById('hit-button-' + playerID);
+    if (player_data.sum > 21 || player_data.has_stayed) {
+        hit_button.disabled = true;
+    } else {
+        hit_button.disabled = false;
+    }
+
+    const stay_button = document.getElementById('stay-button-' + playerID);
+    if (player_data.sum > 21 || player_data.has_stayed) {
+        stay_button.disabled = true;
+    } else {
+        stay_button.disabled = false;
     }
 }
 

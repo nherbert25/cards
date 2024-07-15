@@ -53,7 +53,7 @@ class BlackjackModel:
         if self.if_player_wins(player.sum, self.dealer_sum):
             self.you_win(player)
         else:
-            self.you_win(player)
+            self.you_lose(player)
 
     def if_player_wins(self, player_sum: int, dealer_sum: int) -> bool:
         if player_sum > 21:
