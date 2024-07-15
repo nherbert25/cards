@@ -53,27 +53,28 @@ function initializeUpdatePageListener() {
             // replaces python syntax with html syntax. Ex: 'your_coins' to 'your-coins'
             const htmlKey = key.replace(/_/g, '-')
             const element = document.getElementById(htmlKey);
+            console.log("element: ", element, " htmlkey: ", htmlKey)
             if (element) {
-                if (htmlKey.includes('cards')) {
+                if (htmlKey.includes('cards') || htmlKey.includes('hand')) {
                     element.innerHTML = generateCardImages(value)
                 } else {
                     element.innerText = value;
                 }
             }
+        }
 
-            const hit_button = document.getElementById('hit-button');
-            if (pageData.your_sum > 21 || pageData.has_stayed) {
-                hit_button.disabled = true;
-            } else {
-                hit_button.disabled = false;
-            }
+        const hit_button = document.getElementById('hit-button');
+        if (pageData.your_sum > 21 || pageData.has_stayed) {
+            hit_button.disabled = true;
+        } else {
+            hit_button.disabled = false;
+        }
 
-            const stay_button = document.getElementById('stay-button');
-            if (pageData.your_sum > 21 || pageData.has_stayed) {
-                stay_button.disabled = true;
-            } else {
-                stay_button.disabled = false;
-            }
+        const stay_button = document.getElementById('stay-button');
+        if (pageData.your_sum > 21 || pageData.has_stayed) {
+            stay_button.disabled = true;
+        } else {
+            stay_button.disabled = false;
         }
         console.log('Updating page content: ', data);
     });
@@ -96,6 +97,10 @@ function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 }
 
+function parsePlayerData(cards) {
+    return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
+}
+
 // TODO: update function by adding "-${playerName}" to all ids. for example: id='hit-button' goes to id='hit-button-${playerName}' once users are implemented
 function createPlayerDiv(playerName = 'Taylor', gameData) {
     console.log("Debugging createPlayerDiv gameData:");
@@ -105,15 +110,15 @@ function createPlayerDiv(playerName = 'Taylor', gameData) {
     div.className = 'player';
     div.id = `player-${playerName}`;
     div.innerHTML = `
-        <h2>${playerName}: <span id="your-sum">${gameData.your_sum}</span> <span id="win-or-lose-message"></span>
+        <h2>${playerName}: <span id="sum-${playerName}">${gameData.sum}</span> <span id="win-or-lose-message-${playerName}"></span>
             <br>
-            Coins: <span id="your-coins">${gameData.your_coins}</span>
+            Coins: <span id="coins-${playerName}">${gameData.coins}</span>
             <br>
         </h2>
-        <div id="your-cards"></div>
-        <button id='hit-button' onclick="pressButtons('hit', '${playerName}')">Hit</button>
-        <button id='stay-button' onclick="pressButtons('stay', '${playerName}')">Stay</button>
-        <button id='new-game-button' onclick="pressButtons('new_game', '${playerName}')">New Game</button>
+        <div id="cards-${playerName}"></div>
+        <button id='hit-button-${playerName}' onclick="pressButtons('hit', '${playerName}')">Hit</button>
+        <button id='stay-button-${playerName}' onclick="pressButtons('stay', '${playerName}')">Stay</button>
+        <button id='new-game-button-${playerName}' onclick="pressButtons('new_game', '${playerName}')">New Game</button>
     `;
     return div;
 }

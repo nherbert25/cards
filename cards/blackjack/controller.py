@@ -1,4 +1,6 @@
-from flask import render_template, redirect, url_for
+import json
+
+from flask import render_template, redirect, url_for, jsonify
 from cards.blackjack.blackjack_model import BlackjackModel
 
 
@@ -40,18 +42,23 @@ class BlackjackController:
     def prepare_blackjack_socket_data(self):
         """WebSockets require data to be in a format that can be transmitted over the network. This means the data must be serialized to a format like JSON.
         Not all Python objects are directly serializable to JSON. For example, custom objects need to be converted to basic data types (dicts, lists, strings, numbers, etc.) before they can be serialized."""
+
+
         result = {
             'dealer_cards': [card.to_dict() for card in self.blackjack_model.dealer_cards],
-            'your_cards': [card.to_dict() for card in self.blackjack_model.your_cards],
             'dealer_sum': self.blackjack_model.dealer_sum,
-            'your_sum': self.blackjack_model.your_sum,
-            'player_name': self.blackjack_model.player_name,
-            'your_coins': self.blackjack_model.your_coins,
-            'has_stayed': self.blackjack_model.has_stayed,
             'button1_count': self.counts['button1'],
             'button2_count': self.counts['button2'],
-            'win_or_lose_message': self.blackjack_model.win_or_lose_message
+            # 'your_cards': [card.to_dict() for card in self.blackjack_model.your_cards],
+            # 'your_sum': self.blackjack_model.your_sum,
+            # 'player_name': self.blackjack_model.player_name,
+            # 'your_coins': self.blackjack_model.your_coins,
+            # 'has_stayed': self.blackjack_model.has_stayed,
+            # 'win_or_lose_message': self.blackjack_model.win_or_lose_message
         }
+
+        for player in self.blackjack_model.players:
+            result[str(player.user_id)] = player.to_dict()
         return result
 
     def buttons(self, button_name):
