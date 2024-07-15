@@ -23,6 +23,7 @@ class BlackjackModel:
         self.deck = Deck()
         self.game_exists: bool = False
         self.BET = 50
+        # todo: turn self.players into a dictionary {1: {user_id:1, player_name:'Taylor'}, etc.} then use self.players.get(player_id). You'll have to restructure controller and js.
         self.players: List[Player] = [Player(1, 'Taylor')]
 
     def start_new_game(self):
@@ -31,6 +32,7 @@ class BlackjackModel:
         self.dealer_cards = [Card('0', 'None', hidden=True), self.deck.cards.pop()]
         self.dealer_sum = self.calculate_blackjack_sum(self.dealer_cards)
         for player in self.players:
+            player.hand = []
             player.draw_card(self.deck.cards.pop())
             player.draw_card(self.deck.cards.pop())
             player.sum = self.calculate_blackjack_sum(player.hand)
@@ -43,22 +45,25 @@ class BlackjackModel:
         player.draw_card(self.deck.cards.pop())
         player.sum = self.calculate_blackjack_sum(player.hand)
         if player.sum > 21:
-            self.you_lose()
+            self.you_lose(player)
 
     def stay(self, player: Player):
         player.has_stayed = True
         self.dealer_sum = self.resolve_dealer_turn(self.dealer_cards)
-        self.resolve_winner(player.sum, self.dealer_sum)
-
-    def resolve_winner(self, player_sum: int, dealer_sum: int):
-        if player_sum > 21:
-            self.you_lose()
-        elif dealer_sum > 21:
-            self.you_win()
-        elif player_sum > dealer_sum:
-            self.you_win()
+        if self.if_player_wins(player.sum, self.dealer_sum):
+            self.you_win(player)
         else:
-            self.you_lose()
+            self.you_win(player)
+
+    def if_player_wins(self, player_sum: int, dealer_sum: int) -> bool:
+        if player_sum > 21:
+            return False
+        elif dealer_sum > 21:
+            return True
+        elif player_sum > dealer_sum:
+            return True
+        else:
+            return False
 
     def you_win(self, player: Player):
         player.coins += self.BET
@@ -78,6 +83,14 @@ class BlackjackModel:
             dealer_sum = self.calculate_blackjack_sum(dealer_cards)
 
         return dealer_sum
+
+    def get_player(self, user_id):
+        try:
+            for player in self.players:
+                if player.user_id == user_id or player.user_id == int(user_id):
+                    return player
+        except Exception as e:
+            print(f"error: No player with user_id: {user_id} exists\r\n{e}")
 
     def calculate_blackjack_sum(self, card_list: List[Card]) -> int:
         result = 0

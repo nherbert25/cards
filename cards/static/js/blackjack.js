@@ -48,13 +48,15 @@ function initializeUpdatePageListener() {
 
         for (const [key, value] of Object.entries(data)) {
 
-            pageData = data;
-
             // replaces python syntax with html syntax. Ex: 'your_coins' to 'your-coins'
             const htmlKey = key.replace(/_/g, '-')
 
-            if (Number.isInteger(htmlKey)) {
-                parsePlayerData(value)
+            if (htmlKey === "players-data-object") {
+
+                for (const [playerID, player_value] of Object.entries(value)) {
+                    parsePlayerData(playerID, player_value);
+                }
+
             } else {
                 const element = document.getElementById(htmlKey);
                 console.log("element: ", element, " htmlkey: ", htmlKey)
@@ -88,8 +90,8 @@ function pressSocketTestingButtons(buttonNumber) {
     socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
 };
 
-function pressButtons(buttonName) {
-    socket.emit('press_buttons', buttonName);
+function pressButtons(buttonName, user_id) {
+    socket.emit('press_buttons', buttonName, user_id);
 };
 
 function refresh_data() {
@@ -101,13 +103,15 @@ function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 }
 
-function parsePlayerData(playerObjectData) {
-    for (const [key, value] of Object.entries(playerObjectData)) {
+function parsePlayerData(playerID, player_data) {
+    for (const [key, value] of Object.entries(player_data)) {
 
-        // replaces python syntax with html syntax. Ex: 'your_coins' to 'your-coins'
-        const htmlKey = key.replace(/_/g, '-')
+        // console.log(key, value)
+        // replaces python syntax with html syntax, then add playerID. Ex: 'player_coins' to 'player-coins-7'
+        const htmlKey = key.replace(/_/g, '-') + '-' + playerID
+        console.log(key, value, htmlKey)
         const element = document.getElementById(htmlKey);
-        console.log("element: ", element, " htmlkey: ", htmlKey)
+        // console.log("element: ", element, " htmlkey: ", htmlKey)
         if (element) {
             if (htmlKey.includes('cards') || htmlKey.includes('hand')) {
                 element.innerHTML = generateCardImages(value)
@@ -118,24 +122,23 @@ function parsePlayerData(playerObjectData) {
     }
 }
 
-// TODO: update function by adding "-${playerName}" to all ids. for example: id='hit-button' goes to id='hit-button-${playerName}' once users are implemented
-function createPlayerDiv(playerName = 'Taylor', gameData) {
+function createPlayerDiv(playerID = '1', gameData) {
     console.log("Debugging createPlayerDiv gameData:");
     console.dir(gameData)
 
     const div = document.createElement('div');
     div.className = 'player';
-    div.id = `player-${playerName}`;
+    div.id = `player-${playerID}`;
     div.innerHTML = `
-        <h2>${playerName}: <span id="sum-${playerName}">${gameData.sum}</span> <span id="win-or-lose-message-${playerName}"></span>
+        <h2><span id="player-name-${playerID}"></span>: <span id="sum-${playerID}">${gameData.sum}</span> <span id="win-or-lose-message-${playerID}"></span>
             <br>
-            Coins: <span id="coins-${playerName}">${gameData.coins}</span>
+            Coins: <span id="coins-${playerID}">${gameData.coins}</span>
             <br>
         </h2>
-        <div id="cards-${playerName}"></div>
-        <button id='hit-button-${playerName}' onclick="pressButtons('hit', '${playerName}')">Hit</button>
-        <button id='stay-button-${playerName}' onclick="pressButtons('stay', '${playerName}')">Stay</button>
-        <button id='new-game-button-${playerName}' onclick="pressButtons('new_game', '${playerName}')">New Game</button>
+        <div id="hand-${playerID}"></div>
+        <button id='hit-button-${playerID}' onclick="pressButtons('hit', '${playerID}')">Hit</button>
+        <button id='stay-button-${playerID}' onclick="pressButtons('stay', '${playerID}')">Stay</button>
+        <button id='new-game-button-${playerID}' onclick="pressButtons('new_game', '${playerID}')">New Game</button>
     `;
     return div;
 }
@@ -169,7 +172,7 @@ async function requestGameData() {
 // todo: This is functionally similar to initializePlayerJoinListener
 requestGameData().then(data => {
     console.log("Attempting to create player div")
-    const playerDiv = createPlayerDiv('Taylor', data)
+    const playerDiv = createPlayerDiv('1', data)
     document.getElementById('player-container').appendChild(playerDiv);
 }).catch(error => {
     console.error('Failed to fetch game data:', error);

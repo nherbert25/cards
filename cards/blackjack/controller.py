@@ -43,12 +43,12 @@ class BlackjackController:
         """WebSockets require data to be in a format that can be transmitted over the network. This means the data must be serialized to a format like JSON.
         Not all Python objects are directly serializable to JSON. For example, custom objects need to be converted to basic data types (dicts, lists, strings, numbers, etc.) before they can be serialized."""
 
-
         result = {
             'dealer_cards': [card.to_dict() for card in self.blackjack_model.dealer_cards],
             'dealer_sum': self.blackjack_model.dealer_sum,
             'button1_count': self.counts['button1'],
             'button2_count': self.counts['button2'],
+            'players_data_object': {},
             # 'your_cards': [card.to_dict() for card in self.blackjack_model.your_cards],
             # 'your_sum': self.blackjack_model.your_sum,
             # 'player_name': self.blackjack_model.player_name,
@@ -58,16 +58,18 @@ class BlackjackController:
         }
 
         for player in self.blackjack_model.players:
-            result[str(player.user_id)] = player.to_dict()
+            result['players_data_object'][str(player.user_id)] = player.to_dict()
         return result
 
-    def buttons(self, button_name):
+    def buttons(self, button_name, user_id):
+        if user_id:
+            player_object = self.blackjack_model.get_player(user_id)
 
         if button_name == 'hit':
-            self.blackjack_model.hit()
+            self.blackjack_model.hit(player_object)
 
         if button_name == 'stay':
-            self.blackjack_model.stay()
+            self.blackjack_model.stay(player_object)
 
         if button_name == 'new_game':
             self.blackjack_model.start_new_game()
