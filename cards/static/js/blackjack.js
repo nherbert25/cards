@@ -9,6 +9,7 @@ const socket = io();
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
+    initializePlayerDivs();
     refresh_data();
     initializeOnConnectionListener();
     initializeUpdatePageListener();
@@ -34,7 +35,6 @@ function initializeButtonCountsListener() {
         // Handle button count updates for the selected game
         document.getElementById('button1-count').innerText = data.counts.button1;
         document.getElementById('button2-count').innerText = data.counts.button2;
-        console.log(data.counts);
     });
 }
 
@@ -51,12 +51,11 @@ function initializeUpdatePageListener() {
 
             if (htmlKey === "players-data-object") {
                 for (const [playerID, player_value] of Object.entries(value)) {
-                    updatePlayerContainer(playerID, player_value);
+                    updatePlayerDiv(playerID, player_value);
                 }
 
             } else {
                 const element = document.getElementById(htmlKey);
-                console.log("element: ", element, " htmlkey: ", htmlKey)
                 if (element) {
                     if (htmlKey.includes('cards') || htmlKey.includes('hand')) {
                         element.innerHTML = generateCardImages(value)
@@ -65,8 +64,6 @@ function initializeUpdatePageListener() {
                     }
                 }
             }
-
-
         }
     })
 };
@@ -88,7 +85,7 @@ function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 }
 
-function updatePlayerContainer(playerID, player_data) {
+function updatePlayerDiv(playerID, player_data) {
     for (const [key, value] of Object.entries(player_data)) {
 
         // replaces python syntax with html syntax, then add playerID. Ex: 'player_coins' to 'player-coins-7'
@@ -118,26 +115,53 @@ function updatePlayerContainer(playerID, player_data) {
     }
 }
 
-function createPlayerDiv(playerID = '1', gameData) {
-    console.log("Debugging createPlayerDiv gameData:");
-    console.dir(gameData)
+// function createPlayerDiv(playerID, playerData) {
+//     console.log("Debugging createPlayerDiv playerData:");
+//     console.dir(playerData)
+//
+//     const div = document.createElement('div');
+//     div.className = 'player';
+//     div.id = `player-${playerID}`;
+//     div.innerHTML = `
+//         <h2><span id="player-name-${playerID}"></span>: <span id="sum-${playerID}">${playerData.sum}</span> <span id="win-or-lose-message-${playerID}"></span>
+//             <br>
+//             Coins: <span id="coins-${playerID}">${playerData.coins}</span>
+//             <br>
+//         </h2>
+//         <div id="hand-${playerID}"></div>
+//         <button id='hit-button-${playerID}' onclick="pressButtons('hit', '${playerID}')">Hit</button>
+//         <button id='stay-button-${playerID}' onclick="pressButtons('stay', '${playerID}')">Stay</button>
+//         <button id='new-game-button-${playerID}' onclick="pressButtons('new_game', '${playerID}')">New Game</button>
+//     `;
+//     return div;
+// }
+
+function createPlayerDiv(playerID, playerData) {
+    console.log("Debugging createPlayerDiv playerData:");
+    console.dir(playerData);
 
     const div = document.createElement('div');
     div.className = 'player';
     div.id = `player-${playerID}`;
     div.innerHTML = `
-        <h2><span id="player-name-${playerID}"></span>: <span id="sum-${playerID}">${gameData.sum}</span> <span id="win-or-lose-message-${playerID}"></span>
+        <h2 class="player-header">
+            <span id="player-name-${playerID}" class="player-name">${playerData.player_name}</span>: 
+            <span id="sum-${playerID}" class="player-sum">${playerData.sum}</span> 
+            <span id="win-or-lose-message-${playerID}" class="win-or-lose-message">${playerData.win_or_lose_message}</span>
             <br>
-            Coins: <span id="coins-${playerID}">${gameData.coins}</span>
+            Coins: <span id="coins-${playerID}" class="player-coins">${playerData.coins}</span>
             <br>
         </h2>
-        <div id="hand-${playerID}"></div>
-        <button id='hit-button-${playerID}' onclick="pressButtons('hit', '${playerID}')">Hit</button>
-        <button id='stay-button-${playerID}' onclick="pressButtons('stay', '${playerID}')">Stay</button>
-        <button id='new-game-button-${playerID}' onclick="pressButtons('new_game', '${playerID}')">New Game</button>
+        <div id="hand-${playerID}" class="player-hand"></div>
+        <div class="player-buttons">
+            <button id='hit-button-${playerID}' class="player-button" onclick="pressButtons('hit', '${playerID}')">Hit</button>
+            <button id='stay-button-${playerID}' class="player-button" onclick="pressButtons('stay', '${playerID}')">Stay</button>
+            <button id='new-game-button-${playerID}' class="player-button" onclick="pressButtons('new_game', '${playerID}')">New Game</button>
+        </div>
     `;
     return div;
 }
+
 
 function requestGameDataPromise() {
     return new Promise((resolve, reject) => {
@@ -164,12 +188,21 @@ async function requestGameData() {
     }
 }
 
-// todo: remove this once we have player creation set up. Or refactor it to only be ran if a guest joins
-// todo: This is functionally similar to initializePlayerJoinListener
-requestGameData().then(data => {
-    console.log("Attempting to create player div")
-    const playerDiv = createPlayerDiv('1', data)
-    document.getElementById('player-container').appendChild(playerDiv);
-}).catch(error => {
-    console.error('Failed to fetch game data:', error);
-});
+async function initializePlayerDivs() {
+    try {
+        const data = await requestGameData();
+        console.log("Attempting to create player divs");
+        const playerContainer = document.getElementById('player-container');
+
+        // Clear the player container before adding new player divs
+        playerContainer.innerHTML = '';
+
+        const playersData = data.players_data_object;
+        for (const [playerID, playerData] of Object.entries(playersData)) {
+            const playerDiv = createPlayerDiv(playerID, playerData);
+            playerContainer.appendChild(playerDiv);
+        }
+    } catch (error) {
+        console.error('Failed to fetch game data:', error);
+    }
+}

@@ -1,0 +1,58 @@
+/* styles.css */
+.player {
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    background-color: #f0f0f0;
+    font-family: 'Arial, sans-serif';
+    max-width: 600px;
+}
+
+.player-header {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.player-name {
+    font-weight: bold;
+}
+
+.player-sum, .player-coins {
+    font-size: 1.2em;
+}
+
+.win-or-lose-message {
+    color: red;
+    font-weight: bold;
+}
+
+.player-hand {
+    margin: 10px 0;
+}
+
+.player-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.player-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.player-button:hover {
+    background-color: #0056b3;
+}
+
+.player-button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
