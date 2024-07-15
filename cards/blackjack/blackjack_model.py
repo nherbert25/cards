@@ -45,15 +45,22 @@ class BlackjackModel:
         player.draw_card(self.deck.cards.pop())
         player.sum = self.calculate_blackjack_sum(player.hand)
         if player.sum > 21:
-            self.you_lose(player)
+            player.has_stayed = True
+        if self.if_all_players_have_stayed():
+            self.resolve_dealer_turn(self.dealer_cards)
 
     def stay(self, player: Player):
         player.has_stayed = True
-        self.dealer_sum = self.resolve_dealer_turn(self.dealer_cards)
-        if self.if_player_wins(player.sum, self.dealer_sum):
-            self.you_win(player)
-        else:
-            self.you_lose(player)
+
+        if self.if_all_players_have_stayed():
+            self.resolve_dealer_turn(self.dealer_cards)
+
+
+    def if_all_players_have_stayed(self) -> bool:
+        for player in self.players:
+            if not player.has_stayed:
+                return False
+        return True
 
     def if_player_wins(self, player_sum: int, dealer_sum: int) -> bool:
         if player_sum > 21:
@@ -77,12 +84,16 @@ class BlackjackModel:
         flip_face_down_card = self.deck.cards.pop()
         dealer_cards[0] = flip_face_down_card
 
-        dealer_sum = self.calculate_blackjack_sum(dealer_cards)
-        while dealer_sum < 17:
+        self.dealer_sum = self.calculate_blackjack_sum(dealer_cards)
+        while self.dealer_sum < 17:
             dealer_cards.append(self.deck.cards.pop())
-            dealer_sum = self.calculate_blackjack_sum(dealer_cards)
-
-        return dealer_sum
+            self.dealer_sum = self.calculate_blackjack_sum(dealer_cards)
+        for player in self.players:
+            if self.if_player_wins(player.sum, self.dealer_sum):
+                self.you_win(player)
+            else:
+                self.you_lose(player)
+        return
 
     def get_player(self, user_id):
         try:
