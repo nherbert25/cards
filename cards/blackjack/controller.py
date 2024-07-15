@@ -1,10 +1,7 @@
-import json
-
-from flask import render_template, redirect, url_for, jsonify
+from flask import render_template
 from cards.blackjack.blackjack_model import BlackjackModel
 
 
-# Controller class for Blackjack game
 class BlackjackController:
     def __init__(self):
         self.blackjack_model = BlackjackModel()
@@ -25,20 +22,6 @@ class BlackjackController:
     def update_page_data(self):
         return render_template("blackjack.html", **self.prepare_blackjack_socket_data())
 
-    def prepare_blackjack_html_data(self):
-        result = {
-            # 'dealer_cards': self.blackjack_model.dealer_cards,
-            # 'dealer_sum': self.blackjack_model.dealer_sum,
-            # 'your_cards': self.blackjack_model.your_cards,
-            # 'your_sum': self.blackjack_model.your_sum,
-            # 'player_name': self.blackjack_model.player_name,
-            # 'your_coins': self.blackjack_model.your_coins,
-            # 'has_stayed': self.blackjack_model.has_stayed,
-            # 'button1_count': self.counts['button1'],
-            # 'button2_count': self.counts['button2'],
-        }
-        return result
-
     def prepare_blackjack_socket_data(self):
         """WebSockets require data to be in a format that can be transmitted over the network. This means the data must be serialized to a format like JSON.
         Not all Python objects are directly serializable to JSON. For example, custom objects need to be converted to basic data types (dicts, lists, strings, numbers, etc.) before they can be serialized."""
@@ -49,12 +32,6 @@ class BlackjackController:
             'button1_count': self.counts['button1'],
             'button2_count': self.counts['button2'],
             'players_data_object': {},
-            # 'your_cards': [card.to_dict() for card in self.blackjack_model.your_cards],
-            # 'your_sum': self.blackjack_model.your_sum,
-            # 'player_name': self.blackjack_model.player_name,
-            # 'your_coins': self.blackjack_model.your_coins,
-            # 'has_stayed': self.blackjack_model.has_stayed,
-            # 'win_or_lose_message': self.blackjack_model.win_or_lose_message
         }
 
         for player in self.blackjack_model.players:
@@ -73,9 +50,8 @@ class BlackjackController:
 
         if button_name == 'new_game':
             self.blackjack_model.start_new_game()
-
         return
 
-    # the following will render the blackjack.html BUT leave the url as http://127.0.0.1:5000/buttons?hit=Hit,
-    # meaning if you refresh the page it will rerun this route
-    # return render_template("blackjack.html", deck=self.blackjack_model.deck, etc.)
+        # the following will render the blackjack.html BUT leave the url as http://127.0.0.1:5000/buttons?hit=Hit,
+        # meaning if you refresh the page it will rerun this route
+        # return render_template("blackjack.html", deck=self.blackjack_model.deck, etc.)

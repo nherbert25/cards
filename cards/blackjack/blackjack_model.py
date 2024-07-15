@@ -4,8 +4,6 @@ from cards.blackjack.player_model import Player
 from cards.blackjack.card_model import Card
 
 
-
-
 class Deck:
     def __init__(self):
         ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
@@ -47,14 +45,13 @@ class BlackjackModel:
         if player.sum > 21:
             player.has_stayed = True
         if self.if_all_players_have_stayed():
-            self.resolve_dealer_turn(self.dealer_cards)
+            self.resolve_dealer_turn()
 
     def stay(self, player: Player):
         player.has_stayed = True
 
         if self.if_all_players_have_stayed():
-            self.resolve_dealer_turn(self.dealer_cards)
-
+            self.resolve_dealer_turn()
 
     def if_all_players_have_stayed(self) -> bool:
         for player in self.players:
@@ -80,7 +77,10 @@ class BlackjackModel:
         player.coins -= self.BET
         player.win_or_lose_message = f'You lose! -{self.BET} coins!'
 
-    def resolve_dealer_turn(self, dealer_cards: List[Card]) -> int:
+    def resolve_dealer_turn(self, dealer_cards=None):
+        if dealer_cards is None:
+            dealer_cards = self.dealer_cards
+
         flip_face_down_card = self.deck.cards.pop()
         dealer_cards[0] = flip_face_down_card
 
