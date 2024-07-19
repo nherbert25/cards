@@ -22,7 +22,7 @@ class BlackjackModel:
         self.game_exists: bool = False
         self.BET = 50
         # todo: turn self.players into a dictionary {1: {user_id:1, player_name:'Taylor'}, etc.} then use self.players.get(player_id). You'll have to restructure controller and js.
-        self.players: List[Player] = [Player(1, 'Taylor'), Player(2, 'Nate')]
+        self.players: List[Player] = [Player(1, 'Taylor'), Player(2, 'Nate'), Player(3, 'Travis')]
 
     def start_new_game(self):
         self.deck = Deck()

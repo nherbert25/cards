@@ -8,8 +8,8 @@
 const socket = io();
 
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    initializePlayerDivs();
+document.addEventListener('DOMContentLoaded', async (event) => {
+    await initializePlayerDivs();
     refresh_data();
     initializeOnConnectionListener();
     initializeUpdatePageListener();
@@ -172,7 +172,6 @@ async function initializePlayerDivs() {
         console.log("Attempting to create player divs");
         const playerContainer = document.getElementById('player-container');
 
-        // Clear the player container before adding new player divs
         playerContainer.innerHTML = '';
 
         const playersData = data.players_data_object;
