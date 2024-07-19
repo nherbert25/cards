@@ -1,25 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
-    <form class="grid" action="/result" method="POST">
+    <div class="content-section">
+        <form class="grid" action="/result" method="POST">
 
-        {% if name %}
+            {% if name %}
+                <h3 style="color: blue;" class="let_space">Hello {{ name }}, How was your day!!</h3>
+            {% endif %}
 
-            <h3 style="color: blue;" class="let_space">Hello {{ name }}, How was your day!!</h3>
+            <label for="name">Enter your name:</label>
+            <input type="text" id="name" name="name">
 
-        {% endif %}
+            <div style="text-align: center;"><input class="btn btn-outline-info" type="Submit"></div>
 
-        <label for="name">Enter your name:</label>
-        <input type="text" id="name" name="name">
-
-        <div style="text-align: center;"><input class="file_submit" type="Submit"></div>
-
-    </form>
-    <form action="/join_game" method="post">
-        <h1>Join Game</h1>
-        <label for="ip_address">IP Address:</label>
-        <input type="text" id="ip_address" name="ip_address"><br><br>
-        <label for="port">Port:</label>
-        <input type="text" id="port" name="port"><br><br>
-        <input type="submit" value="Join">
-    </form>
+        </form>
+        <form action="/join_game" method="post">
+            <h1>Join Game</h1>
+            <label for="ip_address">IP Address:</label>
+            <input type="text" id="ip_address" name="ip_address"><br><br>
+            <label for="port">Port:</label>
+            <input type="text" id="port" name="port"><br><br>
+            <input type="submit" class="btn btn-outline-info" value="Join">
+        </form>
+    </div>
 {% endblock content %}

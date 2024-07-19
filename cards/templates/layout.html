@@ -25,11 +25,10 @@
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
-                    <!--          <a class="nav-item nav-link" href="/about">About</a>-->
+                    <a class="nav-item nav-link" href="{{ url_for('blackjack.blackjack') }}">BlackJack</a>
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav ms-auto">
-                    <a class="nav-item nav-link" href="{{ url_for('blackjack.blackjack') }}">BlackJack</a>
                     <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
                     <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
                 </div>
