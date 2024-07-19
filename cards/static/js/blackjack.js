@@ -115,27 +115,6 @@ function updatePlayerDiv(playerID, player_data) {
     }
 }
 
-// function createPlayerDiv(playerID, playerData) {
-//     console.log("Debugging createPlayerDiv playerData:");
-//     console.dir(playerData)
-//
-//     const div = document.createElement('div');
-//     div.className = 'player';
-//     div.id = `player-${playerID}`;
-//     div.innerHTML = `
-//         <h2><span id="player-name-${playerID}"></span>: <span id="sum-${playerID}">${playerData.sum}</span> <span id="win-or-lose-message-${playerID}"></span>
-//             <br>
-//             Coins: <span id="coins-${playerID}">${playerData.coins}</span>
-//             <br>
-//         </h2>
-//         <div id="hand-${playerID}"></div>
-//         <button id='hit-button-${playerID}' onclick="pressButtons('hit', '${playerID}')">Hit</button>
-//         <button id='stay-button-${playerID}' onclick="pressButtons('stay', '${playerID}')">Stay</button>
-//         <button id='new-game-button-${playerID}' onclick="pressButtons('new_game', '${playerID}')">New Game</button>
-//     `;
-//     return div;
-// }
-
 function createPlayerDiv(playerID, playerData) {
     console.log("Debugging createPlayerDiv playerData:");
     console.dir(playerData);
@@ -161,7 +140,6 @@ function createPlayerDiv(playerID, playerData) {
     `;
     return div;
 }
-
 
 function requestGameDataPromise() {
     return new Promise((resolve, reject) => {
