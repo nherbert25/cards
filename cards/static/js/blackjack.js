@@ -120,7 +120,7 @@ function createPlayerDiv(playerID, playerData) {
     console.dir(playerData);
 
     const div = document.createElement('div');
-    div.className = 'player';
+    div.className = 'col player';
     div.id = `player-${playerID}`;
     div.innerHTML = `
         <h2 class="player-header">

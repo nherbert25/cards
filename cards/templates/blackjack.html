@@ -4,20 +4,22 @@
 <!--<html>-->
 <head>
     <title>Black Jack</title>
-    {#<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/blackjack.css') }}">#}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blackjack/playerclass.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blackjack/player_class.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blackjack/dealer_class.css') }}">
 </head>
 
 {% extends "layout.html" %}
 {% block content %}
-    <div id="game-container" class="col-md-8 offset-md-2">
+    <div id="game-container" class="container game-container">
 
-        <div id="dealer-container">
-            <h2>Dealer: <span id="dealer-sum">{{ dealer_sum }}</span></h2>
-            <div id="dealer-cards"></div>
+        <div id="dealer-container" class="row dealer-container">
+            <div id="dealer" class="col dealer">
+                <h2>Dealer: <span id="dealer-sum">{{ dealer_sum }}</span></h2>
+                <div id="dealer-cards"></div>
+            </div>
         </div>
 
-        <div id="player-container"></div>
+        <div id="player-container" class="row player-container"></div>
 
         <br>
         <br>

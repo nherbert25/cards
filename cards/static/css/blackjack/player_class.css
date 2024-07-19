@@ -1,4 +1,9 @@
 /* styles.css */
+.player-container{
+    border: 2px solid #000;
+    background-color: #183d28;
+}
+
 .player {
     border: 2px solid #000;
     border-radius: 10px;
