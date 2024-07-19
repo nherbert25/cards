@@ -29,7 +29,6 @@ def handle_request_game_data():
 
 @socketio.on('update_page_data')
 def update_page_data():
-    print('pressed refresh on server')
     emit('update_page_data', blackjack_controller.prepare_blackjack_socket_data(), broadcast=True)
 
 

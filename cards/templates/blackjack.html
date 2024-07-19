@@ -4,6 +4,7 @@
 <!--<html>-->
 <head>
     <title>Black Jack</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blackjack/game_container_class.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blackjack/player_class.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blackjack/dealer_class.css') }}">
 </head>
@@ -21,16 +22,18 @@
 
         <div id="player-container" class="row player-container"></div>
 
-        <br>
-        <br>
 
-        <!-- Buttons for pressing -->
-        <button onclick="pressSocketTestingButtons(1)">Press Button 1</button>
-        <button onclick="pressSocketTestingButtons(2)">Press Button 2</button>
-        <button onclick="refresh_data()">Refresh Data</button>
-        <p>Button 1 Presses: <span id="button1-count">{{ button1_count }}</span></p>
-        <p>Button 2 Presses: <span id="button2-count">{{ button2_count }}</span></p>
-        <p> Welcome {{ player_name }}! </p>
+
+        <div id="socket-button-testing-container" class="row">
+            <div id="socket-button-testing" class="col socket-button-testing">
+                <p><b>Buttons for socket testing: </b></p>
+                <button onclick="pressSocketTestingButtons(1)">Press Button 1</button>
+                <button onclick="pressSocketTestingButtons(2)">Press Button 2</button>
+                <button onclick="refresh_data()">Refresh Data</button>
+                <p>Button 1 Presses: <span id="button1-count">{{ button1_count }}</span></p>
+                <p>Button 2 Presses: <span id="button2-count">{{ button2_count }}</span></p>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"

@@ -1,13 +1,6 @@
 /* styles.css */
-.game-container{
-    border: 2px solid #000;
-    /*background-color: #183d28;*/
-}
-
 .dealer-container{
-    border: 2px solid #000;
-    background-color: #183d28;
-    padding: 20px;
+    padding-top: 10px;
 }
 
 .dealer {
