@@ -59,25 +59,15 @@ class BlackjackModel:
                 return False
         return True
 
-    def if_player_wins(self, player_sum: int, dealer_sum: int) -> bool:
-        if player_sum > 21:
-            return False
-        elif dealer_sum > 21:
-            return True
-        elif player_sum > dealer_sum:
-            return True
-        else:
-            return False
-
-    def you_win(self, player: Player):
+    def player_wins(self, player: Player) -> None:
         player.coins += self.BET
         player.win_or_lose_message = f'You win! +{self.BET} coins!'
 
-    def you_lose(self, player: Player):
+    def player_loses(self, player: Player) -> None:
         player.coins -= self.BET
         player.win_or_lose_message = f'You lose! -{self.BET} coins!'
 
-    def resolve_dealer_turn(self, dealer_cards=None):
+    def resolve_dealer_turn(self, dealer_cards=None) -> None:
         if dealer_cards is None:
             dealer_cards = self.dealer_cards
 
@@ -90,12 +80,12 @@ class BlackjackModel:
             self.dealer_sum = self.calculate_blackjack_sum(dealer_cards)
         for player in self.players:
             if self.if_player_wins(player.sum, self.dealer_sum):
-                self.you_win(player)
+                self.player_wins(player)
             else:
-                self.you_lose(player)
+                self.player_loses(player)
         return
 
-    def get_player(self, user_id):
+    def get_player(self, user_id) -> Player:
         try:
             for player in self.players:
                 if player.user_id == user_id or player.user_id == int(user_id):
@@ -103,7 +93,19 @@ class BlackjackModel:
         except Exception as e:
             print(f"error: No player with user_id: {user_id} exists\r\n{e}")
 
-    def calculate_blackjack_sum(self, card_list: List[Card]) -> int:
+    @staticmethod
+    def if_player_wins(player_sum: int, dealer_sum: int) -> bool:
+        if player_sum > 21:
+            return False
+        elif dealer_sum > 21:
+            return True
+        elif player_sum > dealer_sum:
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def calculate_blackjack_sum(card_list: List[Card]) -> int:
         result = 0
         ace_count = 0
         for card in card_list:
