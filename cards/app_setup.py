@@ -1,9 +1,10 @@
 from flask import Flask
 from flask_socketio import SocketIO
+from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
 from flask_bcrypt import Bcrypt
 import os
-from cards.configs.config import DevelopmentConfig, TestingConfig, ProductionConfig
+from cards.configs.config import DevelopmentConfig, TestingConfig, ProductionConfig, AWSPostgresConfig
 
 socketio = SocketIO(ping_interval=50, ping_timeout=50)
 
@@ -24,6 +25,8 @@ def create_app():
         app.config.from_object(TestingConfig)
     elif env == 'development':
         app.config.from_object(DevelopmentConfig)
+    elif env == 'aws-postgres':
+        app.config.from_object(AWSPostgresConfig)
 
     # Load database configurations
     from cards.database.models import db

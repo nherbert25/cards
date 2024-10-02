@@ -23,3 +23,9 @@ class TestingConfig(Config):
 # running production application
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '../instance', 'production_database.db')
+
+# running AWS RDS Postgres DB
+class AWSPostgresConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') # ex: postgres://user:password@host:5432/db or f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+    # app.config['SQLALCHEMY_DATABASE_URI'] =
+
