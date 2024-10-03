@@ -14,14 +14,27 @@ PROJECT=cards
 ###########################
 # LOCAL PYTHON AND UNIT-TEST ENV
 #
-.PHONY: venv
-venv:
+.PHONY: venv_mac
+venv_mac:
 	pyenv install -s $(PYTHON_VERSION)
 	pyenv uninstall -f $(PROJECT)
 	pyenv virtualenv -f $(PYTHON_VERSION) $(PROJECT)
 	pyenv local $(PROJECT)
 	PYENV_VERSION=$(PROJECT)
 	pip install -r ./requirements.txt
+
+.PHONY: venv_windows
+venv_windows:
+	python -m venv .venv
+	.venv\Scripts\activate
+	pip install -r ./requirements.txt
+
+.PHONY: venv_windows_destroy
+venv_windows_destroy:
+	deactivate
+	rm -r .venv
+
+
 
 # Test commands
 flake8.check:
