@@ -4,5 +4,6 @@ worker_class = 'eventlet'
 
 # to run: "gunicorn -c gunicorn_config.py app:app"
 # to run with eventlet "gunicorn --worker-class eventlet -w 1 app:app"   <----- THIS IS THE MAIN SCRIPT TO RUN THIS APPLICATION! RUN THIS IN YOUR TERMINAL!
+# to run with eventlet "gunicorn --worker-class eventlet -w 1 cards.app:app"   <----- THIS IS THE MAIN SCRIPT TO RUN THIS APPLICATION! RUN THIS IN YOUR TERMINAL!
 # to find zombie processes on port 8000 "sudo lsof -i :8000"
 # to kill those zombie processes "kill -9 <pid>"
