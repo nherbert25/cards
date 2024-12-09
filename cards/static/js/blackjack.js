@@ -10,6 +10,7 @@ const socket = io();
 
 document.addEventListener('DOMContentLoaded', async (event) => {
     await initializePlayerDivs();
+    generateDebuggerElement();
     refresh_data();
     initializeOnConnectionListener();
     initializeUpdatePageListener();
@@ -142,6 +143,23 @@ function createPlayerDiv(playerID, playerData) {
     return div;
 }
 
+function createSocketButtonTestingDiv() {
+    console.log("Creating Socket Testing Div");
+
+    const div = document.createElement('div');
+    div.className = 'col socket-button-testing';
+    div.id = 'socket-button-testing';
+    div.innerHTML = `
+                <p><b>Buttons for socket testing: </b></p>
+                <button onclick="pressSocketTestingButtons(1)">Press Button 1</button>
+                <button onclick="pressSocketTestingButtons(2)">Press Button 2</button>
+                <button onclick="refresh_data()">Refresh Data</button>
+                <p>Button 1 Presses: <span id="button1-count">{{ button1_count }}</span></p>
+                <p>Button 2 Presses: <span id="button2-count">{{ button2_count }}</span></p>
+    `;
+    return div;
+}
+
 function requestGameDataPromise() {
     return new Promise((resolve, reject) => {
         socket.on('request_game_data', function (data) {
@@ -182,5 +200,14 @@ async function initializePlayerDivs() {
         }
     } catch (error) {
         console.error('Failed to fetch game data:', error);
+    }
+}
+
+function generateDebuggerElement() {
+    try {
+        const socketTestingContainer = document.getElementById('socket-button-testing-container');
+        socketTestingContainer.appendChild(createSocketButtonTestingDiv());
+    } catch (error) {
+        console.error('generateDebuggerElement error:', error);
     }
 }
