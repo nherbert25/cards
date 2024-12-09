@@ -92,6 +92,7 @@ function updatePlayerDiv(playerID, player_data) {
         const htmlKey = key.replace(/_/g, '-') + '-' + playerID
         const element = document.getElementById(htmlKey);
         if (element) {
+            // TODO: Replace this hard coded 'cards' and 'hand' with a list of all the keys that should have images
             if (htmlKey.includes('cards') || htmlKey.includes('hand')) {
                 element.innerHTML = generateCardImages(value)
             } else {
