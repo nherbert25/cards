@@ -2,7 +2,6 @@ from cards.blackjack.card_model import Card
 from typing import List
 
 
-# todo: create player class and redo blackjack logic to use players instead
 class Player:
     def __init__(self, user_id, player_name = 'Taylor', coins = 500):
         self.user_id = user_id
@@ -11,6 +10,7 @@ class Player:
         self.coins = coins
         self.player_name = player_name
         self.has_stayed: bool = False
+        self.has_bust: bool = False
         self.win_or_lose_message: str = ''
 
     def draw_card(self, card: Card):

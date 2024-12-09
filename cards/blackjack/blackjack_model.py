@@ -34,6 +34,8 @@ class BlackjackModel:
         player.sum = self.calculate_blackjack_sum(player.hand)
         if player.sum > 21:
             player.has_stayed = True
+            player.has_bust = True
+            self.player_bust(player)
         if self.if_all_players_have_stayed():
             self.resolve_dealer_turn()
 
@@ -56,6 +58,9 @@ class BlackjackModel:
     def player_loses(self, player: Player) -> None:
         player.coins -= self.BET
         player.win_or_lose_message = f'You lose! -{self.BET} coins!'
+
+    def player_bust(self, player: Player) -> None:
+        player.win_or_lose_message = f'Busted!'
 
     def resolve_dealer_turn(self, dealer_cards=None) -> None:
         if dealer_cards is None:
