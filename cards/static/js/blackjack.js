@@ -203,6 +203,7 @@ async function initializePlayerDivs() {
     }
 }
 
+// TODO: only call this function if FLASK_ENV=development
 function generateDebuggerElement() {
     try {
         const socketTestingContainer = document.getElementById('socket-button-testing-container');
