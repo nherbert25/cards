@@ -1,4 +1,6 @@
-from typing import List
+from typing import List, Dict, Optional
+from uuid import UUID, uuid4
+
 from cards.blackjack.player_model import Player
 from cards.blackjack.card_model import Card
 from cards.blackjack.deck_model import Deck
@@ -13,15 +15,21 @@ class BlackjackModel:
         self.dealer_cards = None
         self.deck = Deck()
         self.game_exists: bool = False
-        # todo: turn self.players into a dictionary {1: {user_id:1, player_name:'Taylor'}, etc.} then use self.players.get(player_id). You'll have to restructure controller and js.
-        self.players: List[Player] = [Player(1, 'Taylor'), Player(2, 'Nate'), Player(3, 'Travis')]
+        self.players: Dict[UUID, Player] = {
+            player.user_id: player for player in
+            [
+                Player(player_name='Taylor'),
+                Player(player_name='Nate'),
+                Player(player_name='Travis')
+            ]
+        }
 
     def start_new_game(self):
         self.deck = Deck()
         self.deck.shuffle()
         self.dealer_cards = [Card('0', 'None', hidden=True), self.deck.cards.pop()]
         self.dealer_sum = self.calculate_blackjack_sum(self.dealer_cards)
-        for player in self.players:
+        for player in self.players.values():
             player.hand = []
             player.draw_card(self.deck.cards.pop())
             player.draw_card(self.deck.cards.pop())
@@ -48,7 +56,7 @@ class BlackjackModel:
             self.resolve_dealer_turn()
 
     def if_all_players_have_stayed(self) -> bool:
-        for player in self.players:
+        for player in self.players.values():
             if not player.has_stayed:
                 return False
         return True
@@ -75,20 +83,18 @@ class BlackjackModel:
         while self.dealer_sum < 17:
             dealer_cards.append(self.deck.cards.pop())
             self.dealer_sum = self.calculate_blackjack_sum(dealer_cards)
-        for player in self.players:
+        for player in self.players.values():
             if self.if_player_wins(player.sum, self.dealer_sum):
                 self.player_wins(player)
             else:
                 self.player_loses(player)
         return
 
-    def get_player(self, user_id) -> Player:
+    def get_player(self, user_id: str) -> Optional[Player]:
         try:
-            for player in self.players:
-                if player.user_id == user_id or player.user_id == int(user_id):
-                    return player
+            return self.players.get(UUID(user_id))
         except Exception as e:
-            print(f"error: No player with user_id: {user_id} exists\r\n{e}")
+            print(f"Unexpected error when searching for player with {user_id}: {e}")
 
     @staticmethod
     def if_player_wins(player_sum: int, dealer_sum: int) -> bool:

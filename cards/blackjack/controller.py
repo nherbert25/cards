@@ -34,13 +34,12 @@ class BlackjackController:
             'players_data_object': {},
         }
 
-        for player in self.blackjack_model.players:
+        for player in self.blackjack_model.players.values():
             result['players_data_object'][str(player.user_id)] = player.to_dict()
         return result
 
-    def buttons(self, button_name, user_id):
-        if user_id:
-            player_object = self.blackjack_model.get_player(user_id)
+    def buttons(self, button_name: str, user_id: str) -> None:
+        player_object = self.blackjack_model.get_player(user_id)
 
         if button_name == 'hit':
             self.blackjack_model.hit(player_object)
@@ -50,7 +49,6 @@ class BlackjackController:
 
         if button_name == 'new_game':
             self.blackjack_model.start_new_game()
-        return
 
         # the following will render the blackjack.html BUT leave the url as http://127.0.0.1:5000/buttons?hit=Hit,
         # meaning if you refresh the page it will rerun this route
