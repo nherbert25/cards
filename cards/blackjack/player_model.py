@@ -3,13 +3,12 @@ from typing import List
 
 
 class Player:
-    def __init__(self, user_id, player_name='Guest', coins=500):
+    def __init__(self, user_id, player_name = 'Taylor', coins = 500):
         self.user_id = user_id
         self.sum = 0
         self.hand: List[Card] = []
         self.coins = coins
         self.player_name = player_name
-        # TODO: Make these properties of the game
         self.has_stayed: bool = False
         self.has_bust: bool = False
         self.win_or_lose_message: str = ''
