@@ -103,6 +103,7 @@ function updatePlayerDiv(playerID, player_data) {
     }
 
     const hit_button = document.getElementById('hit-button-' + playerID);
+    // TODO: make the constant 21 pull from BlackjackModel.BLACKJACK_MAX
     if (player_data.sum > 21 || player_data.has_stayed) {
         hit_button.disabled = true;
     } else {
@@ -110,6 +111,7 @@ function updatePlayerDiv(playerID, player_data) {
     }
 
     const stay_button = document.getElementById('stay-button-' + playerID);
+    // TODO: make the constant 21 pull from BlackjackModel.BLACKJACK_MAX
     if (player_data.sum > 21 || player_data.has_stayed) {
         stay_button.disabled = true;
     } else {

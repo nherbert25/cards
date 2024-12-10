@@ -5,12 +5,14 @@ from cards.blackjack.deck_model import Deck
 
 
 class BlackjackModel:
+    BLACKJACK_MAX = 21
+
     def __init__(self):
+        self.BET = 50
         self.dealer_sum = None
         self.dealer_cards = None
         self.deck = Deck()
         self.game_exists: bool = False
-        self.BET = 50
         # todo: turn self.players into a dictionary {1: {user_id:1, player_name:'Taylor'}, etc.} then use self.players.get(player_id). You'll have to restructure controller and js.
         self.players: List[Player] = [Player(1, 'Taylor'), Player(2, 'Nate'), Player(3, 'Travis')]
 
@@ -32,7 +34,7 @@ class BlackjackModel:
     def hit(self, player: Player):
         player.draw_card(self.deck.cards.pop())
         player.sum = self.calculate_blackjack_sum(player.hand)
-        if player.sum > 21:
+        if player.sum > BlackjackModel.BLACKJACK_MAX:
             player.has_stayed = True
             player.has_bust = True
             self.player_bust(player)
@@ -90,9 +92,9 @@ class BlackjackModel:
 
     @staticmethod
     def if_player_wins(player_sum: int, dealer_sum: int) -> bool:
-        if player_sum > 21:
+        if player_sum > BlackjackModel.BLACKJACK_MAX:
             return False
-        elif dealer_sum > 21:
+        elif dealer_sum > BlackjackModel.BLACKJACK_MAX:
             return True
         elif player_sum > dealer_sum:
             return True
@@ -113,12 +115,12 @@ class BlackjackModel:
                     value = int(card.rank)
                 result += value
         if ace_count == 1:
-            if result + 11 > 21:
+            if result + 11 > BlackjackModel.BLACKJACK_MAX:
                 return result + 1
             else:
                 return result + 11
         elif ace_count > 1:
-            if result + 11 + ace_count - 1 > 21:
+            if result + 11 + ace_count - 1 > BlackjackModel.BLACKJACK_MAX:
                 return result + ace_count
             else:
                 return result + 11 + ace_count - 1
