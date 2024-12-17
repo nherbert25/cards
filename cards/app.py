@@ -50,21 +50,6 @@ def join_game():
         return 'Error: {}'.format(e)
 
 
-@app.route('/player_choice', methods=['POST'])
-def player_choice():
-    # player_card = "{{ url_for('static', filename='playing_cards/BACK.png') }}"
-    if request.form.get('hit') == 'Hit':
-        hit = True
-        print('Player chose to hit!')
-        player_name = session.get('player_name')
-        return render_template('blackjack.html', player_name=session['player_name'], hit=hit)
-
-    elif request.form.get('stay') == 'Stay':
-        print('Player chose to stay!')
-        player_name = session.get('player_name')
-        return render_template('blackjack.html', player_name=session['player_name'])
-
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()

@@ -18,19 +18,28 @@
                         {{ form.email(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+
                 <div class="form-group">
                     {{ form.password.label(class="form-control-label") }}
                     {% if form.password.errors %}
-                        {{ form.password(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
+                        <div class="input-group">
+                            {{ form.password(class="form-control form-control-lg is-invalid", type="password") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
                         </div>
                     {% else %}
-                        {{ form.password(class="form-control form-control-lg") }}
+                        <div class="input-group">
+                            {{ form.password(class="form-control form-control-lg", type="password") }}
+                            <button type="button" class="btn btn-outline-secondary toggle-password" tabindex="-1">
+                                <i class="bi bi-eye-slash"></i>
+                            </button>
+                        </div>
                     {% endif %}
                 </div>
+
                 <div class="form-check">
                     {{ form.remember(class="form-check-input") }}
                     {{ form.remember.label(class="form-check-label") }}
@@ -40,6 +49,7 @@
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
             <small class="text-muted ml-2">
+                {#                TODO: make this functional#}
                 <a href="#">Forgot Password?</a>
             </small>
         </form>
@@ -49,4 +59,26 @@
             Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
         </small>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.toggle-password').forEach(button => {
+                button.addEventListener('click', function () {
+                    const input = this.previousElementSibling; // The password input
+                    const icon = this.querySelector('i'); // The icon inside the button
+
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.classList.remove('bi-eye-slash');
+                        icon.classList.add('bi-eye');
+                    } else {
+                        input.type = 'password';
+                        icon.classList.remove('bi-eye');
+                        icon.classList.add('bi-eye-slash');
+                    }
+                });
+            });
+        });
+    </script>
+
 {% endblock content %}
