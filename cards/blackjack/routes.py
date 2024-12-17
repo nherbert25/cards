@@ -16,20 +16,20 @@ def blackjack():
 @socketio.on('press_buttons')
 def press_buttons(button_name, user_id=None):
     blackjack_controller.buttons(button_name, user_id)
-    emit('update_page_data', blackjack_controller.prepare_blackjack_socket_data(), broadcast=True)
+    emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
 
 
 @socketio.on('request_game_data')
 def handle_request_game_data():
     try:
-        emit('request_game_data', blackjack_controller.prepare_blackjack_socket_data(), broadcast=True)
+        emit('request_game_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
     except Exception as e:
         emit('request_game_data_error', str(e))
 
 
 @socketio.on('update_page_data')
 def update_page_data():
-    emit('update_page_data', blackjack_controller.prepare_blackjack_socket_data(), broadcast=True)
+    emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
 
 
 @socketio.on('press_socket_testing_buttons')

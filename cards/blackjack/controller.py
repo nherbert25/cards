@@ -17,12 +17,12 @@ class BlackjackController:
         # blackjack_controller = session['blackjack_controller']
         if not self.blackjack_model.game_exists:
             self.blackjack_model.start_new_game()
-        return render_template("blackjack.html", **self.prepare_blackjack_socket_data())
+        return render_template("blackjack.html", **self.serialize_blackjack_data())
 
     def update_page_data(self):
-        return render_template("blackjack.html", **self.prepare_blackjack_socket_data())
+        return render_template("blackjack.html", **self.serialize_blackjack_data())
 
-    def prepare_blackjack_socket_data(self):
+    def serialize_blackjack_data(self):
         """WebSockets require data to be in a format that can be transmitted over the network. This means the data must be serialized to a format like JSON.
         Not all Python objects are directly serializable to JSON. For example, custom objects need to be converted to basic data types (dicts, lists, strings, numbers, etc.) before they can be serialized."""
 
@@ -50,6 +50,6 @@ class BlackjackController:
         if button_name == 'new_game':
             self.blackjack_model.start_new_game()
 
-        # the following will render the blackjack.html BUT leave the url as http://127.0.0.1:5000/buttons?hit=Hit,
-        # meaning if you refresh the page it will rerun this route
         # return render_template("blackjack.html", deck=self.blackjack_model.deck, etc.)
+        # the above code will render blackjack.html BUT leave the url as http://127.0.0.1:5000/buttons?hit=Hit,
+        # meaning if you refresh the page it will rerun this route
