@@ -11,6 +11,7 @@ charset-normalizer==2.1.0
 click==8.1.7
 colorama==0.4.6
 commonmark==0.9.1
+coverage==7.6.9
 cryptography==43.0.0
 dnspython==2.5.0
 docopt==0.6.2
