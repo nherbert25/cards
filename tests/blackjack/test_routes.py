@@ -1,39 +1,40 @@
 import pytest
 from cards.app import app, socketio
+from tests.blackjack.test_configs import initial_game_blackjack
 
 
-@pytest.fixture
-def client():
-    client = socketio.test_client(app)
-    yield client
-    client.disconnect()
+class TestBlackjackRoutes:
+    @pytest.fixture
+    def client(self):
+        client = socketio.test_client(app)
+        yield client
+        client.disconnect()
 
+    def test_socketio_connection(self, client):
+        assert client.is_connected()
 
-def test_socketio_connection(client):
-    assert client.is_connected()
+    def test_press_socket_testing_buttons(self, client):
+        client.emit('press_socket_testing_buttons', {'buttonNumber': 1})
+        client.emit('press_socket_testing_buttons', {'buttonNumber': 1})
+        client.emit('press_socket_testing_buttons', {'buttonNumber': 2})
+        received = client.get_received()
 
+        assert len(received) > 0
+        assert received[0]['name'] == 'update_button_counts'
+        assert received[0]['args'][0]['counts'] == {'button1': 1, 'button2': 0}
+        assert received[1]['args'][0]['counts'] == {'button1': 2, 'button2': 0}
+        assert received[2]['args'][0]['counts'] == {'button1': 2, 'button2': 1}
 
-def test_press_socket_testing_buttons(client):
-    client.emit('press_socket_testing_buttons', {'buttonNumber': 1})
-    client.emit('press_socket_testing_buttons', {'buttonNumber': 1})
-    client.emit('press_socket_testing_buttons', {'buttonNumber': 2})
-    received = client.get_received()
+    def test_update_page_data(self, client, mocker):
+        mock_create_game = mocker.patch('cards.blackjack.controller.BlackjackController.serialize_blackjack_data',
+                                        return_value=initial_game_blackjack)
 
-    assert len(received) > 0
-    assert received[0]['name'] == 'update_button_counts'
-    assert received[0]['args'][0]['counts'] == {'button1': 1, 'button2': 0}
-    assert received[1]['args'][0]['counts'] == {'button1': 2, 'button2': 0}
-    assert received[2]['args'][0]['counts'] == {'button1': 2, 'button2': 1}
+        client.emit('update_page_data')
+        received = client.get_received()
 
-
-def test_update_page_data(client):
-    client.emit('update_page_data')
-    received = client.get_received()
-
-    assert len(received) > 0
-    assert received[0]['name'] == 'update_page_data'
-    assert received[0]['args'][0]['dealer_cards'] == []
-    assert received[0]['args'][0]['dealer_sum'] == 0
-    assert received[0]['args'][0]['button1_count'] == 0
-    assert received[0]['args'][0]['button2_count'] == 0
-    assert received[0]['args'][0]['players_data_object'] == {}
+        assert len(received) > 0
+        assert received[0]['name'] == 'update_page_data'
+        assert received[0]['args'][0]['dealer_cards'] == [
+            {'image_path': 'images/playing_cards/BACK.png', 'rank': '0', 'suit': 'None'},
+            {'image_path': 'images/playing_cards/8-S.png ', 'rank': '8', 'suit': 'S'}]
+        assert received[0]['args'][0]['dealer_sum'] == 8

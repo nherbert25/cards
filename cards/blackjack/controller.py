@@ -22,7 +22,7 @@ class BlackjackController:
     def update_page_data(self):
         return render_template("blackjack.html", **self.serialize_blackjack_data())
 
-    def serialize_blackjack_data(self):
+    def serialize_blackjack_data(self) -> dict:
         """WebSockets require data to be in a format that can be transmitted over the network. This means the data must be serialized to a format like JSON.
         Not all Python objects are directly serializable to JSON. For example, custom objects need to be converted to basic data types (dicts, lists, strings, numbers, etc.) before they can be serialized."""
 
