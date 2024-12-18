@@ -84,4 +84,4 @@ def test_add_user_to_database(user_table_dao, mock_db_session):
     mock_user = User(username=mock_username, email=mock_email, password=mock_password)
 
     # Assert
-    assert type(mock_user) == User
+    assert type(mock_user) is User

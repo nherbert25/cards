@@ -78,15 +78,23 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    if request.method == 'POST' and form.validate():
-        db_user = MyUserTableDAO.get_user_by_email(email=form.email.data)
 
-        if db_user is not None and check_password_hash(db_user.password, form.password.data):
-            flash('You have been logged in!', 'success')
-            return redirect(url_for('home'))
+    if request.method == 'GET':
+        return render_template('login.html', title='login', form=form), 200
+
+    if request.method == 'POST':
+        if form.validate():
+            db_user = MyUserTableDAO.get_user_by_email(email=form.email.data)
+
+            if db_user is not None and check_password_hash(db_user.password, form.password.data):
+                flash('You have been logged in!', 'success')
+                return redirect(url_for('home')), 302
+            else:
+                flash('Invalid login. Please check username and password', 'danger')
+                return render_template('login.html', title='login', form=form), 401
         else:
             flash('Invalid login. Please check username and password', 'danger')
-    return render_template('login.html', title='login', form=form)
+            return render_template('login.html', title='login', form=form), 400
 
 
 if __name__ == '__main__':

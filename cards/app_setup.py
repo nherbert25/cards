@@ -22,8 +22,10 @@ def create_app():
         app.config.from_object(ProductionConfig)
     elif env == 'testing':
         app.config.from_object(TestingConfig)
+        app.config['WTF_CSRF_ENABLED'] = False
     elif env == 'development':
         app.config.from_object(DevelopmentConfig)
+        app.config['WTF_CSRF_ENABLED'] = False
 
     # Load database configurations
     from cards.database.models import db
