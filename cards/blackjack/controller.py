@@ -35,18 +35,6 @@ class BlackjackController:
             result['players_data_object'][str(player.user_id)] = player.to_dict()
         return result
 
-    def buttons(self, button_name: str, user_id: str) -> None:
-        player_object = self.blackjack_model.get_player(user_id)
-
-        if button_name == 'hit':
-            self.blackjack_model.hit(player_object)
-
-        if button_name == 'stay':
-            self.blackjack_model.stay(player_object)
-
-        if button_name == 'new_game':
-            self.blackjack_model.start_new_game()
-
     def hit(self, user_id: str) -> None:
         player_object = self.blackjack_model.get_player(user_id)
         self.blackjack_model.hit(player_object)

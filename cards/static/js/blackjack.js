@@ -73,10 +73,6 @@ function pressSocketTestingButtons(buttonNumber) {
     socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
 };
 
-function pressButtons(buttonName, user_id) {
-    socket.emit('press_buttons', buttonName, user_id);
-};
-
 function pressHit(user_id) {
     socket.emit('hit', user_id);
 };

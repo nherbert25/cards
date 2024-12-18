@@ -13,13 +13,6 @@ def blackjack():
     return blackjack_controller.blackjack()
 
 
-# todo: separate buttons into three different functions instead
-@socketio.on('press_buttons')
-def press_buttons(button_name, user_id=None):
-    blackjack_controller.buttons(button_name, user_id)
-    emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
-
-
 @socketio.on('hit')
 def hit(user_id=None):
     blackjack_controller.hit(user_id)
