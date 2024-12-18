@@ -77,6 +77,18 @@ function pressButtons(buttonName, user_id) {
     socket.emit('press_buttons', buttonName, user_id);
 };
 
+function pressHit(user_id) {
+    socket.emit('hit', user_id);
+};
+
+function pressStay(user_id) {
+    socket.emit('stay', user_id);
+};
+
+function pressNewGame() {
+    socket.emit('new_game');
+};
+
 function refresh_data() {
     socket.emit('update_page_data');
     console.log('Asking server to refresh');
@@ -137,9 +149,9 @@ function createPlayerDiv(playerID, playerData) {
         </h2>
         <div id="hand-${playerID}" class="player-hand"></div>
         <div class="player-buttons">
-            <button id='hit-button-${playerID}' class="player-button" onclick="pressButtons('hit', '${playerID}')">Hit</button>
-            <button id='stay-button-${playerID}' class="player-button" onclick="pressButtons('stay', '${playerID}')">Stay</button>
-            <button id='new-game-button-${playerID}' class="player-button" onclick="pressButtons('new_game', '${playerID}')">New Game</button>
+            <button id='hit-button-${playerID}' class="player-button" onclick="pressHit('${playerID}')">Hit</button>
+            <button id='stay-button-${playerID}' class="player-button" onclick="pressStay('${playerID}')">Stay</button>
+            <button id='new-game-button-${playerID}' class="player-button" onclick="pressNewGame()">New Game</button>
         </div>
     `;
     return div;

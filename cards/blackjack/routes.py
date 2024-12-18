@@ -20,6 +20,24 @@ def press_buttons(button_name, user_id=None):
     emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
 
 
+@socketio.on('hit')
+def hit(user_id=None):
+    blackjack_controller.hit(user_id)
+    emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
+
+
+@socketio.on('stay')
+def stay(user_id=None):
+    blackjack_controller.stay(user_id)
+    emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
+
+
+@socketio.on('new_game')
+def new_game():
+    blackjack_controller.new_game()
+    emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
+
+
 @socketio.on('request_game_data')
 def handle_request_game_data():
     try:
