@@ -161,9 +161,9 @@ function createSocketButtonTestingDiv() {
     div.id = 'socket-button-testing';
     div.innerHTML = `
                 <p><b>Debugger: </b></p>
-                <button onclick="pressSocketTestingButtons(1)">Button 1</button>
-                <button onclick="pressSocketTestingButtons(2)">Button 2</button>
-                <button onclick="refresh_data()">Refresh Data</button>
+                <button id='socket-debugger-button-1' onclick="pressSocketTestingButtons(1)">Button 1</button>
+                <button id='socket-debugger-button-2' onclick="pressSocketTestingButtons(2)">Button 2</button>
+                <button id='socket-debugger-refresh-data' onclick="refresh_data()">Refresh Data</button>
                 <p>Button 1 Presses: <span id="button1-count">{{ button1_count }}</span></p>
                 <p>Button 2 Presses: <span id="button2-count">{{ button2_count }}</span></p>
     `;
