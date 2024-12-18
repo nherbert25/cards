@@ -42,3 +42,7 @@ flake8.check:
 
 test:
 	pytest -v
+
+coverage:
+	coverage run -m pytest
+	coverage report --omit="tests/*" --skip-covered --sort=Cover -m
