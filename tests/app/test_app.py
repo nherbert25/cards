@@ -44,15 +44,15 @@ class TestApp:
         response = client.get('/login')
         assert response.status_code == 200
 
-    def test_login_post_invalid_data(self, client):
-        data = {'email': 'bad_email_syntax', 'password': 'password'}
-        response = client.post('/login', data=data)
-        assert response.status_code == 400
-
     def test_login_post_success(self, client):
         data = {'email': 'fakeemail123@gmail.com', 'password': 'password'}
         response = client.post('/login', data=data)
         assert response.status_code == 302
+
+    def test_login_post_invalid_data(self, client):
+        data = {'email': 'bad_email_syntax', 'password': 'password'}
+        response = client.post('/login', data=data)
+        assert response.status_code == 400
 
     def test_login_post_bad_username_and_password(self, client):
         data = {'email': 'test@example.com', 'password': 'password'}

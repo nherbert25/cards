@@ -1,8 +1,7 @@
-from flask import render_template, request, redirect, session, url_for, flash
+from flask import render_template, request, redirect, url_for, flash
 from flask_bcrypt import check_password_hash
 from cards.app_setup import create_app, socketio
 from cards.database.user_table_DAO import UserTableDAO
-from cards.networking.client import Client
 from cards.forms import RegistrationForm, LoginForm
 from cards.database.models import User
 
@@ -17,37 +16,6 @@ MyUserTableDAO = UserTableDAO(db.session)
 @app.route('/home')
 def home():
     return render_template("index.html")
-
-
-@app.route('/result', methods=['POST', 'GET'])
-def result():
-    output = request.form.to_dict()
-    print(output)
-    name = output["name"]
-
-    return render_template('index.html', name=name)
-
-
-@app.route('/join_game', methods=['POST'])
-def join_game():
-    ip_address = request.form['ip_address']
-    port = int(request.form['port'])
-
-    # Connect to the game server
-    try:
-        # Create a socket
-        client = Client(server_ip=ip_address, server_port=port)
-
-        # Ask for player name
-        session['player_name'] = input("Enter your player name: ")
-        client.send_data(session['player_name'])
-
-        # Receive a response from the server
-        data = client.receive_data()
-
-        return render_template('blackjack.html', player_name=session['player_name'])
-    except Exception as e:
-        return 'Error: {}'.format(e)
 
 
 @app.route("/register", methods=['GET', 'POST'])
