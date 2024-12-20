@@ -72,6 +72,29 @@ class BlackjackModel:
     def player_bust(self, player: Player) -> None:
         player.win_or_lose_message = f'Busted!'
 
+    # TODO: implement splitting pairs
+    def split_pair(self, player: Player):
+        pass
+
+    # TODO: implement doubling down
+    def double_down(self, player: Player):
+        pass
+
+    # TODO: implement insurance
+    def insurance(self, player: Player):
+        pass
+
+    # TODO: implement surrender
+    def surrender(self, player: Player):
+        pass
+
+    # Todo implement blackjack (an ace and a 10-value card payout better than a regular win)
+    # Blackjack Payout: 3:2 (e.g., $10 bet wins $15). Some casinos offer 6:5, which is less favorable.
+    def determine_blackjack(self, player: Player):
+        if player.sum == BlackjackModel.BLACKJACK_MAX:
+            player.has_stayed = True
+            player.win_or_lose_message = 'Blackjack!'
+
     def resolve_dealer_turn(self, dealer_cards=None) -> None:
         if dealer_cards is None:
             dealer_cards = self.dealer_cards
