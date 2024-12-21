@@ -10,6 +10,8 @@ class BlackjackModel:
     BLACKJACK_MAX = 21
     DEALER_HOLD_THRESHOLD = 17
 
+    # TODO: fix bug where player will push if dealer and player both have 22 !!!
+
     def __init__(self):
         self.BET = 50
         self.dealer_sum = None
