@@ -16,6 +16,7 @@ class Player:
         self.player_name = player_name
         self.has_stayed: bool = False
         self.has_bust: bool = False
+        self.has_blackjack: bool = False
         self.win_or_lose_message: str = ''
 
     def __repr__(self):
