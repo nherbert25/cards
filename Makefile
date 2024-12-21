@@ -41,7 +41,7 @@ flake8.check:
 	flake8 . --count
 
 test:
-	pytest -v
+	pytest
 
 coverage:
 	coverage run -m pytest

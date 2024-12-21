@@ -9,6 +9,22 @@ from cards.blackjack.deck_model import Deck
 class BlackjackModel:
     BLACKJACK_MAX = 21
     DEALER_HOLD_THRESHOLD = 17
+    BLACKJACK_RATIO = 1.5  # Standard payouts for a blackjack (Ace + 10-value card) are 3:2, but some tables pay 6:5, which increases the house edge.
+    DEALER_HITS_ON_SOFT_17 = False  # Dealers must hit on soft 17 (Ace + 6) or stand on all 17s, depending on the casino’s rules. Soft Hand: A hand containing an Ace counted as 11. For example, Ace + 6 = "Soft 17."
+    RESTRICTED_DOUBLING = False  # Some tables limit doubling down to totals of 9, 10, or 11.
+    SPLITTING_ACES_ADDITIONAL_RULES = False  # Only one additional card per split Ace. Blackjack is usually not recognized on split Aces (it pays 1:1, not 3:2).
+    SPLITTING_RESTRICTIONS = False  # Some tables disallow splitting certain pairs, though this is rare.
+    """If the dealer's upcard is an Ace or a 10-value card, the dealer checks (or "peeks") for blackjack before the player makes decisions like doubling, splitting, or surrendering.
+    # If the dealer has blackjack, the hand ends immediately, and side bets (e.g., insurance) are resolved.
+    # If no peek rule is in effect, players risk losing additional bets made on doubles or splits."""
+    DEALER_PEEK = False  # ^^^ see above
+    FIVE_CARD_CHARLIE = False  # player automatically wins if they draw five cards without busting. Example: A hand of 4 + 2 + 2 + 2 + 3 = 13 wins against the dealer,
+    NUMBER_OF_DECKS = 1
+
+    # Side bets:
+    ENABLE_PERFECT_PAIR = False  # Bet that your initial two cards will form a pair.
+    ENABLE_21_PLUS_3 = False  # Bet on a combination of your cards and the dealer’s upcard forming a poker hand (e.g., flush, straight).
+    ENABLE_LUCKY_LUCKY = False  # Bet on your initial hand and the dealer’s upcard creating specific totals or combinations.
 
     def __init__(self):
         self.BET = 50
@@ -26,7 +42,7 @@ class BlackjackModel:
             ]
         }
 
-    def start_new_game(self):
+    def start_new_game(self) -> None:
         self.deck = Deck()
         self.deck.shuffle()
         self.dealer_blackjack = False
@@ -38,14 +54,13 @@ class BlackjackModel:
             player.has_bust = False
             player.win_or_lose_message = None
             player.hand = []
-        # all players must reset before drawing cards, otherwise all players has_stayed will persist for first players hit
+        # all players must reset *before* drawing cards, otherwise has_stayed will have persisted when first players hits
         for player in self.players.values():
             self.hit(player)
             self.hit(player)
         self.game_exists = True
-        return
 
-    def hit(self, player: Player):
+    def hit(self, player: Player) -> None:
         player.draw_card(self.deck.cards.pop())
         player.sum = self.calculate_blackjack_sum(player.hand)
         if player.sum > BlackjackModel.BLACKJACK_MAX:
@@ -62,7 +77,7 @@ class BlackjackModel:
         if self.if_all_players_have_stayed():
             self.resolve_dealer_turn()
 
-    def stay(self, player: Player):
+    def stay(self, player: Player) -> None:
         player.has_stayed = True
 
         if self.if_all_players_have_stayed():
@@ -74,13 +89,14 @@ class BlackjackModel:
                 return False
         return True
 
+    # Todo: determine payouts!
+    # Blackjack Payout: 3:2 (e.g., $10 bet wins $15). Some casinos offer 6:5, which is less favorable.
+    def determine_payout(self, player: Player):
+        return self.BET
+
     def player_wins(self, player: Player) -> None:
         player.coins += self.determine_payout(player)
         player.win_or_lose_message = f'You win! +{self.BET} coins!'
-
-    # # Blackjack Payout: 3:2 (e.g., $10 bet wins $15). Some casinos offer 6:5, which is less favorable.
-    def determine_payout(self, player: Player):
-        return self.BET
 
     def player_pushes(self, player: Player) -> None:
         player.win_or_lose_message = f'You Push!'
@@ -93,23 +109,40 @@ class BlackjackModel:
         player.win_or_lose_message = f'Busted!'
 
     # TODO: implement splitting pairs
+    # A split is allowed when the player's initial two cards are of the same rank (e.g., two 8s, two Kings).
+    # The player splits the pair into two separate hands by matching their original bet on the second hand.
+    # Each hand is then played independently.
+    # Re-splitting: Some casinos allow players to re-split pairs up to 3-4 times.
+    # Aces: Splitting Aces usually comes with restrictions, like only one additional card dealt per hand.
+    # Doubling after Split (DAS): Some casinos allow doubling down after splitting pairs.
     def split_pair(self, player: Player):
         pass
 
     # TODO: implement doubling down
+    """The player can double down on their initial two-card total. 
+    The player doubles their initial bet and commits to receiving only one additional card.
+    Some casinos restrict doubling down to certain totals (e.g., only 10 or 11).
+    """
     def double_down(self, player: Player):
         pass
 
     # TODO: implement insurance
+    """
+    Insurance is offered when the dealer's upcard is an Ace.
+    The player can make a side bet of up to half the original bet that the dealer’s hole card is a 10-value card (making blackjack).
+    If the dealer has blackjack, the insurance bet pays 2:1, covering the original bet.
+    If the dealer does not have blackjack, the insurance bet is lost.
+    """
     def insurance(self, player: Player):
         pass
 
     # TODO: implement surrender
+    # The player forfeits half of their original bet and ends their hand immediately.
+    # Two variants, early surrender and late surrender.
+    # Early Surrender: Players can surrender before the dealer checks for blackjack. This is less common and generally more favorable to the player.
+    # Late Surrender: Players can surrender after the dealer checks for blackjack. If the dealer has blackjack, the surrender option is not available.
     def surrender(self, player: Player):
         pass
-
-    def has_blackjack(self, player: Player) -> bool:
-        return player.sum == BlackjackModel.BLACKJACK_MAX and len(player.hand) == 2
 
     def resolve_dealer_turn(self, dealer_cards=None) -> None:
         if dealer_cards is None:
@@ -142,6 +175,9 @@ class BlackjackModel:
         except Exception as e:
             print(f"Unexpected error when searching for player with {user_id}: {e}")
 
+    def has_blackjack(self, player: Player) -> bool:
+        return player.sum == BlackjackModel.BLACKJACK_MAX and len(player.hand) == 2
+
     @staticmethod
     def if_player_wins(player_sum: int, player_blackjack: bool, dealer_sum: int, dealer_blackjack: bool) -> bool:
         if player_sum > BlackjackModel.BLACKJACK_MAX:
@@ -155,7 +191,8 @@ class BlackjackModel:
         else:
             return False
 
-    def if_player_pushes(self, player_sum: int, player_blackjack: bool, dealer_sum: int,
+    @staticmethod
+    def if_player_pushes(player_sum: int, player_blackjack: bool, dealer_sum: int,
                          dealer_blackjack: bool) -> bool:
         return player_sum == dealer_sum and player_blackjack == dealer_blackjack
 
