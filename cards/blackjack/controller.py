@@ -1,10 +1,10 @@
 from flask import render_template
-from cards.blackjack.blackjack_model import BlackjackModel
+from cards.blackjack.blackjack_model import BlackjackModel, GameConfigs
 
 
 class BlackjackController:
     def __init__(self):
-        self.blackjack_model = BlackjackModel()
+        self.blackjack_model = BlackjackModel(GameConfigs)
         self.counts = {'button1': 0, 'button2': 0}
 
     # TODO: since the controller should pull variables from the routes and send them to the model, NOT modify it

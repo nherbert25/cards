@@ -1,7 +1,7 @@
 import pytest
 
 from tests.blackjack.test_configs import initial_game_blackjack
-from cards.blackjack.blackjack_model import Card, BlackjackModel
+from cards.blackjack.blackjack_model import Card, BlackjackModel, GameConfigs
 
 
 class TestBlackjackModel:
@@ -9,7 +9,7 @@ class TestBlackjackModel:
     def mock_game(self, mocker):
         mock_create_game = mocker.patch('cards.blackjack.controller.BlackjackController.serialize_blackjack_data',
                                         return_value=initial_game_blackjack)
-        blackjack_game = BlackjackModel()
+        blackjack_game = BlackjackModel(GameConfigs)
 
 
     # working test with parametrization (allows you to run the same test with multiple inputs) note that 'test_input, expected_output' is a SINGLE string!
@@ -24,7 +24,7 @@ class TestBlackjackModel:
                                                              ([Card('A', 'C'), Card('J', 'D')], 21),
                                                              ([Card('A', 'C'), Card('A', 'D'), Card('Q', 'D')], 12)))
     def test_calculate_blackjack_sum(self, test_input, expected_output):
-        model = BlackjackModel()
+        model = BlackjackModel(GameConfigs)
         result = model.calculate_blackjack_sum(test_input)
         assert result == expected_output
 
@@ -32,7 +32,7 @@ class TestBlackjackModel:
     @pytest.mark.parametrize('test_input, expected_output', ((5, 10), (10, 10), (18,10), (21,10), (21,21), (22,10), (22,22)))
     def test_determine_winner(self, test_input, expected_output):
         return
-        model = BlackjackModel()
+        model = BlackjackModel(GameConfigs)
         result = model.determine_winner(test_input)
         assert result == expected_output
 
@@ -42,6 +42,6 @@ class TestBlackjackModel:
                                                              ([Card('5', 'C'), Card('K', 'C'), Card('Q', 'C')], 25)))
     def test_resolve_dealer_turn(self, test_input, expected_output):
         return
-        model = BlackjackModel()
+        model = BlackjackModel(GameConfigs)
         model.resolve_dealer_turn(test_input)
         assert model.dealer_sum >= expected_output

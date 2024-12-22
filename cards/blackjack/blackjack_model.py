@@ -6,13 +6,38 @@ from cards.blackjack.card_model import Card
 from cards.blackjack.deck_model import Deck
 
 
+class GameConfigs:
+    # Game configs:
+    NUMBER_OF_DECKS = 1
+    BLACKJACK_RATIO = 1.5  # Standard payouts for a blackjack (Ace + 10-value card) are 3:2, but some tables pay 6:5, which increases the house edge.
+
+    # Variants
+    DEALER_HITS_ON_SOFT_17 = False  # Dealers must hit on soft 17 (Ace + 6) or stand on all 17s, depending on the casino’s rules. Soft Hand: A hand containing an Ace counted as 11. For example, Ace + 6 = "Soft 17."
+    RESTRICTED_DOUBLING = False  # Some tables limit doubling down to totals of 9, 10, or 11.
+    SPLITTING_ACES_ADDITIONAL_RULES = False  # Only one additional card per split Ace. Blackjack is usually not recognized on split Aces (it pays 1:1, not 3:2).
+    SPLITTING_RESTRICTIONS = False  # Some tables disallow splitting certain pairs, though this is rare.
+    FIVE_CARD_CHARLIE = False  # player automatically wins if they draw five cards without busting. Example: A hand of 4 + 2 + 2 + 2 + 3 = 13 wins against the dealer,
+
+    DEALER_PEEK = False
+    """
+    If the dealer's face up card is an Ace or a 10-value card, the dealer checks (or "peeks") for blackjack before the player makes decisions like doubling, splitting, or surrendering.
+    If the dealer has blackjack, the hand ends immediately, and side bets (e.g., insurance) are resolved.
+    If no peek rule is in effect, players risk losing additional bets made on doubles or splits.
+    """
+
+    # Side bets:
+    ENABLE_PERFECT_PAIR = False  # Bet that your initial two cards will form a pair.
+    ENABLE_21_PLUS_3 = False  # Bet on a combination of your cards and the dealer’s upcard forming a poker hand (e.g., flush, straight).
+    ENABLE_LUCKY_LUCKY = False  # Bet on your initial hand and the dealer’s upcard creating specific totals or combinations.
+
+
 class BlackjackModel:
     BLACKJACK_MAX = 21
     DEALER_HOLD_THRESHOLD = 17
 
     # TODO: fix bug where player will push if dealer and player both have 22 !!!
 
-    def __init__(self):
+    def __init__(self, game_configs: GameConfigs):
         self.BET = 50
         self.dealer_sum = None
         self.dealer_cards = None
@@ -20,23 +45,8 @@ class BlackjackModel:
         self.deck = Deck()
         self.game_exists: bool = False
 
-        # Game configs:
-        self.BLACKJACK_RATIO = 1.5  # Standard payouts for a blackjack (Ace + 10-value card) are 3:2, but some tables pay 6:5, which increases the house edge.
-        self.DEALER_HITS_ON_SOFT_17 = False  # Dealers must hit on soft 17 (Ace + 6) or stand on all 17s, depending on the casino’s rules. Soft Hand: A hand containing an Ace counted as 11. For example, Ace + 6 = "Soft 17."
-        self.RESTRICTED_DOUBLING = False  # Some tables limit doubling down to totals of 9, 10, or 11.
-        self.SPLITTING_ACES_ADDITIONAL_RULES = False  # Only one additional card per split Ace. Blackjack is usually not recognized on split Aces (it pays 1:1, not 3:2).
-        self.SPLITTING_RESTRICTIONS = False  # Some tables disallow splitting certain pairs, though this is rare.
-        """If the dealer's upcard is an Ace or a 10-value card, the dealer checks (or "peeks") for blackjack before the player makes decisions like doubling, splitting, or surrendering.
-        # If the dealer has blackjack, the hand ends immediately, and side bets (e.g., insurance) are resolved.
-        # If no peek rule is in effect, players risk losing additional bets made on doubles or splits."""
-        self.DEALER_PEEK = False  # ^^^ see above
-        self.FIVE_CARD_CHARLIE = False  # player automatically wins if they draw five cards without busting. Example: A hand of 4 + 2 + 2 + 2 + 3 = 13 wins against the dealer,
-        self.NUMBER_OF_DECKS = 1
-
-        # Side bets:
-        self.ENABLE_PERFECT_PAIR = False  # Bet that your initial two cards will form a pair.
-        self.ENABLE_21_PLUS_3 = False  # Bet on a combination of your cards and the dealer’s upcard forming a poker hand (e.g., flush, straight).
-        self.ENABLE_LUCKY_LUCKY = False  # Bet on your initial hand and the dealer’s upcard creating specific totals or combinations.
+        # Unpack the game_configs attributes into the class instance
+        self.__dict__.update(game_configs.__dict__)
 
         self.players: Dict[UUID, Player] = {
             player.user_id: player for player in
