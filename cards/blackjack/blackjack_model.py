@@ -41,9 +41,9 @@ class BlackjackModel:
         self.players: Dict[UUID, Player] = {
             player.user_id: player for player in
             [
-                Player(player_name='Taylor'),
-                Player(player_name='Nate'),
-                Player(player_name='Travis')
+                Player(player_name='Taylor', user_id=UUID("11111111-1111-1111-1111-111111111111")),
+                Player(player_name='Nate', user_id=UUID("22222222-2222-2222-2222-222222222222")),
+                Player(player_name='Travis', user_id=UUID("33333333-3333-3333-3333-333333333333")),
             ]
         }
 
@@ -178,7 +178,7 @@ class BlackjackModel:
         try:
             return self.players.get(UUID(user_id))
         except Exception as e:
-            print(f"Unexpected error when searching for player with {user_id}: {e}")
+            print(f"Unexpected error when searching for player with user_id {user_id}: {e}")
 
     def has_blackjack(self, player: Player) -> bool:
         return player.sum == BlackjackModel.BLACKJACK_MAX and len(player.hand) == 2

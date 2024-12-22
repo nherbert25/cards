@@ -1,8 +1,17 @@
 import pytest
+
+from tests.blackjack.test_configs import initial_game_blackjack
 from cards.blackjack.blackjack_model import Card, BlackjackModel
 
 
 class TestBlackjackModel:
+    @pytest.fixture
+    def mock_game(self, mocker):
+        mock_create_game = mocker.patch('cards.blackjack.controller.BlackjackController.serialize_blackjack_data',
+                                        return_value=initial_game_blackjack)
+        blackjack_game = BlackjackModel()
+
+
     # working test with parametrization (allows you to run the same test with multiple inputs) note that 'test_input, expected_output' is a SINGLE string!
     # also note the class must be instantiated first. pytest methods do not take the 'self' keyword, you must *always* instantiate your test class.
     @pytest.mark.parametrize('test_input, expected_output', (

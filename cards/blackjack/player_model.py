@@ -10,10 +10,10 @@ class Player:
             user_id = uuid4()
 
         self.user_id = user_id
-        self.sum = 0
-        self.hand: List[Card] = []
-        self.coins = coins
         self.player_name = player_name
+        self.coins = coins
+        self.hand: List[Card] = []
+        self.sum = 0
         self.has_stayed: bool = False
         self.has_bust: bool = False
         self.has_blackjack: bool = False
