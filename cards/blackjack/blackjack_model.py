@@ -35,6 +35,7 @@ class BlackjackModel:
     BLACKJACK_MAX = 21
     DEALER_HOLD_THRESHOLD = 17
 
+    # TODO: make win, lose and push state an enum since they're not mutually exclusive. Writing them as independent bools is unnecessary and error prone
     # TODO: fix bug where player will push if dealer and player both have 22 !!!
 
     def __init__(self, game_configs: GameConfigs):

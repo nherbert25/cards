@@ -1,7 +1,18 @@
 import pytest
 
 from tests.blackjack.test_configs import initial_game_blackjack
-from cards.blackjack.blackjack_model import Card, BlackjackModel, GameConfigs
+from cards.blackjack.blackjack_model import BlackjackModel, GameConfigs
+from cards.blackjack.player_model import Player
+from cards.blackjack.card_model import Card
+
+
+def generate_test_players():
+    player_1 = Player()
+    player_1.hand = [Card('3', 'C'), Card('3', 'C')]
+    player_2 = Player()
+    player_2.hand = [Card('10', 'C'), Card('A', 'C')]
+    player_3 = Player()
+    player_3.hand = [Card('3', 'C'), Card('3', 'C')]
 
 
 class TestBlackjackModel:
