@@ -57,7 +57,7 @@ class TestBlackjackModel:
         ]
     )
     def test_determine_outcome(self, dealer_sum, player_sum, dealer_blackjack, player_blackjack, expected_outcome):
-        result = BlackjackModel.determine_outcome(dealer_sum, player_sum, dealer_blackjack, player_blackjack)
+        result = BlackjackModel._determine_outcome(dealer_sum, player_sum, dealer_blackjack, player_blackjack)
         assert result == expected_outcome
 
     # Todo: fix this if necessary. This might require an integration test since no dependency injection

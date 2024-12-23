@@ -42,9 +42,6 @@ class BlackjackModel:
     BLACKJACK_MAX = 21
     DEALER_HOLD_THRESHOLD = 17
 
-    # TODO: make win, lose and push state an enum since they're not mutually exclusive. Writing them as independent bools is unnecessary and error prone
-    # TODO: fix bug where player will push if dealer and player both have 22 !!!
-
     def __init__(self, game_configs: GameConfigs):
         self.BET = 50
         self.dealer_sum = None
@@ -137,6 +134,7 @@ class BlackjackModel:
     # Each hand is then played independently.
     # Re-splitting: Some casinos allow players to re-split pairs up to 3-4 times.
     # Aces: Splitting Aces usually comes with restrictions, like only one additional card dealt per hand.
+    # Making 21 after splitting pairs is usually NOT considered a blackjack.
     # Doubling after Split (DAS): Some casinos allow doubling down after splitting pairs.
     def split_pair(self, player: Player):
         pass
@@ -186,8 +184,8 @@ class BlackjackModel:
 
         # determine winners
         for player in self.players.values():
-            player.player_outcome = self.determine_outcome(self.dealer_sum, player.sum, self.dealer_blackjack,
-                                                           player.has_blackjack)
+            player.player_outcome = self._determine_outcome(self.dealer_sum, player.sum, self.dealer_blackjack,
+                                                            player.has_blackjack)
             if player.player_outcome == PlayerOutcome.WIN:
                 self.player_wins(player)
             elif player.player_outcome == PlayerOutcome.PUSH:
@@ -197,8 +195,8 @@ class BlackjackModel:
         return
 
     @staticmethod
-    def determine_outcome(dealer_sum: int, player_sum: int, dealer_blackjack: bool = False,
-                          player_blackjack: bool = False) -> PlayerOutcome:
+    def _determine_outcome(dealer_sum: int, player_sum: int, dealer_blackjack: bool = False,
+                           player_blackjack: bool = False) -> PlayerOutcome:
         if player_sum > BlackjackModel.BLACKJACK_MAX:
             return PlayerOutcome.LOSE
         elif dealer_sum > BlackjackModel.BLACKJACK_MAX:
