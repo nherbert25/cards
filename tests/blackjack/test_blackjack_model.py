@@ -1,7 +1,7 @@
 import pytest
 
 from tests.blackjack.test_configs import initial_game_blackjack
-from cards.blackjack.blackjack_model import BlackjackModel, GameConfigs
+from cards.blackjack.blackjack_model import BlackjackModel, GameConfigs, PlayerOutcome
 from cards.blackjack.player_model import Player
 from cards.blackjack.card_model import Card
 
@@ -39,15 +39,28 @@ class TestBlackjackModel:
         result = model.calculate_blackjack_sum(test_input)
         assert result == expected_output
 
-    # Todo: fix
-    @pytest.mark.parametrize('test_input, expected_output', ((5, 10), (10, 10), (18,10), (21,10), (21,21), (22,10), (22,22)))
-    def test_determine_winner(self, test_input, expected_output):
-        return
-        model = BlackjackModel(GameConfigs)
-        result = model.determine_winner(test_input)
-        assert result == expected_output
+    @pytest.mark.parametrize(
+        "dealer_sum, player_sum, dealer_blackjack, player_blackjack, expected_outcome",
+        [
+            (18, 20, False, False, PlayerOutcome.WIN),  # Player beats dealer
+            (20, 18, False, False, PlayerOutcome.LOSE),  # Dealer beats player
+            (21, 21, False, False, PlayerOutcome.PUSH),  # Player ties with dealer
+            (18, 22, False, False, PlayerOutcome.LOSE),  # Player busts
+            (22, 20, False, False, PlayerOutcome.WIN),  # Dealer busts
+            (22, 22, False, False, PlayerOutcome.LOSE),  # Both bust; player still loses
+            (19, 19, False, False, PlayerOutcome.PUSH),  # Tie on lower values
+            (21, 21, True, False, PlayerOutcome.LOSE),  # Dealer has Blackjack, player ties
+            (21, 21, False, True, PlayerOutcome.WIN),  # Player has Blackjack, dealer ties
+            (21, 21, True, True, PlayerOutcome.PUSH),  # Both have Blackjack, push
+            (21, 22, True, False, PlayerOutcome.LOSE),  # Dealer has Blackjack, player busts
+            (22, 21, False, True, PlayerOutcome.WIN),  # Player has Blackjack, dealer busts
+        ]
+    )
+    def test_determine_outcome(self, dealer_sum, player_sum, dealer_blackjack, player_blackjack, expected_outcome):
+        result = BlackjackModel.determine_outcome(dealer_sum, player_sum, dealer_blackjack, player_blackjack)
+        assert result == expected_outcome
 
-    # Todo: fix
+    # Todo: fix this if necessary. This might require an integration test since no dependency injection
     @pytest.mark.parametrize('test_input, expected_output', (
                                                              ([Card('3', 'C'), Card('3', 'C')], 6),
                                                              ([Card('5', 'C'), Card('K', 'C'), Card('Q', 'C')], 25)))

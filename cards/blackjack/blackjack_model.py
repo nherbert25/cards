@@ -1,9 +1,16 @@
+from enum import Enum
 from typing import List, Dict, Optional
 from uuid import UUID, uuid4
 
 from cards.blackjack.player_model import Player
 from cards.blackjack.card_model import Card
 from cards.blackjack.deck_model import Deck
+
+
+class PlayerOutcome(Enum):
+    WIN = 'win'
+    LOSE = 'lose'
+    PUSH = 'push'
 
 
 class GameConfigs:
@@ -67,7 +74,7 @@ class BlackjackModel:
         for player in self.players.values():
             player.has_stayed = False
             player.has_blackjack = False
-            player.has_bust = False
+            player.player_outcome = None
             player.win_or_lose_message = None
             player.hand = []
         # all players must reset *before* drawing cards, otherwise has_stayed will have persisted when first players hits
@@ -139,6 +146,7 @@ class BlackjackModel:
     The player doubles their initial bet and commits to receiving only one additional card.
     Some casinos restrict doubling down to certain totals (e.g., only 10 or 11).
     """
+
     def double_down(self, player: Player):
         pass
 
@@ -149,6 +157,7 @@ class BlackjackModel:
     If the dealer has blackjack, the insurance bet pays 2:1, covering the original bet.
     If the dealer does not have blackjack, the insurance bet is lost.
     """
+
     def insurance(self, player: Player):
         pass
 
@@ -177,13 +186,33 @@ class BlackjackModel:
 
         # determine winners
         for player in self.players.values():
-            if self.if_player_wins(player.sum, player.has_blackjack, self.dealer_sum, self.dealer_blackjack):
+            player.player_outcome = self.determine_outcome(self.dealer_sum, player.sum, self.dealer_blackjack,
+                                                           player.has_blackjack)
+            if player.player_outcome == PlayerOutcome.WIN:
                 self.player_wins(player)
-            elif self.if_player_pushes(player.sum, player.has_blackjack, self.dealer_sum, self.dealer_blackjack):
+            elif player.player_outcome == PlayerOutcome.PUSH:
                 self.player_pushes(player)
             else:
                 self.player_loses(player)
         return
+
+    @staticmethod
+    def determine_outcome(dealer_sum: int, player_sum: int, dealer_blackjack: bool = False,
+                          player_blackjack: bool = False) -> PlayerOutcome:
+        if player_sum > BlackjackModel.BLACKJACK_MAX:
+            return PlayerOutcome.LOSE
+        elif dealer_sum > BlackjackModel.BLACKJACK_MAX:
+            return PlayerOutcome.WIN
+        elif dealer_sum == player_sum and dealer_blackjack and not player_blackjack:
+            return PlayerOutcome.LOSE
+        elif dealer_sum == player_sum and player_blackjack and not dealer_blackjack:
+            return PlayerOutcome.WIN
+        elif dealer_sum == player_sum and player_blackjack == dealer_blackjack:
+            return PlayerOutcome.PUSH
+        elif player_sum > dealer_sum:
+            return PlayerOutcome.WIN
+        elif dealer_sum > player_sum:
+            return PlayerOutcome.LOSE
 
     def get_player(self, user_id: str) -> Optional[Player]:
         try:

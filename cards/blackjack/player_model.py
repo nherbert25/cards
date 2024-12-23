@@ -15,8 +15,8 @@ class Player:
         self.hand: List[Card] = []
         self.sum = 0
         self.has_stayed: bool = False
-        self.has_bust: bool = False
         self.has_blackjack: bool = False
+        self.player_outcome = None
         self.win_or_lose_message: str = ''
 
     def __repr__(self):
