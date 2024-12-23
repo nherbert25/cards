@@ -25,6 +25,12 @@ def stay(user_id=None):
     emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
 
 
+@socketio.on('double_down')
+def double_down(user_id=None):
+    blackjack_controller.double_down(user_id)
+    emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
+
+
 @socketio.on('new_game')
 def new_game():
     blackjack_controller.new_game()

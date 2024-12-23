@@ -43,5 +43,9 @@ class BlackjackController:
         player_object = self.blackjack_model.get_player(user_id)
         self.blackjack_model.stay(player_object)
 
+    def double_down(self, user_id: str) -> None:
+        player_object = self.blackjack_model.get_player(user_id)
+        self.blackjack_model.double_down(player_object)
+
     def new_game(self) -> None:
         self.blackjack_model.start_new_game()

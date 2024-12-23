@@ -81,6 +81,10 @@ function pressStay(user_id) {
     socket.emit('stay', user_id);
 };
 
+function pressDoubleDown(user_id){
+    socket.emit('double_down', user_id);
+};
+
 function pressNewGame() {
     socket.emit('new_game');
 };
@@ -125,6 +129,14 @@ function updatePlayerDiv(playerID, player_data) {
     } else {
         stay_button.disabled = false;
     }
+
+    const double_down_button = document.getElementById('double-down-button-' + playerID);
+    // TODO: make the constant 21 pull from BlackjackModel.BLACKJACK_MAX
+    if (player_data.sum > 21 || player_data.has_stayed) {
+        double_down_button.disabled = true;
+    } else {
+        double_down_button.disabled = false;
+    }
 }
 
 function createPlayerDiv(playerID, playerData) {
@@ -147,6 +159,7 @@ function createPlayerDiv(playerID, playerData) {
         <div class="player-buttons">
             <button id='hit-button-${playerID}' class="player-button" onclick="pressHit('${playerID}')">Hit</button>
             <button id='stay-button-${playerID}' class="player-button" onclick="pressStay('${playerID}')">Stay</button>
+            <button id='double-down-button-${playerID}' class="player-button" onclick="pressDoubleDown('${playerID}')">Double Down</button>
             <button id='new-game-button-${playerID}' class="player-button" onclick="pressNewGame()">New Game</button>
         </div>
     `;

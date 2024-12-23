@@ -5,7 +5,7 @@ from typing import List
 
 
 class Player:
-    def __init__(self, user_id: UUID = None, player_name: str = 'Guest', coins: int = 500):
+    def __init__(self, user_id: UUID = None, player_name: str = 'Guest', coins: int = 500, bet: int = 50):
         if user_id is None:
             user_id = uuid4()
 
@@ -14,6 +14,7 @@ class Player:
         self.coins = coins
         self.hand: List[Card] = []
         self.sum = 0
+        self.bet = bet
         self.has_stayed: bool = False
         self.has_blackjack: bool = False
         self.player_outcome = None

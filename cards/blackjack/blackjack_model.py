@@ -43,7 +43,7 @@ class BlackjackModel:
     DEALER_HOLD_THRESHOLD = 17
 
     def __init__(self, game_configs: GameConfigs):
-        self.BET = 50
+        self.MINIMUM_BET = 50
         self.dealer_sum = None
         self.dealer_cards = None
         self.dealer_blackjack = False
@@ -56,9 +56,9 @@ class BlackjackModel:
         self.players: Dict[UUID, Player] = {
             player.user_id: player for player in
             [
-                Player(player_name='Taylor', user_id=UUID("11111111-1111-1111-1111-111111111111")),
-                Player(player_name='Nate', user_id=UUID("22222222-2222-2222-2222-222222222222")),
-                Player(player_name='Travis', user_id=UUID("33333333-3333-3333-3333-333333333333")),
+                Player(player_name='Taylor', user_id=UUID("11111111-1111-1111-1111-111111111111"), bet=self.MINIMUM_BET),
+                Player(player_name='Nate', user_id=UUID("22222222-2222-2222-2222-222222222222"), bet=self.MINIMUM_BET),
+                Player(player_name='Travis', user_id=UUID("33333333-3333-3333-3333-333333333333"), bet=self.MINIMUM_BET),
             ]
         }
 
@@ -73,6 +73,7 @@ class BlackjackModel:
             player.has_blackjack = False
             player.player_outcome = None
             player.win_or_lose_message = None
+            player.bet = self.MINIMUM_BET
             player.hand = []
         # all players must reset *before* drawing cards, otherwise has_stayed will have persisted when first players hits
         for player in self.players.values():
@@ -112,18 +113,18 @@ class BlackjackModel:
     # Todo: determine payouts!
     # Blackjack Payout: 3:2 (e.g., $10 bet wins $15). Some casinos offer 6:5, which is less favorable.
     def determine_payout(self, player: Player):
-        return self.BET
+        return player.bet
 
     def player_wins(self, player: Player) -> None:
         player.coins += self.determine_payout(player)
-        player.win_or_lose_message = f'You win! +{self.BET} coins!'
+        player.win_or_lose_message = f'You win! +{player.bet} coins!'
 
     def player_pushes(self, player: Player) -> None:
         player.win_or_lose_message = f'You Push!'
 
     def player_loses(self, player: Player) -> None:
-        player.coins -= self.BET
-        player.win_or_lose_message = f'You lose! -{self.BET} coins!'
+        player.coins -= player.bet
+        player.win_or_lose_message = f'You lose! -{player.bet} coins!'
 
     def player_busts(self, player: Player) -> None:
         player.win_or_lose_message = f'Busted!'
@@ -139,14 +140,11 @@ class BlackjackModel:
     def split_pair(self, player: Player):
         pass
 
-    # TODO: implement doubling down
-    """The player can double down on their initial two-card total. 
-    The player doubles their initial bet and commits to receiving only one additional card.
-    Some casinos restrict doubling down to certain totals (e.g., only 10 or 11).
-    """
-
     def double_down(self, player: Player):
-        pass
+        player.bet = player.bet * 2
+        player.has_stayed = True
+        self.hit(player)
+
 
     # TODO: implement insurance
     """
