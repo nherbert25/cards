@@ -52,7 +52,7 @@ function initializeUpdatePageListener() {
 
             if (htmlKey === "players-data-object") {
                 for (const [playerID, player_value] of Object.entries(value)) {
-                    updatePlayerDiv(playerID, player_value);
+                    updatePlayerDiv(playerID, player_value, data.BLACKJACK_MAX);
                 }
 
             } else {
@@ -98,7 +98,7 @@ function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 }
 
-function updatePlayerDiv(playerID, player_data) {
+function updatePlayerDiv(playerID, player_data, BLACKJACK_MAX) {
     for (const [key, value] of Object.entries(player_data)) {
 
         // replaces python syntax with html syntax, then add playerID. Ex: 'player_coins' to 'player-coins-7'
@@ -115,24 +115,21 @@ function updatePlayerDiv(playerID, player_data) {
     }
 
     const hit_button = document.getElementById('hit-button-' + playerID);
-    // TODO: make the constant 21 pull from BlackjackModel.BLACKJACK_MAX
-    if (player_data.sum > 21 || player_data.has_stayed) {
+    if (player_data.sum > BLACKJACK_MAX || player_data.has_stayed) {
         hit_button.disabled = true;
     } else {
         hit_button.disabled = false;
     }
 
     const stay_button = document.getElementById('stay-button-' + playerID);
-    // TODO: make the constant 21 pull from BlackjackModel.BLACKJACK_MAX
-    if (player_data.sum > 21 || player_data.has_stayed) {
+    if (player_data.sum > BLACKJACK_MAX || player_data.has_stayed) {
         stay_button.disabled = true;
     } else {
         stay_button.disabled = false;
     }
 
     const double_down_button = document.getElementById('double-down-button-' + playerID);
-    // TODO: make the constant 21 pull from BlackjackModel.BLACKJACK_MAX
-    if (player_data.sum > 21 || player_data.has_stayed) {
+    if (player_data.sum > BLACKJACK_MAX || player_data.has_stayed) {
         double_down_button.disabled = true;
     } else {
         double_down_button.disabled = false;
