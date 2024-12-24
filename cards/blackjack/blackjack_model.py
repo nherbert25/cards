@@ -21,10 +21,12 @@ class GameConfigs:
     # Variants
     DEALER_HITS_ON_SOFT_17 = False  # Dealers must hit on soft 17 (Ace + 6) or stand on all 17s, depending on the casino’s rules. Soft Hand: A hand containing an Ace counted as 11. For example, Ace + 6 = "Soft 17."
     RESTRICTED_DOUBLING = False  # Some tables limit doubling down to totals of 9, 10, or 11.
+
+    ALLOW_SPLIT_PAIRS = True
     SPLITTING_ACES_ADDITIONAL_RULES = False  # Only one additional card per split Ace. Blackjack is usually not recognized on split Aces (it pays 1:1, not 3:2).
     SPLITTING_RESTRICTIONS = False  # Some tables disallow splitting certain pairs, though this is rare.
-    FIVE_CARD_CHARLIE = False  # player automatically wins if they draw five cards without busting. Example: A hand of 4 + 2 + 2 + 2 + 3 = 13 wins against the dealer,
 
+    FIVE_CARD_CHARLIE = False  # player automatically wins if they draw five cards without busting. Example: A hand of 4 + 2 + 2 + 2 + 3 = 13 wins against the dealer,
     DEALER_PEEK = False
     """
     If the dealer's face up card is an Ace or a 10-value card, the dealer checks (or "peeks") for blackjack before the player makes decisions like doubling, splitting, or surrendering.
