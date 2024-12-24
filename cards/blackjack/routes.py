@@ -37,6 +37,12 @@ def new_game():
     emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
 
 
+# TODO: add ability to change bet amount
+@socketio.on('bet')
+def bet(user_id=None):
+    pass
+
+
 @socketio.on('request_game_data')
 def handle_request_game_data():
     try:
