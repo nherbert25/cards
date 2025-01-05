@@ -2,15 +2,9 @@ from enum import Enum
 from typing import List, Dict, Optional
 from uuid import UUID, uuid4
 
-from cards.blackjack.player_model import Player
+from cards.blackjack.player_model import Player, Hand, HandOutcome
 from cards.blackjack.card_model import Card
 from cards.blackjack.deck_model import Deck
-
-
-class PlayerOutcome(Enum):
-    WIN = 'win'
-    LOSE = 'lose'
-    PUSH = 'push'
 
 
 class GameConfigs:
@@ -71,45 +65,47 @@ class BlackjackModel:
         self.dealer_cards = [Card('0', 'None', hidden=True), self.deck.cards.pop()]
         self.dealer_sum = self.calculate_blackjack_sum(self.dealer_cards)
         for player in self.players.values():
-            player.has_stayed = False
-            player.has_blackjack = False
-            player.player_outcome = None
             player.win_or_lose_message = None
             player.bet = self.MINIMUM_BET
-            player.hand = []
+            player.hands = []
         # all players must reset *before* drawing cards, otherwise has_stayed will have persisted when first players hits
         for player in self.players.values():
-            self.hit(player)
-            self.hit(player)
+            player.hands.append(Hand())
+            self.hit(player, 0)
+            self.hit(player, 0)
         self.game_exists = True
 
-    def hit(self, player: Player) -> None:
-        player.draw_card(self.deck.cards.pop())
-        player.sum = self.calculate_blackjack_sum(player.hand)
-        if player.sum > BlackjackModel.BLACKJACK_MAX:
-            player.has_stayed = True
-            player.has_bust = True
-            self.player_busts(player)
+    def hit(self, player: Player, hand_index: int) -> None:
+        current_hand = player.get_hand(hand_index)
 
-        if player.sum == BlackjackModel.BLACKJACK_MAX:
-            if self.has_blackjack(player):
-                player.has_blackjack = True
-                player.win_or_lose_message = 'Blackjack!'
+        current_hand.draw_card(self.deck.cards.pop())
+
+        current_hand.sum = self.calculate_blackjack_sum(current_hand.cards)
+        if current_hand.sum > BlackjackModel.BLACKJACK_MAX:
+            current_hand.has_stayed = True
+            current_hand.has_bust = True
+            self.hand_busts(player)
+
+        if current_hand.sum == BlackjackModel.BLACKJACK_MAX:
+            if self.has_blackjack(current_hand):
+                current_hand.has_blackjack = True
+                current_hand.win_or_lose_message = 'Blackjack!'
             self.stay(player)
 
-        if self.if_all_players_have_stayed():
+        if self.if_all_hands_have_stayed():
             self.resolve_dealer_turn()
 
     def stay(self, player: Player) -> None:
         player.has_stayed = True
 
-        if self.if_all_players_have_stayed():
+        if self.if_all_hands_have_stayed():
             self.resolve_dealer_turn()
 
-    def if_all_players_have_stayed(self) -> bool:
+    def if_all_hands_have_stayed(self) -> bool:
         for player in self.players.values():
-            if not player.has_stayed:
-                return False
+            for hand in player.hands:
+                if not hand.has_stayed:
+                    return False
         return True
 
     # Todo: determine payouts!
@@ -127,9 +123,6 @@ class BlackjackModel:
     def player_loses(self, player: Player) -> None:
         player.coins -= player.bet
         player.win_or_lose_message = f'You lose! -{player.bet} coins!'
-
-    def player_busts(self, player: Player) -> None:
-        player.win_or_lose_message = f'Busted!'
 
     # TODO: implement splitting pairs
     # A split is allowed when the player's initial two cards are of the same rank (e.g., two 8s, two Kings).
@@ -195,22 +188,22 @@ class BlackjackModel:
         return
 
     @staticmethod
-    def _determine_outcome(dealer_sum: int, player_sum: int, dealer_blackjack: bool = False,
-                           player_blackjack: bool = False) -> PlayerOutcome:
-        if player_sum > BlackjackModel.BLACKJACK_MAX:
-            return PlayerOutcome.LOSE
+    def _determine_outcome(dealer_sum: int, hand_sum: int, dealer_blackjack: bool = False,
+                           hand_blackjack: bool = False) -> HandOutcome:
+        if hand_sum > BlackjackModel.BLACKJACK_MAX:
+            return HandOutcome.LOSE
         elif dealer_sum > BlackjackModel.BLACKJACK_MAX:
-            return PlayerOutcome.WIN
-        elif dealer_sum == player_sum and dealer_blackjack and not player_blackjack:
-            return PlayerOutcome.LOSE
-        elif dealer_sum == player_sum and player_blackjack and not dealer_blackjack:
-            return PlayerOutcome.WIN
-        elif dealer_sum == player_sum and player_blackjack == dealer_blackjack:
-            return PlayerOutcome.PUSH
-        elif player_sum > dealer_sum:
-            return PlayerOutcome.WIN
-        elif dealer_sum > player_sum:
-            return PlayerOutcome.LOSE
+            return HandOutcome.WIN
+        elif dealer_sum == hand_sum and dealer_blackjack and not hand_blackjack:
+            return HandOutcome.LOSE
+        elif dealer_sum == hand_sum and hand_blackjack and not dealer_blackjack:
+            return HandOutcome.WIN
+        elif dealer_sum == hand_sum and hand_blackjack == dealer_blackjack:
+            return HandOutcome.PUSH
+        elif hand_sum > dealer_sum:
+            return HandOutcome.WIN
+        elif dealer_sum > hand_sum:
+            return HandOutcome.LOSE
 
     def get_player(self, user_id: str) -> Optional[Player]:
         try:

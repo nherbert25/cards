@@ -35,17 +35,17 @@ class BlackjackController:
             result['players_data_object'][str(player.user_id)] = player.to_dict()
         return result
 
-    def hit(self, user_id: str) -> None:
+    def hit(self, user_id: str, hand_index: int = 0) -> None:
         player_object = self.blackjack_model.get_player(user_id)
-        self.blackjack_model.hit(player_object)
+        self.blackjack_model.hit(player_object, hand_index)
 
-    def stay(self, user_id: str) -> None:
+    def stay(self, user_id: str,  hand_index: int = 0) -> None:
         player_object = self.blackjack_model.get_player(user_id)
-        self.blackjack_model.stay(player_object)
+        self.blackjack_model.stay(player_object, hand_index)
 
-    def double_down(self, user_id: str) -> None:
+    def double_down(self, user_id: str,  hand_index: int = 0) -> None:
         player_object = self.blackjack_model.get_player(user_id)
-        self.blackjack_model.double_down(player_object)
+        self.blackjack_model.double_down(player_object, hand_index)
 
     def new_game(self) -> None:
         self.blackjack_model.start_new_game()
