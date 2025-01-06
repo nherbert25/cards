@@ -65,13 +65,13 @@ class BlackjackModel:
         self.dealer_cards = [Card('0', 'None', hidden=True), self.deck.cards.pop()]
         self.dealer_sum = self.calculate_blackjack_sum(self.dealer_cards)
         for player in self.players.values():
-            player.win_or_lose_message = None
-            player.bet = self.MINIMUM_BET
-            player.hands = []
-        # all players must reset *before* drawing cards, otherwise has_stayed will have persisted when first players hits
+            player.new_round(self.MINIMUM_BET)
+
+        # all players must reset *before* drawing cards, otherwise first player hitting can erroneously proc downstream logic
         for player in self.players.values():
             player.hands.append(Hand())
             self.hit(player, 0)
+        for player in self.players.values():
             self.hit(player, 0)
         self.game_exists = True
 
@@ -211,8 +211,8 @@ class BlackjackModel:
         except Exception as e:
             print(f"Unexpected error when searching for player with user_id {user_id}: {e}")
 
-    def has_blackjack(self, player: Player) -> bool:
-        return player.sum == BlackjackModel.BLACKJACK_MAX and len(player.hand) == 2
+    def has_blackjack(self, hand: Hand) -> bool:
+        return self.calculate_blackjack_sum(hand.cards) == BlackjackModel.BLACKJACK_MAX and len(hand.cards) == 2
 
     @staticmethod
     def if_player_wins(player_sum: int, player_blackjack: bool, dealer_sum: int, dealer_blackjack: bool) -> bool:

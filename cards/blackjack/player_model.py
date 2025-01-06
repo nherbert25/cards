@@ -1,6 +1,8 @@
 from enum import Enum
 from uuid import UUID, uuid4
 
+from flask import jsonify
+
 from cards.blackjack.card_model import Card
 from typing import List
 
@@ -43,6 +45,18 @@ class Hand:
     def hand_loses(self) -> None:
         self.win_or_lose_message = f'You lose! -{self.bet} coins!'
 
+    # Serialize for websocket handling
+    def to_dict(self) -> dict:
+        return {
+            "cards": [card.to_dict() for card in self.cards],  # Assuming Card has a to_dict() method
+            "bet": self.bet,
+            "sum": self.sum,
+            "has_stayed": self.has_stayed,
+            "has_blackjack": self.has_blackjack,
+            "win_or_lose_message": self.win_or_lose_message,
+            "outcome": self.outcome.name  # Assuming HandOutcome is an Enum
+        }
+
 
 class Player:
     def __init__(self, user_id: UUID = None, player_name: str = 'Guest', coins: int = 500, bet: int = 50):
@@ -53,6 +67,7 @@ class Player:
         self.player_name = player_name
         self.coins = coins
         self.hands: List[Hand] = []
+        self.bet = bet
         self.win_or_lose_message: str = f'Current bet: {bet}'
 
     def __repr__(self):
@@ -70,21 +85,17 @@ class Player:
         pass
 
     # TODO: implement this
-    def new_round(self):
-        self.has_stayed = False
-        self.has_blackjack = False
+    def new_round(self, bet):
         self.player_outcome = None
-        self.win_or_lose_message = None
-        self.bet = self.MINIMUM_BET
+        self.bet = bet
+        self.win_or_lose_message = f'Current bet: {self.bet}'
         self.hands = []
 
     # Serialize for websocket handling
     def to_dict(self):
         return {
             'user_id': str(self.user_id),
-            'hands': [
-                [Card.to_dict(card) for card in hand.cards] for hand in self.hands
-            ],
+            'hands': [hand.to_dict() for hand in self.hands],
             'coins': self.coins,
             'player_name': self.player_name,
             'win_or_lose_message': self.win_or_lose_message

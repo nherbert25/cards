@@ -114,25 +114,28 @@ function updatePlayerDiv(playerID, player_data, BLACKJACK_MAX) {
         }
     }
 
-    const hit_button = document.getElementById('hit-button-' + playerID);
-    if (player_data.sum > BLACKJACK_MAX || player_data.has_stayed) {
-        hit_button.disabled = true;
-    } else {
-        hit_button.disabled = false;
-    }
+    for (const [handID, handData] of Object.entries(player_data.hands)) {
 
-    const stay_button = document.getElementById('stay-button-' + playerID);
-    if (player_data.sum > BLACKJACK_MAX || player_data.has_stayed) {
-        stay_button.disabled = true;
-    } else {
-        stay_button.disabled = false;
-    }
+        const hit_button = document.getElementById('hit-button-' + playerID + handID);
+        if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
+            hit_button.disabled = true;
+        } else {
+            hit_button.disabled = false;
+        }
 
-    const double_down_button = document.getElementById('double-down-button-' + playerID);
-    if (player_data.sum > BLACKJACK_MAX || player_data.has_stayed) {
-        double_down_button.disabled = true;
-    } else {
-        double_down_button.disabled = false;
+        const stay_button = document.getElementById('stay-button-' + playerID + handID);
+        if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
+            stay_button.disabled = true;
+        } else {
+            stay_button.disabled = false;
+        }
+
+        const double_down_button = document.getElementById('double-down-button-' + playerID + handID);
+        if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
+            double_down_button.disabled = true;
+        } else {
+            double_down_button.disabled = false;
+        }
     }
 }
 
@@ -152,12 +155,34 @@ function createPlayerDiv(playerID, playerData) {
             Coins: <span id="coins-${playerID}" class="player-coins">${playerData.coins}</span>
             <br>
         </h2>
-        <div id="hand-${playerID}" class="player-hand"></div>
-        <div class="player-buttons">
-            <button id='hit-button-${playerID}' class="player-button" onclick="pressHit('${playerID}')">Hit</button>
-            <button id='stay-button-${playerID}' class="player-button" onclick="pressStay('${playerID}')">Stay</button>
-            <button id='double-down-button-${playerID}' class="player-button" onclick="pressDoubleDown('${playerID}')">Double Down</button>
-            <button id='new-game-button-${playerID}' class="player-button" onclick="pressNewGame()">New Game</button>
+    `;
+
+    // Loop through each hand and create a hand div
+    playerData.hands.forEach((handData, index) => {
+        const handDiv = createHandDiv(playerID, index, playerData, handData);
+        div.appendChild(handDiv);
+    });
+
+    return div;
+}
+
+function createHandDiv(playerID, handID, playerData, handData) {
+    console.log("Running createHandDiv with:");
+    console.dir(playerData);
+    console.dir(handData);
+
+    const div = document.createElement('div');
+    div.className = 'col player-hand';
+    div.id = `player-hand-${playerID}-${handID}`;
+    div.innerHTML = `
+<!--        creates hand div for holding cards-->
+        <div id="hand-images-${playerID}-${handID}" class="player-hand"></div>
+<!--        creates button div for holding buttons-->
+        <div id="player-buttons-${playerID}-${handID}" class="player-buttons">
+            <button id='hit-button-${playerID}-${handID}' class="player-button" onclick="pressHit('${playerID}')">Hit</button>
+            <button id='stay-button-${playerID}-${handID}' class="player-button" onclick="pressStay('${playerID}')">Stay</button>
+            <button id='double-down-button-${playerID}-${handID}' class="player-button" onclick="pressDoubleDown('${playerID}')">Double Down</button>
+            <button id='new-game-button-${playerID}-${handID}' class="player-button" onclick="pressNewGame()">New Game</button>
         </div>
     `;
     return div;
