@@ -83,7 +83,7 @@ class Player:
         return {
             'user_id': str(self.user_id),
             'hands': [
-                [Card.to_dict(card) for card in hand] for hand in self.hands
+                [Card.to_dict(card) for card in hand.cards] for hand in self.hands
             ],
             'coins': self.coins,
             'player_name': self.player_name,
