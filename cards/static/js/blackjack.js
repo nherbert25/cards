@@ -116,21 +116,21 @@ function updatePlayerDiv(playerID, player_data, BLACKJACK_MAX) {
 
     for (const [handID, handData] of Object.entries(player_data.hands)) {
 
-        const hit_button = document.getElementById('hit-button-' + playerID + handID);
+        const hit_button = document.getElementById('hit-button-' + playerID + '-' + handID);
         if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
             hit_button.disabled = true;
         } else {
             hit_button.disabled = false;
         }
 
-        const stay_button = document.getElementById('stay-button-' + playerID + handID);
+        const stay_button = document.getElementById('stay-button-' + playerID + '-'  + handID);
         if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
             stay_button.disabled = true;
         } else {
             stay_button.disabled = false;
         }
 
-        const double_down_button = document.getElementById('double-down-button-' + playerID + handID);
+        const double_down_button = document.getElementById('double-down-button-' + playerID + '-'  + handID);
         if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
             double_down_button.disabled = true;
         } else {
