@@ -2,7 +2,8 @@ from enum import Enum
 from typing import List, Dict, Optional
 from uuid import UUID, uuid4
 
-from cards.blackjack.player_model import Player, Hand, HandOutcome
+from cards.blackjack.player_model import Player
+from cards.blackjack.hand_model import Hand, HandOutcome
 from cards.blackjack.card_model import Card
 from cards.blackjack.deck_model import Deck
 
@@ -69,11 +70,19 @@ class BlackjackModel:
 
         # all players must reset *before* drawing cards, otherwise first player hitting can erroneously proc downstream logic
         for player in self.players.values():
-            player.hands.append(Hand())
+            player.hands.append(Hand(blackjack_max=self.BLACKJACK_MAX))
             self.hit(player, 0)
         for player in self.players.values():
             self.hit(player, 0)
         self.game_exists = True
+
+
+
+    def hit_card(self, player: Player, hand_index: int) -> None:
+        current_hand = player.get_hand(hand_index)
+        current_hand.hit(self.deck.cards.pop(), self.calculate_blackjack_sum)
+        if self.if_all_hands_have_stayed():
+            self.resolve_dealer_turn()
 
     def hit(self, player: Player, hand_index: int) -> None:
         current_hand = player.get_hand(hand_index)
@@ -81,10 +90,9 @@ class BlackjackModel:
         current_hand.draw_card(self.deck.cards.pop())
 
         current_hand.sum = self.calculate_blackjack_sum(current_hand.cards)
+
         if current_hand.sum > BlackjackModel.BLACKJACK_MAX:
-            current_hand.has_stayed = True
-            current_hand.has_bust = True
-            self.hand_busts(player)
+            current_hand.hand_busts()
 
         if current_hand.sum == BlackjackModel.BLACKJACK_MAX:
             if self.has_blackjack(current_hand):
@@ -95,7 +103,7 @@ class BlackjackModel:
         if self.if_all_hands_have_stayed():
             self.resolve_dealer_turn()
 
-    def stay(self, player: Player) -> None:
+    def stay(self, player: Player, hand_index: int) -> None:
         player.has_stayed = True
 
         if self.if_all_hands_have_stayed():
