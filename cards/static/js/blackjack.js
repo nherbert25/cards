@@ -96,13 +96,15 @@ function refresh_data() {
 
 function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
-}
+};
 
 function updatePlayerDiv(playerID, player_data, BLACKJACK_MAX) {
     for (const [key, value] of Object.entries(player_data)) {
 
         // replaces python syntax with html syntax, then add playerID. Ex: 'player_coins' to 'player-coins-7'
         const htmlKey = key.replace(/_/g, '-') + '-' + playerID
+
+        // grab the corresponding element in the document, if it exists, update the value
         const element = document.getElementById(htmlKey);
         if (element) {
             // TODO: Replace this hard coded 'cards' and 'hand' with a list of all the keys that should have images
@@ -114,7 +116,18 @@ function updatePlayerDiv(playerID, player_data, BLACKJACK_MAX) {
         }
     }
 
+    // loop through each hand
     for (const [handID, handData] of Object.entries(player_data.hands)) {
+        updateHandDiv(playerID, handID, handData, BLACKJACK_MAX)
+    }
+
+};
+
+function updateHandDiv(playerID, handID, handData, BLACKJACK_MAX) {
+
+        const hand_element = document.getElementById('hand-images-' + playerID + '-' + handID);
+        hand_element.innerHTML = generateCardImages(handData.cards)
+
 
         const hit_button = document.getElementById('hit-button-' + playerID + '-' + handID);
         if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
@@ -136,8 +149,7 @@ function updatePlayerDiv(playerID, player_data, BLACKJACK_MAX) {
         } else {
             double_down_button.disabled = false;
         }
-    }
-}
+};
 
 function createPlayerDiv(playerID, playerData) {
     console.log("Debugging createPlayerDiv playerData:");
@@ -164,7 +176,7 @@ function createPlayerDiv(playerID, playerData) {
     });
 
     return div;
-}
+};
 
 function createHandDiv(playerID, handID, playerData, handData) {
     console.log("Running createHandDiv with:");
@@ -178,7 +190,7 @@ function createHandDiv(playerID, handID, playerData, handData) {
 <!--        creates hand div for holding cards-->
         <div id="hand-images-${playerID}-${handID}" class="player-hand"></div>
 <!--        creates button div for holding buttons-->
-        <div id="player-buttons-${playerID}-${handID}" class="player-buttons">
+        <div id="hand-buttons-${playerID}-${handID}" class="player-buttons">
             <button id='hit-button-${playerID}-${handID}' class="player-button" onclick="pressHit('${playerID}')">Hit</button>
             <button id='stay-button-${playerID}-${handID}' class="player-button" onclick="pressStay('${playerID}')">Stay</button>
             <button id='double-down-button-${playerID}-${handID}' class="player-button" onclick="pressDoubleDown('${playerID}')">Double Down</button>
