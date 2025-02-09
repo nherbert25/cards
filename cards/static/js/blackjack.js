@@ -182,8 +182,8 @@ function createHandDiv(playerID, handID, playerData, handData) {
     console.dir(handData);
 
     const div = document.createElement('div');
-    div.className = 'col player-hand';
-    div.id = `player-hand-${playerID}-${handID}`;
+    div.className = 'col hand';
+    div.id = `hand-${playerID}-${handID}`;
     div.innerHTML = `
         <span id="win-or-lose-message-${playerID}" class="win-or-lose-message">${handData.win_or_lose_message}</span>
         <br>

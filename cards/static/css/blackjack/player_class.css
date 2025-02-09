@@ -30,7 +30,7 @@
     font-weight: bold;
 }
 
-.player-hand {
+.hand {
     margin: 10px;
     border: 2px solid #333;
     padding: 10px;
@@ -42,6 +42,7 @@
     justify-content: space-between;
     gap: 15px; /* Adds space between buttons */
     flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+    margin-top: 10px; /* Adds space between the cards and the buttons */
 }
 
 .hand-button {
