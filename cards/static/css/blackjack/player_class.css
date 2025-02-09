@@ -31,15 +31,23 @@
 }
 
 .player-hand {
-    margin: 10px 0;
+    margin: 10px;
+    border: 2px solid #333;
+    padding: 10px;
+    border-radius: 10px;
 }
 
-.player-buttons {
+.hand-buttons {
     display: flex;
     justify-content: space-between;
+    gap: 15px; /* Adds space between buttons */
+    flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
 }
 
-.player-button {
+.hand-button {
+    display: flex;
+    align-items: center; /* Vertically center the text */
+    justify-content: center; /* Horizontally center the text */
     padding: 10px 20px;
     font-size: 1em;
     border: none;
@@ -48,14 +56,33 @@
     background-color: #007bff;
     color: white;
     transition: background-color 0.3s;
+    min-width: 150px; /* Fixed minimum width for all buttons */
+    height: 45px; /* Fixed height for all buttons */
+    text-align: center;
 }
 
-.player-button:hover {
+.hand-button:hover {
     background-color: #0056b3;
 }
 
-.player-button:disabled {
+.hand-button:disabled {
     background-color: #ccc;
     color: #666;
     cursor: not-allowed;
 }
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .hand-buttons {
+        flex-direction: column; /* Stack buttons vertically on smaller screens */
+        align-items: center; /* Center buttons */
+    }
+
+    .hand-button {
+        width: 100%; /* Make buttons full width on small screens */
+        margin-bottom: 10px; /* Add space between stacked buttons */
+        min-width: auto; /* Remove min-width restriction for full-width buttons */
+    }
+}
+
+

@@ -161,8 +161,6 @@ function createPlayerDiv(playerID, playerData) {
     div.innerHTML = `
         <h2 class="player-header">
             <span id="player-name-${playerID}" class="player-name">${playerData.player_name}</span>: 
-            <span id="sum-${playerID}" class="player-sum">${playerData.sum}</span> 
-            <span id="win-or-lose-message-${playerID}" class="win-or-lose-message">${playerData.win_or_lose_message}</span>
             <br>
             Coins: <span id="coins-${playerID}" class="player-coins">${playerData.coins}</span>
             <br>
@@ -187,14 +185,18 @@ function createHandDiv(playerID, handID, playerData, handData) {
     div.className = 'col player-hand';
     div.id = `player-hand-${playerID}-${handID}`;
     div.innerHTML = `
+        <span id="win-or-lose-message-${playerID}" class="win-or-lose-message">${handData.win_or_lose_message}</span>
+        <br>
+        Sum: <span id="sum-${playerID}" class="player-sum">${handData.sum}</span> 
+
 <!--        creates hand div for holding cards-->
-        <div id="hand-images-${playerID}-${handID}" class="player-hand"></div>
+        <div id="hand-images-${playerID}-${handID}"></div>
 <!--        creates button div for holding buttons-->
-        <div id="hand-buttons-${playerID}-${handID}" class="player-buttons">
-            <button id='hit-button-${playerID}-${handID}' class="player-button" onclick="pressHit('${playerID}')">Hit</button>
-            <button id='stay-button-${playerID}-${handID}' class="player-button" onclick="pressStay('${playerID}')">Stay</button>
-            <button id='double-down-button-${playerID}-${handID}' class="player-button" onclick="pressDoubleDown('${playerID}')">Double Down</button>
-            <button id='new-game-button-${playerID}-${handID}' class="player-button" onclick="pressNewGame()">New Game</button>
+        <div id="hand-buttons-${playerID}-${handID}" class="hand-buttons">
+            <button id='hit-button-${playerID}-${handID}' class="hand-button" onclick="pressHit('${playerID}')">Hit</button>
+            <button id='stay-button-${playerID}-${handID}' class="hand-button" onclick="pressStay('${playerID}')">Stay</button>
+            <button id='double-down-button-${playerID}-${handID}' class="hand-button" onclick="pressDoubleDown('${playerID}')">Double Down</button>
+            <button id='new-game-button-${playerID}-${handID}' class="hand-button" onclick="pressNewGame()">New Game</button>
         </div>
     `;
     return div;
