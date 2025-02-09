@@ -125,10 +125,18 @@ function updatePlayerDiv(playerID, player_data, BLACKJACK_MAX) {
 
 function updateHandDiv(playerID, handID, handData, BLACKJACK_MAX) {
 
+        // Update header
+        const sum = document.getElementById('sum-' + playerID + '-' + handID);
+        sum.innerHTML = handData.sum
+
+        const message = document.getElementById('win-or-lose-message-' + playerID + '-' + handID);
+        message.innerHTML = handData.win_or_lose_message
+
+        // Update card images
         const hand_element = document.getElementById('hand-images-' + playerID + '-' + handID);
         hand_element.innerHTML = generateCardImages(handData.cards)
 
-
+        // Update buttons
         const hit_button = document.getElementById('hit-button-' + playerID + '-' + handID);
         if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
             hit_button.disabled = true;
@@ -185,9 +193,9 @@ function createHandDiv(playerID, handID, playerData, handData) {
     div.className = 'col hand';
     div.id = `hand-${playerID}-${handID}`;
     div.innerHTML = `
-        <span id="win-or-lose-message-${playerID}" class="win-or-lose-message">${handData.win_or_lose_message}</span>
+        <span id="win-or-lose-message-${playerID}-${handID}" class="win-or-lose-message">${handData.win_or_lose_message}</span>
         <br>
-        Sum: <span id="sum-${playerID}" class="player-sum">${handData.sum}</span> 
+        Sum: <span id="sum-${playerID}-${handID}" class="hand-sum">${handData.sum}</span> 
 
 <!--        creates hand div for holding cards-->
         <div id="hand-images-${playerID}-${handID}"></div>

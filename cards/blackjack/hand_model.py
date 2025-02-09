@@ -22,7 +22,7 @@ class Hand:
         self.has_stayed: bool = False
         self.has_bust: bool = False
         self.has_blackjack: bool = False
-        self.win_or_lose_message: str = ''
+        self.win_or_lose_message: str = f'Current bet: {bet}'
         self.outcome: HandOutcome = HandOutcome.NOT_EVALUATED
         self.sum_method = None
 
