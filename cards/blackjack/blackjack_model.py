@@ -98,7 +98,7 @@ class BlackjackModel:
             if self.has_blackjack(current_hand):
                 current_hand.has_blackjack = True
                 current_hand.win_or_lose_message = 'Blackjack!'
-            self.stay(player)
+            self.stay(player, hand_index)
 
         if self.if_all_hands_have_stayed():
             self.resolve_dealer_turn()
@@ -160,8 +160,9 @@ class BlackjackModel:
         if dealer_cards is None:
             dealer_cards = self.dealer_cards
 
-        flip_face_down_card = self.deck.cards.pop()
-        dealer_cards[0] = flip_face_down_card
+        if dealer_cards[0].rank == 0:
+            flip_face_down_card = self.deck.cards.pop()
+            dealer_cards[0] = flip_face_down_card
 
         # dealer draws
         self.dealer_sum = self.calculate_blackjack_sum(dealer_cards)

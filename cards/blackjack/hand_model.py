@@ -15,16 +15,16 @@ class Hand:
     BLACKJACK_MAX = 21
 
     def __init__(self, bet=50, blackjack_max=None):
-        self.BLACKJACK_MAX = blackjack_max or Hand.BLACKJACK_MAX
+        self.BLACKJACK_MAX: int = blackjack_max or Hand.BLACKJACK_MAX
         self.cards: List[Card] = []
-        self.bet = bet
-        self.sum = 0
+        self.bet: int = bet
+        self.sum: int = 0
         self.has_stayed: bool = False
         self.has_bust: bool = False
         self.has_blackjack: bool = False
         self.win_or_lose_message: str = f'Current bet: {bet}'
         self.outcome: HandOutcome = HandOutcome.NOT_EVALUATED
-        self.sum_method = None
+        self.sum_method: staticmethod = None
 
     def draw_card(self, card: Card):
         self.cards.append(card)
@@ -32,6 +32,7 @@ class Hand:
     def remove_card(self, card: Card):
         self.cards.remove(card)
 
+    # TODO: function is not currently used. Have blackjack.hit() call this instead
     def hit(self, card: Card, sum_method):
         self.draw_card(card)
         self.get_sum(sum_method)

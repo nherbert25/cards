@@ -7,7 +7,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# TODO: get this working. It works when the application is *already* running (I can see it clicking the websocket button), but I can't get it to spin up the application.
+
+# TODO: get this working. It works when the application is *already* running (I can see it clicking the websocket
+#  button), but I can't get it to spin up the application.
 @pytest.fixture(scope="module", autouse=True)
 def start_flask_app():
     # Set the FLASK_APP environment variable
