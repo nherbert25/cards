@@ -78,28 +78,9 @@ class BlackjackModel:
             self.hit(player, 0)
         self.game_exists = True
 
-    def hit_card(self, player: Player, hand_index: int) -> None:
-        current_hand = player.get_hand(hand_index)
-        current_hand.hit(self.deck.cards.pop(), self.calculate_blackjack_sum)
-        if self.if_all_hands_have_stayed():
-            self.resolve_dealer_turn()
-
     def hit(self, player: Player, hand_index: int) -> None:
         current_hand = player.get_hand(hand_index)
-
-        current_hand.draw_card(self.deck.cards.pop())
-
-        current_hand.sum = self.calculate_blackjack_sum(current_hand.cards)
-
-        if current_hand.sum > BlackjackModel.BLACKJACK_MAX:
-            current_hand.hand_busts()
-
-        if current_hand.sum == BlackjackModel.BLACKJACK_MAX:
-            if self.has_blackjack(current_hand):
-                current_hand.has_blackjack = True
-                current_hand.win_or_lose_message = 'Blackjack!'
-            self.stay(player, hand_index)
-
+        current_hand.hit(self.deck.cards.pop(), self.calculate_blackjack_sum)
         if self.if_all_hands_have_stayed():
             self.resolve_dealer_turn()
 
@@ -132,10 +113,11 @@ class BlackjackModel:
     def split_pair(self, player: Player):
         pass
 
-    def double_down(self, player: Player):
+    # TODO: doubledown is broken after adding hand_index
+    def double_down(self, player: Player, hand_index):
         player.bet = player.bet * 2
         player.has_stayed = True
-        self.hit(player)
+        self.hit(player, hand_index)
 
     # TODO: implement insurance
     """

@@ -41,7 +41,7 @@ class Hand:
             self.hand_busts()
 
         if self.sum == self.BLACKJACK_MAX:
-            if self.has_blackjack():
+            if self.check_if_blackjack():
                 self.has_blackjack = True
                 self.win_or_lose_message = 'Blackjack!'
             self.has_stayed = True
@@ -79,8 +79,33 @@ class Hand:
     def hand_loses(self) -> None:
         self.win_or_lose_message = f'You lose! -{self.bet} coins!'
 
-    def has_blackjack(self) -> bool:
+    def check_if_blackjack(self) -> bool:
         return self.calculate_blackjack_sum(self.cards) == self.BLACKJACK_MAX and len(self.cards) == 2
+
+    @staticmethod
+    def calculate_blackjack_sum(card_list: List[Card]) -> int:
+        result = 0
+        ace_count = 0
+        for card in card_list:
+            if card.rank == 'A':
+                ace_count += 1
+            else:
+                if card.rank in ['J', 'Q', 'K']:
+                    value = 10
+                else:
+                    value = int(card.rank)
+                result += value
+        if ace_count == 1:
+            if result + 11 > Hand.BLACKJACK_MAX:
+                return result + 1
+            else:
+                return result + 11
+        elif ace_count > 1:
+            if result + 11 + ace_count - 1 > Hand.BLACKJACK_MAX:
+                return result + ace_count
+            else:
+                return result + 11 + ace_count - 1
+        return result
 
     # Serialize for websocket handling
     def to_dict(self) -> dict:
