@@ -121,17 +121,6 @@ class BlackjackModel:
     def determine_payout(self, player: Player):
         return player.bet
 
-    def player_wins(self, player: Player) -> None:
-        player.coins += self.determine_payout(player)
-        player.win_or_lose_message = f'You win! +{player.bet} coins!'
-
-    def player_pushes(self, player: Player) -> None:
-        player.win_or_lose_message = f'You Push!'
-
-    def player_loses(self, player: Player) -> None:
-        player.coins -= player.bet
-        player.win_or_lose_message = f'You lose! -{player.bet} coins!'
-
     # TODO: implement splitting pairs
     # A split is allowed when the player's initial two cards are of the same rank (e.g., two 8s, two Kings).
     # The player splits the pair into two separate hands by matching their original bet on the second hand.
@@ -188,7 +177,6 @@ class BlackjackModel:
                 hand.evaluate_outcome(self._determine_outcome(self.dealer_sum, hand.sum, self.dealer_blackjack,
                                                               hand.has_blackjack))
             player.evaluate_round_end()
-
 
     @staticmethod
     def _determine_outcome(dealer_sum: int, hand_sum: int, dealer_blackjack: bool = False,
