@@ -124,12 +124,14 @@ function updatePlayerDiv(playerID, player_data, BLACKJACK_MAX) {
 };
 
 function updateHandDiv(playerID, handID, handData, BLACKJACK_MAX) {
+        console.log("Running updateHandDiv with:");
+        console.log(playerID, handID, handData);
 
         // Update header
         const sum = document.getElementById('sum-' + playerID + '-' + handID);
-        sum.innerHTML = handData.sum
-
         const message = document.getElementById('win-or-lose-message-' + playerID + '-' + handID);
+
+        sum.innerHTML = handData.sum
         message.innerHTML = handData.win_or_lose_message
 
         // Update card images

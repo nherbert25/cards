@@ -53,9 +53,11 @@ class BlackjackModel:
         self.players: Dict[UUID, Player] = {
             player.user_id: player for player in
             [
-                Player(player_name='Taylor', user_id=UUID("11111111-1111-1111-1111-111111111111"), bet=self.MINIMUM_BET),
+                Player(player_name='Taylor', user_id=UUID("11111111-1111-1111-1111-111111111111"),
+                       bet=self.MINIMUM_BET),
                 Player(player_name='Nate', user_id=UUID("22222222-2222-2222-2222-222222222222"), bet=self.MINIMUM_BET),
-                Player(player_name='Travis', user_id=UUID("33333333-3333-3333-3333-333333333333"), bet=self.MINIMUM_BET),
+                Player(player_name='Travis', user_id=UUID("33333333-3333-3333-3333-333333333333"),
+                       bet=self.MINIMUM_BET),
             ]
         }
 
@@ -75,8 +77,6 @@ class BlackjackModel:
         for player in self.players.values():
             self.hit(player, 0)
         self.game_exists = True
-
-
 
     def hit_card(self, player: Player, hand_index: int) -> None:
         current_hand = player.get_hand(hand_index)
@@ -104,7 +104,7 @@ class BlackjackModel:
             self.resolve_dealer_turn()
 
     def stay(self, player: Player, hand_index: int) -> None:
-        player.has_stayed = True
+        player.stay_hand(hand_index)
 
         if self.if_all_hands_have_stayed():
             self.resolve_dealer_turn()
@@ -148,7 +148,6 @@ class BlackjackModel:
         player.has_stayed = True
         self.hit(player)
 
-
     # TODO: implement insurance
     """
     Insurance is offered when the dealer's upcard is an Ace.
@@ -183,17 +182,13 @@ class BlackjackModel:
             if self.dealer_sum == BlackjackModel.BLACKJACK_MAX and len(dealer_cards) == 2:
                 self.dealer_blackjack = True
 
-        # determine winners
+        # evaluate each hand and resolve bets
         for player in self.players.values():
-            player.player_outcome = self._determine_outcome(self.dealer_sum, player.sum, self.dealer_blackjack,
-                                                            player.has_blackjack)
-            if player.player_outcome == PlayerOutcome.WIN:
-                self.player_wins(player)
-            elif player.player_outcome == PlayerOutcome.PUSH:
-                self.player_pushes(player)
-            else:
-                self.player_loses(player)
-        return
+            for hand in player.hands:
+                hand.evaluate_outcome(self._determine_outcome(self.dealer_sum, hand.sum, self.dealer_blackjack,
+                                                              hand.has_blackjack))
+            player.evaluate_round_end()
+
 
     @staticmethod
     def _determine_outcome(dealer_sum: int, hand_sum: int, dealer_blackjack: bool = False,

@@ -1,6 +1,7 @@
+import logging
 from uuid import UUID, uuid4
 
-from cards.blackjack.hand_model import Hand
+from cards.blackjack.hand_model import Hand, HandOutcome
 from typing import List
 
 
@@ -24,8 +25,31 @@ class Player:
     def add_hand(self, hand: Hand) -> None:
         self.hands.append(hand)
 
+    def stay_hand(self, hand_index) -> None:
+        try:
+            self.hands[hand_index].stay()
+        except IndexError:
+            logging.error(f"Attempted to locate hand: {hand_index}. Hand index doesn't exist. {len(self.hands)} in hand.", exc_info=True)  # Log error + traceback
+            print(f"Attempted to locate hand: {hand_index}. Hand index doesn't exist. {len(self.hands)} in hand.")
+        except Exception as e:
+            logging.error(f"Unexpected error locating hand index: {hand_index}", exc_info=True)
+            print(f"Unexpected error locating hand index: {hand_index}")
+
     def evaluate_round_end(self):
-        pass
+        payout = 0
+        for hand in self.hands:
+            if hand.outcome == HandOutcome.WIN:
+                payout += hand.bet
+            if hand.outcome == HandOutcome.LOSE:
+                payout -= hand.bet
+        self.coins += payout
+        if payout > 0:
+            self.win_or_lose_message = f'You win! +{self.bet} coins!'
+        elif payout < 0:
+            self.win_or_lose_message = f'You lose! -{self.bet} coins!'
+        elif payout == 0:
+            self.win_or_lose_message = f'You Push!'
+
 
     # TODO: implement this
     def new_round(self, bet):

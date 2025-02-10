@@ -45,7 +45,18 @@ class Hand:
                 self.win_or_lose_message = 'Blackjack!'
             self.has_stayed = True
 
+    def stay(self):
+        self.has_stayed = True
 
+    def evaluate_outcome(self, outcome: HandOutcome):
+        self.outcome = outcome
+
+        if self.outcome == HandOutcome.WIN:
+            self.win_or_lose_message = f'You win! +{self.bet} coins!'
+        elif self.outcome == HandOutcome.PUSH:
+            self.win_or_lose_message = f'You Push!'
+        elif self.outcome == HandOutcome.LOSE:
+            self.win_or_lose_message = f'You lose! -{self.bet} coins!'
 
     def get_sum(self, sum_method):
         # Use the injected sum method to calculate the sum
