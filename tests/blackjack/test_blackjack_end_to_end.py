@@ -69,6 +69,9 @@ def test_blackjack_hit_button(driver):
         d.find_element(By.ID, "sum-11111111-1111-1111-1111-111111111111-0")
     ))
 
+    # Scroll to the button before clicking
+    ActionChains(driver).move_to_element(hit_button).perform()
+
     hand_sum = int(hand_sum_element.text)
     hit_button.click()
     hand_sum_after_click = int(hand_sum_element.text)
