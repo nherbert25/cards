@@ -9,18 +9,16 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-PORT = 5050  # Change this to the port you want to use
+APP_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "cards", "app.py"))
+PORT = 5050
 
 
 @pytest.fixture(scope="module", autouse=True)
 def start_flask_app():
     """Starts the Flask app before tests and ensures cleanup after."""
 
-    # Get the absolute path of app.py
-    app_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "cards", "app.py"))
-
     # Set the environment variable to specify the port
-    os.environ["FLASK_APP"] = app_path  # Ensure Flask knows where the app is
+    os.environ["FLASK_APP"] = APP_PATH  # Ensure Flask knows where the app is
     os.environ["FLASK_RUN_PORT"] = str(PORT)  # Set the port via an environment variable
 
     # Start the Flask app with SocketIO, running on the specified port
@@ -65,18 +63,16 @@ def test_blackjack_hit_button(driver):
     # Start browser and navigate to the URL
     driver.get(f"http://localhost:{PORT}/blackjack")  # URL where Flask app runs
 
-    # Wait for the hit button to be present
-    hit_button = WebDriverWait(driver, 2).until(
-        EC.presence_of_element_located((By.ID, "hit-button-11111111-1111-1111-1111-111111111111-0"))
-    )
-    # Wait for the sum field to be present
-    hand_sum_element = WebDriverWait(driver, 2).until(
-        EC.presence_of_element_located((By.ID, "sum-11111111-1111-1111-1111-111111111111-0"))
-    )
+    # Wait for the button and sum field
+    hit_button, hand_sum_element = WebDriverWait(driver, 2).until(lambda d: (
+        d.find_element(By.ID, "hit-button-11111111-1111-1111-1111-111111111111-0"),
+        d.find_element(By.ID, "sum-11111111-1111-1111-1111-111111111111-0")
+    ))
+
     hand_sum = int(hand_sum_element.text)
     hit_button.click()
-
     hand_sum_after_click = int(hand_sum_element.text)
+
     assert hand_sum <= hand_sum_after_click
 
 
