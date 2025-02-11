@@ -76,7 +76,7 @@ def test_blackjack_hit_button(driver):
     hit_button.click()
     hand_sum_after_click = int(hand_sum_element.text)
 
-    assert hand_sum <= hand_sum_after_click
+    assert hand_sum <= hand_sum_after_clickf
 
 
 def test_press_socket_testing_buttons(driver):
