@@ -138,6 +138,7 @@ class BlackjackModel:
     def surrender(self, player: Player):
         pass
 
+    # TODO: dealer facedown card is currenlty broken. Doesn't register a card exists, instead it draws a new one.
     def resolve_dealer_turn(self, dealer_cards=None) -> None:
         if dealer_cards is None:
             dealer_cards = self.dealer_cards

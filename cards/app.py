@@ -12,6 +12,11 @@ app, db, sess, bcrypt = create_app()
 MyUserTableDAO = UserTableDAO(db.session)
 
 
+@app.route('/health_check')
+def health_check():
+    return "OK", 200
+
+
 @app.route('/')
 @app.route('/home')
 def home():
