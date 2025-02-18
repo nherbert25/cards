@@ -32,7 +32,6 @@ class Hand:
     def remove_card(self, card: Card):
         self.cards.remove(card)
 
-    # TODO: function is not currently used. Have blackjack.hit() call this instead
     def hit(self, card: Card, sum_method):
         self.draw_card(card)
         self.get_sum(sum_method)

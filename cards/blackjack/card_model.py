@@ -14,6 +14,11 @@ class Card:
         self.suit = suit
         self.image_path = 'images/playing_cards/BACK.png' if hidden else f"images/playing_cards/{self.rank}-{self.suit}.png "
 
+    def __eq__(self, other):
+        if not isinstance(other, Card):
+            return False
+        return self.rank == other.rank and self.suit == other.suit
+
     def to_dict(self):
         return {
             'rank': self.rank,
