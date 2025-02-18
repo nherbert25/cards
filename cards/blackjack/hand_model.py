@@ -28,21 +28,21 @@ class Hand:
 
     def draw_card(self, card: Card):
         self.cards.append(card)
+        self.get_sum()
+        if self.sum > self.BLACKJACK_MAX:
+            self.hand_busts()
+        if self.sum == self.BLACKJACK_MAX:
+            if self.check_if_blackjack():
+                self.has_blackjack = True
 
     def remove_card(self, card: Card):
         self.cards.remove(card)
 
     def hit(self, card: Card, sum_method):
         self.draw_card(card)
-        self.get_sum(sum_method)
 
-        if self.sum > self.BLACKJACK_MAX:
-            self.hand_busts()
-
-        if self.sum == self.BLACKJACK_MAX:
-            if self.check_if_blackjack():
-                self.has_blackjack = True
-                self.win_or_lose_message = 'Blackjack!'
+        if self.has_blackjack:
+            self.win_or_lose_message = 'Blackjack!'
             self.has_stayed = True
 
     def stay(self):
@@ -58,9 +58,8 @@ class Hand:
         elif self.outcome == HandOutcome.LOSE:
             self.win_or_lose_message = f'You lose! -{self.bet} coins!'
 
-    def get_sum(self, sum_method):
-        # Use the injected sum method to calculate the sum
-        result = sum_method(self.cards)
+    def get_sum(self):
+        result = self.calculate_blackjack_sum(self.cards)
         self.sum = result
         return result
 
