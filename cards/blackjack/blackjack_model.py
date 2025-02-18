@@ -41,6 +41,9 @@ class BlackjackModel:
 
     def __init__(self, game_configs: GameConfigs):
         self.MINIMUM_BET = 50
+        self.dealer_hand = None
+
+
         self.dealer_sum = None
         self.dealer_cards = None
         self.dealer_blackjack = False
@@ -65,6 +68,11 @@ class BlackjackModel:
         self.deck = Deck()
         self.deck.shuffle()
         self.dealer_blackjack = False
+
+        self.dealer_hand = Hand(blackjack_max=self.BLACKJACK_MAX)
+        self.dealer_hand.hit(self.deck.cards.pop(), self.calculate_blackjack_sum)
+        self.dealer_hand.hit(self.deck.cards.pop(), self.calculate_blackjack_sum)
+
         self.dealer_cards = [Card('0', 'None', hidden=True), self.deck.cards.pop()]
         self.dealer_sum = self.calculate_blackjack_sum(self.dealer_cards)
         for player in self.players.values():
@@ -212,6 +220,8 @@ class BlackjackModel:
         result = 0
         ace_count = 0
         for card in card_list:
+            if card.hidden:
+                continue
             if card.rank == 'A':
                 ace_count += 1
             else:
