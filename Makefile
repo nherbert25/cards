@@ -46,3 +46,13 @@ test:
 coverage:
 	coverage run -m pytest
 	coverage report --omit="tests/*" --skip-covered --sort=Cover -m
+
+
+.PHONY: preview-cleanup cleanup
+# Preview merged branches that would be deleted
+preview-cleanup:
+	git branch --merged master | grep -v "master" | xargs -I {} echo "Would delete: {}"
+
+# Actually delete merged branches
+cleanup:
+	git branch --merged master | grep -v "master" | xargs git branch -d
