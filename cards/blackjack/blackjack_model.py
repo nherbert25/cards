@@ -93,14 +93,16 @@ class BlackjackModel:
             self._resolve_dealer_turn(self.dealer)
 
     # TODO: implement splitting pairs
-    # A split is allowed when the player's initial two cards are of the same rank (e.g., two 8s, two Kings).
-    # The player splits the pair into two separate hands by matching their original bet on the second hand.
-    # Each hand is then played independently.
-    # Re-splitting: Some casinos allow players to re-split pairs up to 3-4 times.
-    # Aces: Splitting Aces usually comes with restrictions, like only one additional card dealt per hand.
-    # Making 21 after splitting pairs is usually NOT considered a blackjack.
-    # Doubling after Split (DAS): Some casinos allow doubling down after splitting pairs.
     def split_pair(self, player: Player):
+        """
+        A split is allowed when the player's initial two cards are of the same rank (e.g., two 8s, two Kings).
+        The player splits the pair into two separate hands by matching their original bet on the second hand.
+        Each hand is then played independently.
+        Re-splitting: Some casinos allow players to re-split pairs up to 3-4 times.
+        Aces: Splitting Aces usually comes with restrictions, like only one additional card dealt per hand.
+        Making 21 after splitting pairs is usually NOT considered a blackjack.
+        Doubling after Split (DAS): Some casinos allow doubling down after splitting pairs.
+        """
         pass
 
     # TODO: doubledown is broken after adding hand_index
@@ -110,22 +112,23 @@ class BlackjackModel:
         self.hit(player, hand_index)
 
     # TODO: implement insurance
-    """
-    Insurance is offered when the dealer's upcard is an Ace.
-    The player can make a side bet of up to half the original bet that the dealer’s hole card is a 10-value card (making blackjack).
-    If the dealer has blackjack, the insurance bet pays 2:1, covering the original bet.
-    If the dealer does not have blackjack, the insurance bet is lost.
-    """
-
     def insurance(self, player: Player):
+        """
+        Insurance is offered when the dealer's upcard is an Ace.
+        The player can make a side bet of up to half the original bet that the dealer’s hole card is a 10-value card (making blackjack).
+        If the dealer has blackjack, the insurance bet pays 2:1, covering the original bet.
+        If the dealer does not have blackjack, the insurance bet is lost.
+        """
         pass
 
     # TODO: implement surrender
-    # The player forfeits half of their original bet and ends their hand immediately.
-    # Two variants, early surrender and late surrender.
-    # Early Surrender: Players can surrender before the dealer checks for blackjack. This is less common and generally more favorable to the player.
-    # Late Surrender: Players can surrender after the dealer checks for blackjack. If the dealer has blackjack, the surrender option is not available.
     def surrender(self, player: Player):
+        """
+        The player forfeits half of their original bet and ends their hand immediately.
+        Two variants, early surrender and late surrender.
+        Early Surrender: Players can surrender before the dealer checks for blackjack. This is less common and generally more favorable to the player.
+        Late Surrender: Players can surrender after the dealer checks for blackjack. If the dealer has blackjack, the surrender option is not available.
+        """
         pass
 
     def get_player(self, user_id: str) -> Optional[Player]:
