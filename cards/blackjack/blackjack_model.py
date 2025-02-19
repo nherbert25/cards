@@ -83,16 +83,16 @@ class BlackjackModel:
     def hit(self, player: Player, hand_index: int) -> None:
         current_hand = player.get_hand(hand_index)
         current_hand.hit(self.deck.cards.pop())
-        if self.if_all_hands_have_stayed():
+        if self._if_all_hands_have_stayed():
             self.resolve_dealer_turn(self.dealer)
 
     def stay(self, player: Player, hand_index: int) -> None:
         player.stay_hand(hand_index)
 
-        if self.if_all_hands_have_stayed():
+        if self._if_all_hands_have_stayed():
             self.resolve_dealer_turn(self.dealer)
 
-    def if_all_hands_have_stayed(self) -> bool:
+    def _if_all_hands_have_stayed(self) -> bool:
         for player in self.players.values():
             for hand in player.hands:
                 if not hand.has_stayed:
