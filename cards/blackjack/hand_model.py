@@ -19,8 +19,6 @@ class Hand:
         self._bet: int = bet
         self._sum: int = 0
         self._has_stayed: bool = False
-        self._has_bust: bool = False
-        self._has_blackjack: bool = False
         self.cards: List[Card] = []
         self.win_or_lose_message: str = f'Current bet: {bet}'
         self.outcome: HandOutcome = HandOutcome.NOT_EVALUATED
@@ -40,19 +38,16 @@ class Hand:
 
     @property
     def has_bust(self):
-        return self._has_bust
+        return self.sum > self.BLACKJACK_MAX
 
     @property
     def has_blackjack(self):
-        return self._has_blackjack
+        return self.sum == self.BLACKJACK_MAX and len(self.cards) == 2
 
     def draw_card(self, card: Card):
         self.cards.append(card)
-        if self.sum > self.BLACKJACK_MAX:
+        if self.has_bust:
             self._hand_busts()
-        if self.sum == self.BLACKJACK_MAX:
-            if self._check_if_blackjack():
-                self._has_blackjack = True
 
     def discard_card(self, card: Card):
         self.cards.remove(card)
@@ -85,14 +80,10 @@ class Hand:
 
     def _hand_busts(self) -> None:
         self._has_stayed = True
-        self._has_bust = True
         self.win_or_lose_message = f'Busted!'
 
     def _hand_loses(self) -> None:
         self.win_or_lose_message = f'You lose! -{self.bet} coins!'
-
-    def _check_if_blackjack(self) -> bool:
-        return self.sum == self.BLACKJACK_MAX and len(self.cards) == 2
 
     @staticmethod
     def calculate_blackjack_sum(card_list: List[Card]) -> int:
