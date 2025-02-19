@@ -19,13 +19,19 @@ class Hand:
         self._bet: int = bet
         self._has_stayed: bool = False
         self.cards: List[Card] = []
-        self.win_or_lose_message: str = f'Current bet: {bet}'
+        self.win_or_lose_message: str = f'Current bet: {self.bet}'
         self.outcome: HandOutcome = HandOutcome.NOT_EVALUATED
-        self.sum_method: staticmethod = None
 
     @property
     def bet(self):
         return self._bet
+
+    @bet.setter
+    def bet(self, new_bet):
+        if new_bet < 0:
+            raise ValueError("Bet cannot be negative")
+        self._bet = new_bet
+        self.win_or_lose_message = f'Current bet: {self.bet}'
 
     @property
     def sum(self):

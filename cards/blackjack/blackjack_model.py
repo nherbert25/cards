@@ -105,10 +105,10 @@ class BlackjackModel:
         """
         pass
 
-    # TODO: doubledown is broken after adding hand_index
     def double_down(self, player: Player, hand_index):
-        player.bet = player.bet * 2
-        player.has_stayed = True
+        current_hand = player.get_hand(hand_index)
+        current_hand.bet *= 2
+        current_hand.stay()
         self.hit(player, hand_index)
 
     # TODO: implement insurance

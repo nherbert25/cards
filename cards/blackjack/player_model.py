@@ -50,9 +50,7 @@ class Player:
         elif payout == 0:
             self.win_or_lose_message = f'You Push!'
 
-    # TODO: implement this
     def new_round(self, bet):
-        self.player_outcome = None
         self.bet = bet
         self.win_or_lose_message = f'Current bet: {self.bet}'
         self.hands = []
