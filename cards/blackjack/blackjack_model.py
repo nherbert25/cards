@@ -85,13 +85,13 @@ class BlackjackModel:
         current_hand = player.get_hand(hand_index)
         current_hand.hit(self.deck.cards.pop())
         if self.if_all_hands_have_stayed():
-            self.resolve_dealer_turn()
+            self.resolve_dealer_turn(self.dealer)
 
     def stay(self, player: Player, hand_index: int) -> None:
         player.stay_hand(hand_index)
 
         if self.if_all_hands_have_stayed():
-            self.resolve_dealer_turn()
+            self.resolve_dealer_turn(self.dealer)
 
     def if_all_hands_have_stayed(self) -> bool:
         for player in self.players.values():
@@ -142,7 +142,7 @@ class BlackjackModel:
         pass
 
     # TODO: dealer face-down card is currently broken. Doesn't register a card exists, instead it draws a new one.
-    def resolve_dealer_turn(self, dealer: Hand = None) -> None:
+    def resolve_dealer_turn(self, dealer: Hand) -> None:
 
         if dealer.cards[0].hidden:
             dealer.cards[0].flip()

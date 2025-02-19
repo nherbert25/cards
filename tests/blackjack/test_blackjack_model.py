@@ -71,5 +71,6 @@ class TestBlackjackModel:
         mock_game.resolve_dealer_turn(mock_game.dealer)
         assert mock_game.dealer.sum == expected_output
 
-
-
+    # TODO: Write a test that will go through an entire round then resolve the dealers turn
+    def test_test_full_round(self):
+        pass

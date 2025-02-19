@@ -17,7 +17,6 @@ class Hand:
     def __init__(self, bet=50, blackjack_max=None):
         self.BLACKJACK_MAX: int = blackjack_max or Hand.BLACKJACK_MAX
         self._bet: int = bet
-        self._sum: int = 0
         self._has_stayed: bool = False
         self.cards: List[Card] = []
         self.win_or_lose_message: str = f'Current bet: {bet}'
