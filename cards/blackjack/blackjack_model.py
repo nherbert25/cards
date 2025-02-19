@@ -41,12 +41,8 @@ class BlackjackModel:
 
     def __init__(self, game_configs: GameConfigs):
         self.MINIMUM_BET = 50
-        self.dealer_hand = None
+        self.dealer = None
 
-
-        self.dealer_sum = None
-        self.dealer_cards = None
-        self.dealer_blackjack = False
         self.deck = Deck()
         self.game_exists: bool = False
 
@@ -67,14 +63,13 @@ class BlackjackModel:
     def start_new_game(self) -> None:
         self.deck = Deck()
         self.deck.shuffle()
-        self.dealer_blackjack = False
 
-        self.dealer_hand = Hand(blackjack_max=self.BLACKJACK_MAX)
-        self.dealer_hand.hit(self.deck.cards.pop())
-        self.dealer_hand.hit(self.deck.cards.pop())
+        self.dealer = Hand(blackjack_max=self.BLACKJACK_MAX)
+        self.dealer.draw_card(self.deck.cards.pop())
+        self.dealer.draw_card(self.deck.cards.pop())
 
-        self.dealer_cards = [Card('0', 'None', hidden=True), self.deck.cards.pop()]
-        self.dealer_sum = self.calculate_blackjack_sum(self.dealer_cards)
+        # self.dealer_cards = [Card('0', 'None', hidden=True), self.deck.cards.pop()]
+
         for player in self.players.values():
             player.new_round(self.MINIMUM_BET)
 
@@ -146,29 +141,28 @@ class BlackjackModel:
     def surrender(self, player: Player):
         pass
 
-    # TODO: dealer facedown card is currenlty broken. Doesn't register a card exists, instead it draws a new one.
-    def resolve_dealer_turn(self, dealer_cards=None) -> None:
-        if dealer_cards is None:
-            dealer_cards = self.dealer_cards
+    # TODO: dealer face-down card is currently broken. Doesn't register a card exists, instead it draws a new one.
+    def resolve_dealer_turn(self, dealer: Hand = None) -> None:
 
-        if dealer_cards[0].rank == 0:
-            flip_face_down_card = self.deck.cards.pop()
-            dealer_cards[0] = flip_face_down_card
+        if dealer.cards[0].hidden:
+            dealer.cards[0].flip()
 
         # dealer draws
-        self.dealer_sum = self.calculate_blackjack_sum(dealer_cards)
-        while self.dealer_sum < BlackjackModel.DEALER_HOLD_THRESHOLD:
-            dealer_cards.append(self.deck.cards.pop())
-            self.dealer_sum = self.calculate_blackjack_sum(dealer_cards)
-            if self.dealer_sum == BlackjackModel.BLACKJACK_MAX and len(dealer_cards) == 2:
-                self.dealer_blackjack = True
+        while dealer.sum < BlackjackModel.DEALER_HOLD_THRESHOLD:
+            dealer.cards.append(self.deck.cards.pop())
 
         # evaluate each hand and resolve bets
         for player in self.players.values():
             for hand in player.hands:
-                hand.evaluate_outcome(self._determine_outcome(self.dealer_sum, hand.sum, self.dealer_blackjack,
+                hand.evaluate_outcome(self._determine_outcome(self.dealer.sum, hand.sum, self.dealer.has_blackjack,
                                                               hand.has_blackjack))
             player.evaluate_round_end()
+
+    def get_player(self, user_id: str) -> Optional[Player]:
+        try:
+            return self.players.get(UUID(user_id))
+        except Exception as e:
+            print(f"Unexpected error when searching for player with user_id {user_id}: {e}")
 
     @staticmethod
     def _determine_outcome(dealer_sum: int, hand_sum: int, dealer_blackjack: bool = False,
@@ -188,12 +182,6 @@ class BlackjackModel:
         elif dealer_sum > hand_sum:
             return HandOutcome.LOSE
 
-    def get_player(self, user_id: str) -> Optional[Player]:
-        try:
-            return self.players.get(UUID(user_id))
-        except Exception as e:
-            print(f"Unexpected error when searching for player with user_id {user_id}: {e}")
-
     @staticmethod
     def if_player_wins(player_sum: int, player_blackjack: bool, dealer_sum: int, dealer_blackjack: bool) -> bool:
         if player_sum > BlackjackModel.BLACKJACK_MAX:
@@ -211,33 +199,6 @@ class BlackjackModel:
     def if_player_pushes(player_sum: int, player_blackjack: bool, dealer_sum: int,
                          dealer_blackjack: bool) -> bool:
         return player_sum == dealer_sum and player_blackjack == dealer_blackjack
-
-    @staticmethod
-    def calculate_blackjack_sum(card_list: List[Card]) -> int:
-        result = 0
-        ace_count = 0
-        for card in card_list:
-            if card.hidden:
-                continue
-            if card.rank == 'A':
-                ace_count += 1
-            else:
-                if card.rank in ['J', 'Q', 'K']:
-                    value = 10
-                else:
-                    value = int(card.rank)
-                result += value
-        if ace_count == 1:
-            if result + 11 > BlackjackModel.BLACKJACK_MAX:
-                return result + 1
-            else:
-                return result + 11
-        elif ace_count > 1:
-            if result + 11 + ace_count - 1 > BlackjackModel.BLACKJACK_MAX:
-                return result + ace_count
-            else:
-                return result + 11 + ace_count - 1
-        return result
 
     @staticmethod
     def get_blackjack_max():

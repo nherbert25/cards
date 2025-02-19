@@ -24,8 +24,8 @@ class BlackjackController:
     def serialize_blackjack_data(self) -> dict:
         result = {
             'BLACKJACK_MAX': self.blackjack_model.BLACKJACK_MAX,
-            'dealer_cards': [card.to_dict() for card in self.blackjack_model.dealer_cards],
-            'dealer_sum': self.blackjack_model.dealer_sum,
+            'dealer_cards': [card.to_dict() for card in self.blackjack_model.dealer.cards],
+            'dealer_sum': self.blackjack_model.dealer.sum,
             'button1_count': self.counts['button1'],
             'button2_count': self.counts['button2'],
             'players_data_object': {},

@@ -1,6 +1,7 @@
 import pytest
 
-from tests.blackjack.test_configs import initial_game_blackjack
+from tests.blackjack.test_configs import initial_game_blackjack, generate_test_hand, example_hand_total_6, \
+    example_hand_total_25
 from cards.blackjack.blackjack_model import BlackjackModel, GameConfigs
 from cards.blackjack.player_model import Player
 from cards.blackjack.hand_model import Hand, HandOutcome
@@ -12,21 +13,21 @@ def generate_test_players():
     hand = Hand()
     cards = [Card('3', 'C'), Card('3', 'C')]
     for card in cards:
-        hand.hit(card, BlackjackModel.calculate_blackjack_sum())
+        hand.hit(card)
     player_1.add_hand(hand)
 
     player_2 = Player(player_name='Nate')
     hand = Hand()
     cards = [Card('10', 'C'), Card('A', 'C')]
     for card in cards:
-        hand.hit(card, BlackjackModel.calculate_blackjack_sum())
+        hand.hit(card)
     player_2.add_hand(hand)
 
     player_3 = Player(player_name='Travis')
     hand = Hand()
     cards = [Card('3', 'C'), Card('3', 'C')]
     for card in cards:
-        hand.hit(card, BlackjackModel.calculate_blackjack_sum())
+        hand.hit(card)
     player_3.add_hand(hand)
 
     return player_1, player_2, player_3
@@ -38,23 +39,6 @@ class TestBlackjackModel:
         mock_create_game = mocker.patch('cards.blackjack.controller.BlackjackController.serialize_blackjack_data',
                                         return_value=initial_game_blackjack)
         blackjack_game = BlackjackModel(GameConfigs)
-
-    # working test with parametrization (allows you to run the same test with multiple inputs) note that 'test_input,
-    # expected_output' is a SINGLE string! also note the class must be instantiated first. pytest methods do not take
-    # the 'self' keyword, you must *always* instantiate your test class.
-    @pytest.mark.parametrize('test_input, expected_output', (
-            ([], 0),
-            ([Card('10', 'C')], 10),
-            ([Card('3', 'C'), Card('3', 'C')], 6),
-            ([Card('5', 'C'), Card('K', 'C'), Card('Q', 'C')], 25),
-            ([Card('A', 'C'), Card('A', 'D')], 12),
-            ([Card('A', 'C'), Card('A', 'D'), Card('A', 'D')], 13),
-            ([Card('A', 'C'), Card('J', 'D')], 21),
-            ([Card('A', 'C'), Card('A', 'D'), Card('Q', 'D')], 12)))
-    def test_calculate_blackjack_sum(self, test_input, expected_output):
-        model = BlackjackModel(GameConfigs)
-        result = model.calculate_blackjack_sum(test_input)
-        assert result == expected_output
 
     @pytest.mark.parametrize(
         "dealer_sum, player_sum, dealer_blackjack, player_blackjack, expected_outcome",
@@ -77,14 +61,15 @@ class TestBlackjackModel:
         result = BlackjackModel._determine_outcome(dealer_sum, player_sum, dealer_blackjack, player_blackjack)
         assert result == expected_outcome
 
+    # TODO: The first test draws an Ace since the deck defaults with an Ace on top. It's not great.
     @pytest.mark.parametrize('test_input, expected_output', (
-            ([Card('3', 'C'), Card('3', 'C')], 17),
-            ([Card('5', 'C'), Card('K', 'C'), Card('Q', 'C')], 25)))
+            (example_hand_total_6, 17),
+            (example_hand_total_25, 25)))
     def test_resolve_dealer_turn(self, test_input, expected_output):
         mock_game = BlackjackModel(GameConfigs)
-        # mock_game.players = generate_test_players()
-        mock_game.resolve_dealer_turn(test_input)
-        assert mock_game.dealer_sum == expected_output
+        mock_game.dealer = test_input
+        mock_game.resolve_dealer_turn(mock_game.dealer)
+        assert mock_game.dealer.sum == expected_output
 
 
 

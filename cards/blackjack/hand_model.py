@@ -34,6 +34,8 @@ class Hand:
 
     @property
     def has_stayed(self):
+        if self.sum >= self.BLACKJACK_MAX:
+            self._has_stayed = True
         return self._has_stayed
 
     @property
