@@ -12,7 +12,7 @@ class GameConfigs:
     # Game configs:
     NUMBER_OF_DECKS = 1
     BLACKJACK_RATIO = 1.5  # Standard payouts for a blackjack (Ace + 10-value card) are 3:2, but some tables pay 6:5, which increases the house edge.
-    DOUBLE_DOWN_RATIO = 2  # How much a player wins/loses if they double down on a bet
+
 
     # Variants
     DEALER_HITS_ON_SOFT_17 = False  # Dealers must hit on soft 17 (Ace + 6) or stand on all 17s, depending on the casino’s rules. Soft Hand: A hand containing an Ace counted as 11. For example, Ace + 6 = "Soft 17."
@@ -39,6 +39,7 @@ class GameConfigs:
 class BlackjackModel:
     BLACKJACK_MAX = 21
     DEALER_HOLD_THRESHOLD = 17
+    DOUBLE_DOWN_RATIO = 2  # How much a player wins/loses if they double down on a bet
 
     def __init__(self, game_configs: GameConfigs):
         self.MINIMUM_BET = 50
