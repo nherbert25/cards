@@ -84,25 +84,13 @@ class BlackjackModel:
         current_hand = player.get_hand(hand_index)
         current_hand.hit(self.deck.cards.pop())
         if self._if_all_hands_have_stayed():
-            self.resolve_dealer_turn(self.dealer)
+            self._resolve_dealer_turn(self.dealer)
 
     def stay(self, player: Player, hand_index: int) -> None:
         player.stay_hand(hand_index)
 
         if self._if_all_hands_have_stayed():
-            self.resolve_dealer_turn(self.dealer)
-
-    def _if_all_hands_have_stayed(self) -> bool:
-        for player in self.players.values():
-            for hand in player.hands:
-                if not hand.has_stayed:
-                    return False
-        return True
-
-    # Todo: determine payouts!
-    # Blackjack Payout: 3:2 (e.g., $10 bet wins $15). Some casinos offer 6:5, which is less favorable.
-    def determine_payout(self, player: Player):
-        return player.bet
+            self._resolve_dealer_turn(self.dealer)
 
     # TODO: implement splitting pairs
     # A split is allowed when the player's initial two cards are of the same rank (e.g., two 8s, two Kings).
@@ -140,8 +128,13 @@ class BlackjackModel:
     def surrender(self, player: Player):
         pass
 
-    def resolve_dealer_turn(self, dealer: Hand) -> None:
+    def get_player(self, user_id: str) -> Optional[Player]:
+        try:
+            return self.players.get(UUID(user_id))
+        except Exception as e:
+            print(f"Unexpected error when searching for player with user_id {user_id}: {e}")
 
+    def _resolve_dealer_turn(self, dealer: Hand) -> None:
         if dealer.cards[0].hidden:
             dealer.cards[0].flip()
 
@@ -156,11 +149,17 @@ class BlackjackModel:
                                                               hand.has_blackjack))
             player.evaluate_round_end()
 
-    def get_player(self, user_id: str) -> Optional[Player]:
-        try:
-            return self.players.get(UUID(user_id))
-        except Exception as e:
-            print(f"Unexpected error when searching for player with user_id {user_id}: {e}")
+    def _if_all_hands_have_stayed(self) -> bool:
+        for player in self.players.values():
+            for hand in player.hands:
+                if not hand.has_stayed:
+                    return False
+        return True
+
+    # Todo: determine payouts!
+    # Blackjack Payout: 3:2 (e.g., $10 bet wins $15). Some casinos offer 6:5, which is less favorable.
+    def _determine_payout(self, player: Player):
+        return player.bet
 
     @staticmethod
     def _determine_outcome(dealer_sum: int, hand_sum: int, dealer_blackjack: bool = False,
@@ -181,7 +180,7 @@ class BlackjackModel:
             return HandOutcome.LOSE
 
     @staticmethod
-    def if_player_wins(player_sum: int, player_blackjack: bool, dealer_sum: int, dealer_blackjack: bool) -> bool:
+    def _if_player_wins(player_sum: int, player_blackjack: bool, dealer_sum: int, dealer_blackjack: bool) -> bool:
         if player_sum > BlackjackModel.BLACKJACK_MAX:
             return False
         elif dealer_sum > BlackjackModel.BLACKJACK_MAX:
@@ -194,7 +193,7 @@ class BlackjackModel:
             return False
 
     @staticmethod
-    def if_player_pushes(player_sum: int, player_blackjack: bool, dealer_sum: int,
+    def _if_player_pushes(player_sum: int, player_blackjack: bool, dealer_sum: int,
                          dealer_blackjack: bool) -> bool:
         return player_sum == dealer_sum and player_blackjack == dealer_blackjack
 
