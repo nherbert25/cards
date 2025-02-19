@@ -66,9 +66,8 @@ class BlackjackModel:
 
         self.dealer = Hand(blackjack_max=self.BLACKJACK_MAX)
         self.dealer.draw_card(self.deck.cards.pop())
+        self.dealer.cards[0].flip()
         self.dealer.draw_card(self.deck.cards.pop())
-
-        # self.dealer_cards = [Card('0', 'None', hidden=True), self.deck.cards.pop()]
 
         for player in self.players.values():
             player.new_round(self.MINIMUM_BET)
@@ -141,7 +140,6 @@ class BlackjackModel:
     def surrender(self, player: Player):
         pass
 
-    # TODO: dealer face-down card is currently broken. Doesn't register a card exists, instead it draws a new one.
     def resolve_dealer_turn(self, dealer: Hand) -> None:
 
         if dealer.cards[0].hidden:
