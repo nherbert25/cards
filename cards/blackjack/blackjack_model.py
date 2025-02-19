@@ -12,6 +12,7 @@ class GameConfigs:
     # Game configs:
     NUMBER_OF_DECKS = 1
     BLACKJACK_RATIO = 1.5  # Standard payouts for a blackjack (Ace + 10-value card) are 3:2, but some tables pay 6:5, which increases the house edge.
+    DOUBLE_DOWN_RATIO = 2  # How much a player wins/loses if they double down on a bet
 
     # Variants
     DEALER_HITS_ON_SOFT_17 = False  # Dealers must hit on soft 17 (Ace + 6) or stand on all 17s, depending on the casino’s rules. Soft Hand: A hand containing an Ace counted as 11. For example, Ace + 6 = "Soft 17."
@@ -74,6 +75,7 @@ class BlackjackModel:
 
         # all players must reset *before* drawing cards, otherwise first player hitting can erroneously proc downstream logic
         for player in self.players.values():
+            # TODO: replace player.hands.append with player.add_hand()
             player.hands.append(Hand(blackjack_max=self.BLACKJACK_MAX))
             self.hit(player, 0)
         for player in self.players.values():
@@ -107,7 +109,7 @@ class BlackjackModel:
 
     def double_down(self, player: Player, hand_index):
         current_hand = player.get_hand(hand_index)
-        current_hand.bet *= 2
+        current_hand.bet *= self.DOUBLE_DOWN_RATIO
         current_hand.stay()
         self.hit(player, hand_index)
 
@@ -197,7 +199,7 @@ class BlackjackModel:
 
     @staticmethod
     def _if_player_pushes(player_sum: int, player_blackjack: bool, dealer_sum: int,
-                         dealer_blackjack: bool) -> bool:
+                          dealer_blackjack: bool) -> bool:
         return player_sum == dealer_sum and player_blackjack == dealer_blackjack
 
     @staticmethod
