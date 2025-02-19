@@ -49,18 +49,18 @@ class Hand:
     def draw_card(self, card: Card):
         self.cards.append(card)
         if self.sum > self.BLACKJACK_MAX:
-            self.hand_busts()
+            self._hand_busts()
         if self.sum == self.BLACKJACK_MAX:
-            if self.check_if_blackjack():
+            if self._check_if_blackjack():
                 self._has_blackjack = True
 
     def discard_card(self, card: Card):
         self.cards.remove(card)
 
-    def hit(self, card: Card, sum_method):
+    def hit(self, card: Card):
         self.draw_card(card)
 
-        if self._has_blackjack:
+        if self.has_blackjack:
             self.win_or_lose_message = 'Blackjack!'
             self._has_stayed = True
 
@@ -77,21 +77,21 @@ class Hand:
         elif self.outcome == HandOutcome.LOSE:
             self.win_or_lose_message = f'You lose! -{self.bet} coins!'
 
-    def hand_wins(self) -> None:
+    def _hand_wins(self) -> None:
         self.win_or_lose_message = f'You win! +{self.bet} coins!'
 
-    def hand_pushes(self) -> None:
+    def _hand_pushes(self) -> None:
         self.win_or_lose_message = f'You Push!'
 
-    def hand_busts(self) -> None:
+    def _hand_busts(self) -> None:
         self._has_stayed = True
         self._has_bust = True
         self.win_or_lose_message = f'Busted!'
 
-    def hand_loses(self) -> None:
+    def _hand_loses(self) -> None:
         self.win_or_lose_message = f'You lose! -{self.bet} coins!'
 
-    def check_if_blackjack(self) -> bool:
+    def _check_if_blackjack(self) -> bool:
         return self.sum == self.BLACKJACK_MAX and len(self.cards) == 2
 
     @staticmethod

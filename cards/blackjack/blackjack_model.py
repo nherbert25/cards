@@ -70,8 +70,8 @@ class BlackjackModel:
         self.dealer_blackjack = False
 
         self.dealer_hand = Hand(blackjack_max=self.BLACKJACK_MAX)
-        self.dealer_hand.hit(self.deck.cards.pop(), self.calculate_blackjack_sum)
-        self.dealer_hand.hit(self.deck.cards.pop(), self.calculate_blackjack_sum)
+        self.dealer_hand.hit(self.deck.cards.pop())
+        self.dealer_hand.hit(self.deck.cards.pop())
 
         self.dealer_cards = [Card('0', 'None', hidden=True), self.deck.cards.pop()]
         self.dealer_sum = self.calculate_blackjack_sum(self.dealer_cards)
@@ -88,7 +88,7 @@ class BlackjackModel:
 
     def hit(self, player: Player, hand_index: int) -> None:
         current_hand = player.get_hand(hand_index)
-        current_hand.hit(self.deck.cards.pop(), self.calculate_blackjack_sum)
+        current_hand.hit(self.deck.cards.pop())
         if self.if_all_hands_have_stayed():
             self.resolve_dealer_turn()
 
@@ -193,9 +193,6 @@ class BlackjackModel:
             return self.players.get(UUID(user_id))
         except Exception as e:
             print(f"Unexpected error when searching for player with user_id {user_id}: {e}")
-
-    def has_blackjack(self, hand: Hand) -> bool:
-        return self.calculate_blackjack_sum(hand.cards) == BlackjackModel.BLACKJACK_MAX and len(hand.cards) == 2
 
     @staticmethod
     def if_player_wins(player_sum: int, player_blackjack: bool, dealer_sum: int, dealer_blackjack: bool) -> bool:
