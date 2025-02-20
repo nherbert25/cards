@@ -94,6 +94,10 @@ function pressDoubleDown(user_id) {
     socket.emit('double_down', user_id);
 };
 
+function pressSplitPair(user_id){
+    socket.emit('split_pair', user_id);
+};
+
 function pressNewGame() {
     socket.emit('new_game');
 };
@@ -174,11 +178,18 @@ function updateHandDiv(playerID, handID, handData, BLACKJACK_MAX) {
         stay_button.disabled = false;
     }
 
-    const double_down_button = document.getElementById('double-down-button-' + playerID + '-' + handID);
+    const double_down_button = document.getElementById('double-down-button-' + playerID + '-'  + handID);
     if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
         double_down_button.disabled = true;
     } else {
         double_down_button.disabled = false;
+    }
+
+    const split_pair_button = document.getElementById('split-pair-button-' + playerID + '-'  + handID);
+    if (!handData.can_split_pair || handData.has_stayed) {
+        split_pair_button.disabled = true;
+    } else {
+        split_pair_button.disabled = false;
     }
 };
 
@@ -227,6 +238,7 @@ function createHandDiv(playerID, handID, playerData, handData) {
             <button id='hit-button-${playerID}-${handID}' class="hand-button" onclick="pressHit('${playerID}')">Hit</button>
             <button id='stay-button-${playerID}-${handID}' class="hand-button" onclick="pressStay('${playerID}')">Stay</button>
             <button id='double-down-button-${playerID}-${handID}' class="hand-button" onclick="pressDoubleDown('${playerID}')">Double Down</button>
+            <button id='split-pair-button-${playerID}-${handID}' class="hand-button" onclick="pressSplitPair('${playerID}')">Split Pair</button>
             <button id='new-game-button-${playerID}-${handID}' class="hand-button" onclick="pressNewGame()">New Game</button>
         </div>
     `;

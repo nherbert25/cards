@@ -13,7 +13,6 @@ class GameConfigs:
     NUMBER_OF_DECKS = 1
     BLACKJACK_RATIO = 1.5  # Standard payouts for a blackjack (Ace + 10-value card) are 3:2, but some tables pay 6:5, which increases the house edge.
 
-
     # Variants
     DEALER_HITS_ON_SOFT_17 = False  # Dealers must hit on soft 17 (Ace + 6) or stand on all 17s, depending on the casino’s rules. Soft Hand: A hand containing an Ace counted as 11. For example, Ace + 6 = "Soft 17."
     RESTRICTED_DOUBLING = False  # Some tables limit doubling down to totals of 9, 10, or 11.
@@ -110,7 +109,7 @@ class BlackjackModel:
         Making 21 after splitting pairs is usually NOT considered a blackjack.
         Doubling after Split (DAS): Some casinos allow doubling down after splitting pairs.
         """
-        pass
+        player.split_pair(hand_index)
 
     # TODO: implement insurance
     def insurance(self, player: Player):

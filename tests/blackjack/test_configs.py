@@ -98,3 +98,11 @@ example_hand_total_25 = generate_test_hand([Card('5', 'C'), Card('K', 'C'), Card
 example_hand_total_KQ = generate_test_hand([Card('K', 'C'), Card('Q', 'C')])
 example_hand_total_KK = generate_test_hand([Card('K', 'C'), Card('K', 'D')])
 example_hand_total_QQQ = generate_test_hand([Card('Q', 'C'), Card('Q', 'D'), Card('Q', 'H')])
+
+
+# functions are required to avoid creating the object once. Otherwise multiple tests will use the same object, if they moidfy it, the test is void.
+def example_hand_KK():
+    return Hand([Card('K', 'C'), Card('K', 'D')])
+
+def example_hand_KQ():
+    return Hand([Card('K', 'C'), Card('Q', 'D')])

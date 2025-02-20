@@ -42,7 +42,7 @@ class Player:
         current_hand = self.get_hand(hand_index)
         if current_hand.can_split_pair:
             hand_1, hand_2 = current_hand.split_pair()
-            self.add_hand(hand_index+1, hand_2)
+            self.add_hand(hand_2, hand_index+1)
 
     def evaluate_round_end(self):
         payout = 0

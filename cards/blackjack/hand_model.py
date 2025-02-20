@@ -162,6 +162,7 @@ class Hand:
             "sum": self.sum,
             "has_stayed": self.has_stayed,
             "has_blackjack": self.has_blackjack,
+            "can_split_pair": self.can_split_pair,
             "win_or_lose_message": self.win_or_lose_message,
             "outcome": self.outcome.name  # Assuming HandOutcome is an Enum
         }

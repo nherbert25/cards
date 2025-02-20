@@ -5,7 +5,7 @@ from cards.blackjack.hand_model import Hand
 from cards.blackjack.card_model import Card
 
 
-class TestBlackjackModel:
+class TestHandModel:
     @pytest.fixture
     def mock_game(self, mocker):
         pass
