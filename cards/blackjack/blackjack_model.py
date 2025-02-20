@@ -76,8 +76,7 @@ class BlackjackModel:
 
         # all players must reset *before* drawing cards, otherwise first player hitting can erroneously proc downstream logic
         for player in self.players.values():
-            # TODO: replace player.hands.append with player.add_hand()
-            player.hands.append(Hand(blackjack_max=self.BLACKJACK_MAX))
+            player.add_hand(Hand(blackjack_max=self.BLACKJACK_MAX))
             self.hit(player, 0)
         for player in self.players.values():
             self.hit(player, 0)
@@ -108,7 +107,7 @@ class BlackjackModel:
         """
         pass
 
-    def double_down(self, player: Player, hand_index):
+    def double_down(self, player: Player, hand_index: int) -> None:
         current_hand = player.get_hand(hand_index)
         current_hand.bet *= self.DOUBLE_DOWN_RATIO
         current_hand.stay()
