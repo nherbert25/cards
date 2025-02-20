@@ -56,7 +56,7 @@ class Hand:
         return self.sum == self.BLACKJACK_MAX and len(self.cards) == 2
 
     @property
-    def can_split_pairs(self) -> bool:
+    def can_split_pair(self) -> bool:
         return len(self.cards) == 2 and self.cards[0].rank == self.cards[1].rank
 
     def hit(self, card: Card) -> None:
@@ -71,8 +71,8 @@ class Hand:
     def stay(self):
         self._has_stayed = True
 
-    def split_pairs(self) -> Tuple["Hand", "Hand"] | None:
-        if not self.can_split_pairs:
+    def split_pair(self) -> Tuple["Hand", "Hand"] | None:
+        if not self.can_split_pair:
             print('Cannot split!')
             return None
         else:

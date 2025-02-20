@@ -45,12 +45,12 @@ class TestBlackjackRoutes:
     def test_hit(self, client, mocker):
         mock_hit = mocker.patch('cards.blackjack.controller.BlackjackController.hit')
         client.emit('hit', '2290c4b3-5f33-498b-85f1-92da8da356b1')
-        mock_hit.assert_called_once_with('2290c4b3-5f33-498b-85f1-92da8da356b1')
+        mock_hit.assert_called_once_with('2290c4b3-5f33-498b-85f1-92da8da356b1', 0)
 
     def test_stay(self, client, mocker):
         mock_stay = mocker.patch('cards.blackjack.controller.BlackjackController.stay')
         client.emit('stay', '2290c4b3-5f33-498b-85f1-92da8da356b1')
-        mock_stay.assert_called_once_with('2290c4b3-5f33-498b-85f1-92da8da356b1')
+        mock_stay.assert_called_once_with('2290c4b3-5f33-498b-85f1-92da8da356b1', 0)
 
     def test_new_game(self, client, mocker):
         mock_new_game = mocker.patch('cards.blackjack.controller.BlackjackController.new_game')

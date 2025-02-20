@@ -32,19 +32,19 @@ class TestBlackjackModel:
             (example_hand_total_KK, True),
             (example_hand_total_QQQ, False),
     ))
-    def test_can_split_pairs(self, test_input, expected_output):
-        assert test_input.can_split_pairs == expected_output
+    def test_can_split_pair(self, test_input, expected_output):
+        assert test_input.can_split_pair == expected_output
 
     @pytest.mark.parametrize('test_input, expected_output', (
             (example_hand_total_KK, (Card('K', 'C'), (Card('K', 'D')))),
             (example_hand_total_KQ, None),
 
     ))
-    def test_split_pairs(self, test_input, expected_output):
-        if not test_input.can_split_pairs:
-            assert test_input.split_pairs() is None
+    def test_split_pair(self, test_input, expected_output):
+        if not test_input.can_split_pair:
+            assert test_input.split_pair() is None
 
         else:
-            hand_1, hand_2 = test_input.split_pairs()
+            hand_1, hand_2 = test_input.split_pair()
             assert hand_1[0] == expected_output[0]
             assert hand_2[0] == expected_output[1]

@@ -40,8 +40,8 @@ class Player:
 
     def split_pair(self, hand_index: int) -> None:
         current_hand = self.get_hand(hand_index)
-        if current_hand.can_split_pairs:
-            hand_1, hand_2 = current_hand.split_pairs()
+        if current_hand.can_split_pair:
+            hand_1, hand_2 = current_hand.split_pair()
             self.add_hand(hand_index+1, hand_2)
 
     def evaluate_round_end(self):

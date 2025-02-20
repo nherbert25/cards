@@ -14,33 +14,39 @@ def blackjack():
 
 
 @socketio.on('hit')
-def hit(user_id=None):
-    blackjack_controller.hit(user_id)
+def hit(user_id=None, hand_index=0):
+    blackjack_controller.hit(user_id, hand_index)
     emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
 
 
 @socketio.on('stay')
-def stay(user_id=None):
-    blackjack_controller.stay(user_id)
+def stay(user_id=None, hand_index=0):
+    blackjack_controller.stay(user_id, hand_index)
     emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
 
 
 @socketio.on('double_down')
-def double_down(user_id=None):
-    blackjack_controller.double_down(user_id)
+def double_down(user_id=None, hand_index=0):
+    blackjack_controller.double_down(user_id, hand_index)
     emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
+
+
+@socketio.on('split_pair')
+def split_pair(user_id=None, hand_index=0):
+    blackjack_controller.split_pair(user_id, hand_index)
+    emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
+
+
+# TODO: add ability to change bet amount
+@socketio.on('bet')
+def bet(user_id=None, hand_index=0):
+    pass
 
 
 @socketio.on('new_game')
 def new_game():
     blackjack_controller.new_game()
     emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
-
-
-# TODO: add ability to change bet amount
-@socketio.on('bet')
-def bet(user_id=None):
-    pass
 
 
 @socketio.on('request_game_data')

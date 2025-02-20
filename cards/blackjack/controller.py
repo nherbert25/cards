@@ -47,5 +47,9 @@ class BlackjackController:
         player_object = self.blackjack_model.get_player(user_id)
         self.blackjack_model.double_down(player_object, hand_index)
 
+    def split_pair(self, user_id: str, hand_index: int = 0) -> None:
+        player_object = self.blackjack_model.get_player(user_id)
+        self.blackjack_model.split_pair(player_object, hand_index)
+
     def new_game(self) -> None:
         self.blackjack_model.start_new_game()

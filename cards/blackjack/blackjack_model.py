@@ -18,7 +18,7 @@ class GameConfigs:
     DEALER_HITS_ON_SOFT_17 = False  # Dealers must hit on soft 17 (Ace + 6) or stand on all 17s, depending on the casino’s rules. Soft Hand: A hand containing an Ace counted as 11. For example, Ace + 6 = "Soft 17."
     RESTRICTED_DOUBLING = False  # Some tables limit doubling down to totals of 9, 10, or 11.
 
-    ALLOW_SPLIT_PAIRS = True
+    ALLOW_SPLIT_PAIR = True
     SPLITTING_ACES_ADDITIONAL_RULES = False  # Only one additional card per split Ace. Blackjack is usually not recognized on split Aces (it pays 1:1, not 3:2).
     SPLITTING_RESTRICTIONS = False  # Some tables disallow splitting certain pairs, though this is rare.
 
@@ -94,6 +94,12 @@ class BlackjackModel:
         if self._if_all_hands_have_stayed():
             self._resolve_dealer_turn(self.dealer)
 
+    def double_down(self, player: Player, hand_index: int) -> None:
+        current_hand = player.get_hand(hand_index)
+        current_hand.bet *= self.DOUBLE_DOWN_RATIO
+        current_hand.stay()
+        self.hit(player, hand_index)
+
     def split_pair(self, player: Player, hand_index: int) -> None:
         """
         A split is allowed when the player's initial two cards are of the same rank (e.g., two 8s, two Kings).
@@ -105,12 +111,6 @@ class BlackjackModel:
         Doubling after Split (DAS): Some casinos allow doubling down after splitting pairs.
         """
         pass
-
-    def double_down(self, player: Player, hand_index: int) -> None:
-        current_hand = player.get_hand(hand_index)
-        current_hand.bet *= self.DOUBLE_DOWN_RATIO
-        current_hand.stay()
-        self.hit(player, hand_index)
 
     # TODO: implement insurance
     def insurance(self, player: Player):
