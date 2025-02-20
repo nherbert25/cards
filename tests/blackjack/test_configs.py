@@ -84,14 +84,17 @@ initial_game_blackjack = {
 }
 
 
-def generate_test_hand(cards: List[Card]):
+def generate_test_hand(cards: List[Card]) -> Hand:
     test_hand = Hand()
 
     for card in cards:
-        test_hand.draw_card(card)
+        test_hand.hit(card)
 
     return test_hand
 
 
 example_hand_total_6 = generate_test_hand([Card('3', 'C'), Card('3', 'C')])
 example_hand_total_25 = generate_test_hand([Card('5', 'C'), Card('K', 'C'), Card('Q', 'C')])
+example_hand_total_KQ = generate_test_hand([Card('K', 'C'), Card('Q', 'C')])
+example_hand_total_KK = generate_test_hand([Card('K', 'C'), Card('K', 'D')])
+example_hand_total_QQQ = generate_test_hand([Card('Q', 'C'), Card('Q', 'D'), Card('Q', 'H')])

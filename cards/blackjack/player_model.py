@@ -22,18 +22,27 @@ class Player:
             return self.hands[hand_index]
         raise IndexError(f"Hand index {hand_index} is out of bounds.")
 
-    def add_hand(self, hand: Hand) -> None:
-        self.hands.append(hand)
+    def add_hand(self, hand: Hand, index: int = None) -> None:
+        if index is None:
+            self.hands.append(hand)
+        else:
+            self.hands.insert(index, hand)
 
-    def stay_hand(self, hand_index) -> None:
+    def stay_hand(self, hand_index: int) -> None:
         try:
-            self.hands[hand_index].stay()
+            self.get_hand(hand_index).stay()
         except IndexError:
             logging.error(f"Attempted to locate hand: {hand_index}. Hand index doesn't exist. {len(self.hands)} in hand.", exc_info=True)  # Log error + traceback
             print(f"Attempted to locate hand: {hand_index}. Hand index doesn't exist. {len(self.hands)} in hand.")
         except Exception as e:
             logging.error(f"Unexpected error locating hand index: {hand_index}", exc_info=True)
             print(f"Unexpected error locating hand index: {hand_index}")
+
+    def split_pair(self, hand_index: int) -> None:
+        current_hand = self.get_hand(hand_index)
+        if current_hand.can_split_pairs:
+            hand_1, hand_2 = current_hand.split_pairs()
+            self.add_hand(hand_index+1, hand_2)
 
     def evaluate_round_end(self):
         payout = 0
@@ -44,9 +53,9 @@ class Player:
                 payout -= hand.bet
         self.coins += payout
         if payout > 0:
-            self.win_or_lose_message = f'You win! +{self.bet} coins!'
+            self.win_or_lose_message = f'You win! +{payout} coins!'
         elif payout < 0:
-            self.win_or_lose_message = f'You lose! -{self.bet} coins!'
+            self.win_or_lose_message = f'You lose! -{payout} coins!'
         elif payout == 0:
             self.win_or_lose_message = f'You Push!'
 

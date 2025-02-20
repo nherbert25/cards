@@ -94,8 +94,7 @@ class BlackjackModel:
         if self._if_all_hands_have_stayed():
             self._resolve_dealer_turn(self.dealer)
 
-    # TODO: implement splitting pairs
-    def split_pair(self, player: Player):
+    def split_pair(self, player: Player, hand_index: int) -> None:
         """
         A split is allowed when the player's initial two cards are of the same rank (e.g., two 8s, two Kings).
         The player splits the pair into two separate hands by matching their original bet on the second hand.

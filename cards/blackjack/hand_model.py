@@ -1,5 +1,6 @@
+from copy import deepcopy
 from enum import Enum
-from typing import List
+from typing import List, Optional, Tuple
 
 from cards.blackjack.card_model import Card
 
@@ -14,13 +15,16 @@ class HandOutcome(Enum):
 class Hand:
     BLACKJACK_MAX = 21
 
-    def __init__(self, bet=50, blackjack_max=None):
+    def __init__(self, bet=50, blackjack_max: Optional[int] = None, cards: Optional[list[Card]] = None):
         self.BLACKJACK_MAX: int = blackjack_max or Hand.BLACKJACK_MAX
         self._bet: int = bet
         self._has_stayed: bool = False
-        self.cards: List[Card] = []
+        self.cards: List[Card] = cards or []
         self.win_or_lose_message: str = f'Current bet: {self.bet}'
         self.outcome: HandOutcome = HandOutcome.NOT_EVALUATED
+
+    def __getitem__(self, index: int) -> Card:
+        return self.cards[index]
 
     @property
     def bet(self):
@@ -51,23 +55,32 @@ class Hand:
     def has_blackjack(self):
         return self.sum == self.BLACKJACK_MAX and len(self.cards) == 2
 
-    def draw_card(self, card: Card):
-        self.cards.append(card)
+    @property
+    def can_split_pairs(self) -> bool:
+        return len(self.cards) == 2 and self.cards[0].rank == self.cards[1].rank
+
+    def hit(self, card: Card) -> None:
+        self.draw_card(card)
+
         if self.has_bust:
             self._hand_busts()
 
-    def discard_card(self, card: Card):
-        self.cards.remove(card)
-
-    def hit(self, card: Card):
-        self.draw_card(card)
-
         if self.has_blackjack:
             self.win_or_lose_message = 'Blackjack!'
-            self._has_stayed = True
 
     def stay(self):
         self._has_stayed = True
+
+    def split_pairs(self) -> Tuple["Hand", "Hand"] | None:
+        if not self.can_split_pairs:
+            print('Cannot split!')
+            return None
+        else:
+            new_hand = deepcopy(self)
+            new_hand.cards.clear()
+            new_hand.hit(self.cards[1])
+            self.remove_card(self.cards[1])
+            return self, new_hand
 
     def evaluate_outcome(self, outcome: HandOutcome):
         self.outcome = outcome
@@ -79,6 +92,29 @@ class Hand:
         elif self.outcome == HandOutcome.LOSE:
             self.win_or_lose_message = f'You lose! -{self.bet} coins!'
 
+    def draw_card(self, card: Card) -> None:
+        self.cards.append(card)
+
+    def remove_card(self, card: Optional[Card] = None, index: Optional[int] = None) -> Card:
+        if index is not None:
+            if index < 0 or index > len(self.cards) - 1:
+                raise IndexError(f"Cannot remove card, index is invalid. Hand size: {len(self.hands)}, Index: {index}")
+            return self.cards.pop(index)
+        elif card is not None:
+            return self.cards.remove(card)
+        else:
+            return self.cards.pop()
+
+    def get_card(self, card: Optional[Card] = None, index: Optional[int] = None) -> Card:
+        if index is not None:
+            if index < 0 or index > len(self.cards) - 1:
+                raise IndexError(f"Cannot find card, index is invalid. Hand size: {len(self.hands)}, Index: {index}")
+            return self.cards[index]
+        elif card is not None:
+            return self.cards.remove(card)
+        else:
+            return self.cards.pop()
+
     def _hand_wins(self) -> None:
         self.win_or_lose_message = f'You win! +{self.bet} coins!'
 
@@ -86,7 +122,6 @@ class Hand:
         self.win_or_lose_message = f'You Push!'
 
     def _hand_busts(self) -> None:
-        self._has_stayed = True
         self.win_or_lose_message = f'Busted!'
 
     def _hand_loses(self) -> None:
