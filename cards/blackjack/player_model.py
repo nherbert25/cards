@@ -2,7 +2,7 @@ import logging
 from uuid import UUID, uuid4
 
 from cards.blackjack.hand_model import Hand, HandOutcome
-from typing import List
+from typing import List, Tuple
 
 
 class Player:
@@ -38,11 +38,13 @@ class Player:
             logging.error(f"Unexpected error locating hand index: {hand_index}", exc_info=True)
             print(f"Unexpected error locating hand index: {hand_index}")
 
-    def split_pair(self, hand_index: int) -> None:
+    def split_pair(self, hand_index: int) -> bool:
         current_hand = self.get_hand(hand_index)
         if current_hand.can_split_pair:
             hand_1, hand_2 = current_hand.split_pair()
             self.add_hand(hand_2, hand_index+1)
+            return True
+        return False
 
     def evaluate_round_end(self):
         payout = 0

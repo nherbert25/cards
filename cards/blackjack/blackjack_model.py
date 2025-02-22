@@ -109,7 +109,9 @@ class BlackjackModel:
         Making 21 after splitting pairs is usually NOT considered a blackjack.
         Doubling after Split (DAS): Some casinos allow doubling down after splitting pairs.
         """
-        player.split_pair(hand_index)
+        if player.split_pair(hand_index):
+            self.hit(player, hand_index)
+            self.hit(player, hand_index + 1)
 
     # TODO: implement insurance
     def insurance(self, player: Player):
