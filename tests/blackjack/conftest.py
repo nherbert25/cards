@@ -93,14 +93,19 @@ def test_hands():
     }
 
 
-
-
 @pytest.fixture(scope="session")
 def hand_factory():
-    """scope defaults to "function" which means this is getting ran during every single unit test. hand_factory is only
+    """scope defaults to "function" which means this would get ran during every single unit test. hand_factory is only
     defining *how* to create hands, so it only needs to be defined once."""
+
     def _create_hand(name):
         hands = {
+            "empty_hand": lambda: Hand(),
+            "9": lambda: Hand([Card('9', 'C')]),
+            "AA": lambda: Hand([Card('A', 'C'), Card('A', 'D')]),
+            "AAA": lambda: Hand([Card('A', 'C'), Card('A', 'D'), Card('A', 'D')]),
+            "AJ": lambda: Hand([Card('A', 'C'), Card('J', 'D')]),
+            "AAQ": lambda: Hand([Card('A', 'C'), Card('A', 'D'), Card('Q', 'D')]),
             "KQ": lambda: Hand([Card('K', 'C'), Card('Q', 'D')]),
             "KK": lambda: Hand([Card('K', 'C'), Card('K', 'D')]),
             "QQQ": lambda: Hand([Card('Q', 'C'), Card('Q', 'D'), Card('Q', 'H')]),
