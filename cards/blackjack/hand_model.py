@@ -15,7 +15,7 @@ class HandOutcome(Enum):
 class Hand:
     BLACKJACK_MAX = 21
 
-    def __init__(self, bet=50, blackjack_max: Optional[int] = None, cards: Optional[list[Card]] = None):
+    def __init__(self, cards: Optional[list[Card]] = None, bet: Optional[int] = 50, blackjack_max: Optional[int] = None):
         self.BLACKJACK_MAX: int = blackjack_max or Hand.BLACKJACK_MAX
         self._bet: int = bet
         self._has_stayed: bool = False
