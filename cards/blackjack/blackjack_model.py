@@ -99,7 +99,7 @@ class BlackjackModel:
         current_hand.stay()
         self.hit(player, hand_index)
 
-    def split_pair(self, player: Player, hand_index: int) -> None:
+    def split_pair(self, player: Player, hand_index: int) -> bool:
         """
         A split is allowed when the player's initial two cards are of the same rank (e.g., two 8s, two Kings).
         The player splits the pair into two separate hands by matching their original bet on the second hand.
@@ -112,6 +112,8 @@ class BlackjackModel:
         if player.split_pair(hand_index):
             self.hit(player, hand_index)
             self.hit(player, hand_index + 1)
+            return True
+        return False
 
     # TODO: implement insurance
     def insurance(self, player: Player):

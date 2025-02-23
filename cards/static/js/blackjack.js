@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     initializeOnConnectionListener();
     initializeUpdatePageListener();
     initializePlayerJoinListener();
+    initializePlayerAddedHandListener();
     initializeButtonCountsListener();
     console.log("DOM fully loaded.");
     console.log(document.getElementById('dealer-sum')); // Should NOT be null
@@ -30,6 +31,24 @@ function initializePlayerJoinListener() {
     socket.on('player_joined', function (data) {
         const playerDiv = createPlayerDiv(data.player_name, data.game_data);
         document.getElementById('player-container').appendChild(playerDiv);
+    });
+}
+
+function initializePlayerAddedHandListener() {
+    socket.on('player_added_hand', function (data) {
+
+        // initializePlayerDivs()
+        // const newPlayerDiv = createPlayerDiv(playerID, playerData);
+        // const newPlayerDiv = createPlayerDiv(data.playerID, data.game_data);
+        const existingPlayerDiv = document.getElementById('player-' + {playerID});
+
+        // const newHandDiv = createHandDiv(data.playerID, data.game_data);
+
+        const newhandDiv = createHandDiv(playerID, index, playerData, handData);
+        existingPlayerDiv.appendChild(newhandDiv);
+
+
+        // updatePlayerDiv(playerID, player_data, BLACKJACK_MAX)
     });
 }
 
