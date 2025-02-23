@@ -59,9 +59,18 @@ function initializeUpdatePageListener() {
                 updateDealerDiv(cards, sum);
             }
 
-            if (htmlKey === "players") {
+            else if (htmlKey === "players") {
                 for (const [playerID, player_data] of Object.entries(value)) {
                     updatePlayerDiv(playerID, player_data, BLACKJACK_MAX);
+                }
+            } else {
+                const element = document.getElementById(htmlKey);
+                if (element) {
+                    if (htmlKey.includes('cards') || htmlKey.includes('hand')) {
+                        element.innerHTML = generateCardImages(value)
+                    } else {
+                        element.innerText = value;
+                    }
                 }
             }
         }
