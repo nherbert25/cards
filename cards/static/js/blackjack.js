@@ -5,6 +5,8 @@
 // in the definition, aka: "async function myFunction() { ...my code ..  await myPromise() ... my code ..  }"
 // https://www.youtube.com/watch?v=AMp6hlA8xKA   using websockets instead of fetch and callbacks
 
+// TODO: convert this js file to a module which allows you to import and export functions
+//  import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
 const socket = io();
 
 // after the DOM has loaded, register the following event listeners
