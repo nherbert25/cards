@@ -34,9 +34,6 @@ function initializePlayerJoinListener() {
     });
 }
 
-//TODO: split pairs has a bug where hands are not cleared at new game \
-// implement something to recreate player divs on new game. \
-// I was working on building this. IT IS NOT CURRENTLY IMPLEMENTED!
 function initializeNewGameListener() {
     socket.on('initialize_new_game', function (data) {
         try {
@@ -84,9 +81,7 @@ function initializeButtonCountsListener() {
 }
 
 function initializeUpdatePageListener() {
-    socket.on('update_page_data', function (data) {
-        updatePageData(data);
-    })
+    socket.on('update_page_data', updatePageData)
 };
 
 function updatePageData(data) {

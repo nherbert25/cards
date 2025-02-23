@@ -53,10 +53,7 @@ def bet(user_id=None, hand_index=0):
 @socketio.on('new_game')
 def new_game():
     blackjack_controller.new_game()
-    # TODO: split pairs has a bug where hands are not cleared at new game \
-    #  implement something to recreate player divs on new game
     emit('initialize_new_game', blackjack_controller.serialize_blackjack_data(), broadcast=True)
-    # emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
 
 
 @socketio.on('request_game_data')
