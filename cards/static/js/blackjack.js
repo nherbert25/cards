@@ -7,7 +7,7 @@
 
 const socket = io();
 
-
+// after the DOM has loaded, register the following event listeners
 document.addEventListener('DOMContentLoaded', async (event) => {
     await initializePlayerDivs();
     generateDebuggerElement();
@@ -80,9 +80,16 @@ function initializeUpdatePageListener() {
     socket.on('update_page_data', function (data) {
 
         console.log("UpdatePageData returned the following data:");
+        console.dir("TESING MEOW MEOW MEOW MEOW");
         console.dir(data);
 
-        const BLACKJACK_MAX = data.BLACKJACK_MAX
+        const { BLACKJACK_MAX, dealer, button_counts, players } = data;
+        console.log("🎲 Blackjack Max:", BLACKJACK_MAX);
+        console.log("🃏 Dealer Cards:", dealer.cards);
+        console.log("🔘 Button Counts:", button_counts);
+        console.log("👥 Players:", Object.keys(players));
+
+        // const BLACKJACK_MAX = data.BLACKJACK_MAX
 
         for (const [key, value] of Object.entries(data)) {
 
