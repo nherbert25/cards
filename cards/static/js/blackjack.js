@@ -37,16 +37,21 @@ function initializePlayerJoinListener() {
 function initializePlayerAddedHandListener() {
     socket.on('player_added_hand', function (data) {
 
+        const { player_id, player_data } = data;
+        console.log("Running player_added_hand with: ", player_id, player_data);
         // initializePlayerDivs()
         // const newPlayerDiv = createPlayerDiv(playerID, playerData);
         // const newPlayerDiv = createPlayerDiv(data.playerID, data.game_data);
-        const existingPlayerDiv = document.getElementById('player-' + {playerID});
+        const existingPlayerDiv = document.getElementById('player-' + player_id);
 
-        // const newHandDiv = createHandDiv(data.playerID, data.game_data);
+        console.log("existingPlayerDiv: ", existingPlayerDiv);
 
-        const newhandDiv = createHandDiv(playerID, index, playerData, handData);
-        existingPlayerDiv.appendChild(newhandDiv);
+        const newHandDiv = createHandDiv(player_id, 1, player_data, player_data.hands[1]);
 
+        console.log(newHandDiv);
+        existingPlayerDiv.appendChild(newHandDiv);
+
+        console.log(existingPlayerDiv);
 
         // updatePlayerDiv(playerID, player_data, BLACKJACK_MAX)
     });
@@ -101,20 +106,20 @@ function pressSocketTestingButtons(buttonNumber) {
     socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
 };
 
-function pressHit(user_id) {
-    socket.emit('hit', user_id);
+function pressHit(user_id, hand_index=0) {
+    socket.emit('hit', user_id, hand_index);
 };
 
-function pressStay(user_id) {
-    socket.emit('stay', user_id);
+function pressStay(user_id, hand_index=0) {
+    socket.emit('stay', user_id, hand_index);
 };
 
-function pressDoubleDown(user_id) {
-    socket.emit('double_down', user_id);
+function pressDoubleDown(user_id, hand_index=0) {
+    socket.emit('double_down', user_id, hand_index);
 };
 
-function pressSplitPair(user_id){
-    socket.emit('split_pair', user_id);
+function pressSplitPair(user_id, hand_index=0){
+    socket.emit('split_pair', user_id, hand_index);
 };
 
 function pressNewGame() {
@@ -164,7 +169,6 @@ function updatePlayerDiv(playerID, player_data, BLACKJACK_MAX) {
     for (const [handID, handData] of Object.entries(player_data.hands)) {
         updateHandDiv(playerID, handID, handData, BLACKJACK_MAX)
     }
-
 };
 
 function updateHandDiv(playerID, handID, handData, BLACKJACK_MAX) {
@@ -254,10 +258,10 @@ function createHandDiv(playerID, handID, playerData, handData) {
         <div id="hand-images-${playerID}-${handID}"></div>
 <!--        creates button div for holding buttons-->
         <div id="hand-buttons-${playerID}-${handID}" class="hand-buttons">
-            <button id='hit-button-${playerID}-${handID}' class="hand-button" onclick="pressHit('${playerID}')">Hit</button>
-            <button id='stay-button-${playerID}-${handID}' class="hand-button" onclick="pressStay('${playerID}')">Stay</button>
-            <button id='double-down-button-${playerID}-${handID}' class="hand-button" onclick="pressDoubleDown('${playerID}')">Double Down</button>
-            <button id='split-pair-button-${playerID}-${handID}' class="hand-button" onclick="pressSplitPair('${playerID}')">Split Pair</button>
+            <button id='hit-button-${playerID}-${handID}' class="hand-button" onclick="pressHit('${playerID}', ${handID})">Hit</button>
+            <button id='stay-button-${playerID}-${handID}' class="hand-button" onclick="pressStay('${playerID}', ${handID})">Stay</button>
+            <button id='double-down-button-${playerID}-${handID}' class="hand-button" onclick="pressDoubleDown('${playerID}', ${handID})">Double Down</button>
+            <button id='split-pair-button-${playerID}-${handID}' class="hand-button" onclick="pressSplitPair('${playerID}', ${handID})">Split Pair</button>
             <button id='new-game-button-${playerID}-${handID}' class="hand-button" onclick="pressNewGame()">New Game</button>
         </div>
     `;
