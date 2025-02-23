@@ -34,9 +34,9 @@ function initializePlayerJoinListener() {
     });
 }
 
-    //TODO: split pairs has a bug where hands are not cleared at new game \
-    // implement something to recreate player divs on new game. \
-    // I was working on building this. IT IS NOT CURRENTLY IMPLEMENTED!
+//TODO: split pairs has a bug where hands are not cleared at new game \
+// implement something to recreate player divs on new game. \
+// I was working on building this. IT IS NOT CURRENTLY IMPLEMENTED!
 function initializeNewGameListener() {
     socket.on('initialize_new_game', function () {
         try {
@@ -63,6 +63,8 @@ function initializePlayerAddedHandListener() {
         console.log("Running player_added_hand with: ", data);
         const {player_id, player_data} = data;
         const existingPlayerDiv = document.getElementById('player-' + player_id);
+        // TODO: need to create new hand dynamically, currently setting the hand-id to 1 which will break
+        //  if hand already exists
         const newHandDiv = createHandDiv(player_id, 1, player_data, player_data.hands[1]);
         existingPlayerDiv.appendChild(newHandDiv);
     });
@@ -83,7 +85,7 @@ function initializeUpdatePageListener() {
         console.dir("TESING MEOW MEOW MEOW MEOW");
         console.dir(data);
 
-        const { BLACKJACK_MAX, dealer, button_counts, players } = data;
+        const {BLACKJACK_MAX, dealer, button_counts, players} = data;
         console.log("🎲 Blackjack Max:", BLACKJACK_MAX);
         console.log("🃏 Dealer Cards:", dealer.cards);
         console.log("🔘 Button Counts:", button_counts);
