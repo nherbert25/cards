@@ -54,25 +54,26 @@ function initializeUpdatePageListener() {
             // replaces python syntax with html syntax. Ex: 'your_coins' to 'your-coins'
             const htmlKey = key.replace(/_/g, '-')
 
+            // Update dealer data
             if (htmlKey === "dealer") {
                 const {cards, sum} = value;
                 updateDealerDiv(cards, sum);
             }
 
-            else if (htmlKey === "players") {
+            // Update player data
+            if (htmlKey === "players") {
                 for (const [playerID, player_data] of Object.entries(value)) {
                     updatePlayerDiv(playerID, player_data, BLACKJACK_MAX);
                 }
-            } else {
-                const element = document.getElementById(htmlKey);
-                if (element) {
-                    if (htmlKey.includes('cards') || htmlKey.includes('hand')) {
-                        element.innerHTML = generateCardImages(value)
-                    } else {
-                        element.innerText = value;
-                    }
-                }
             }
+
+            // Update button counts
+            if (htmlKey === "button-counts") {
+                const { button1, button2 } = value;
+                document.getElementById('button1-count').innerText = button1;
+                document.getElementById('button2-count').innerText = button2;
+            }
+
         }
     })
 };
@@ -243,8 +244,8 @@ function createSocketButtonTestingDiv() {
                 <button id='socket-debugger-button-1' onclick="pressSocketTestingButtons(1)">Button 1</button>
                 <button id='socket-debugger-button-2' onclick="pressSocketTestingButtons(2)">Button 2</button>
                 <button id='socket-debugger-refresh-data' onclick="refresh_data()">Refresh Data</button>
-                <p>Button 1 Presses: <span id="button1-count">{{ button1_count }}</span></p>
-                <p>Button 2 Presses: <span id="button2-count">{{ button2_count }}</span></p>
+                <p>Button 1 Presses: <span id="button1-count">0</span></p>
+                <p>Button 2 Presses: <span id="button2-count">0</span></p>
     `;
     return div;
 }
