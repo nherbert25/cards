@@ -22,28 +22,28 @@ class BlackjackController:
         return render_template("blackjack.html", **self.serialize_blackjack_data())
 
     def serialize_blackjack_data(self) -> dict:
-        result = {
+        return {
             'BLACKJACK_MAX': self.blackjack_model.BLACKJACK_MAX,
-            'dealer_cards': [card.to_dict() for card in self.blackjack_model.dealer.cards],
-            'dealer_sum': self.blackjack_model.dealer.sum,
-            'button1_count': self.counts['button1'],
-            'button2_count': self.counts['button2'],
-            'players_data_object': {},
+            'dealer': {
+                'cards': [card.to_dict() for card in self.blackjack_model.dealer.cards],
+                'sum': self.blackjack_model.dealer.sum
+            },
+            'button_counts': {
+                'button1': self.counts['button1'],
+                'button2': self.counts['button2']
+            },
+            'players': {str(player.user_id): player.to_dict() for player in self.blackjack_model.players.values()}
         }
-
-        for player in self.blackjack_model.players.values():
-            result['players_data_object'][str(player.user_id)] = player.to_dict()
-        return result
 
     def hit(self, user_id: str, hand_index: int = 0) -> None:
         player_object = self.blackjack_model.get_player(user_id)
         self.blackjack_model.hit(player_object, hand_index)
 
-    def stay(self, user_id: str,  hand_index: int = 0) -> None:
+    def stay(self, user_id: str, hand_index: int = 0) -> None:
         player_object = self.blackjack_model.get_player(user_id)
         self.blackjack_model.stay(player_object, hand_index)
 
-    def double_down(self, user_id: str,  hand_index: int = 0) -> None:
+    def double_down(self, user_id: str, hand_index: int = 0) -> None:
         player_object = self.blackjack_model.get_player(user_id)
         self.blackjack_model.double_down(player_object, hand_index)
 

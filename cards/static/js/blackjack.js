@@ -50,7 +50,7 @@ function initializeUpdatePageListener() {
             // replaces python syntax with html syntax. Ex: 'your_coins' to 'your-coins'
             const htmlKey = key.replace(/_/g, '-')
 
-            if (htmlKey === "players-data-object") {
+            if (htmlKey === "players") {
                 for (const [playerID, player_value] of Object.entries(value)) {
                     updatePlayerDiv(playerID, player_value, data.BLACKJACK_MAX);
                 }
@@ -81,7 +81,7 @@ function pressStay(user_id) {
     socket.emit('stay', user_id);
 };
 
-function pressDoubleDown(user_id){
+function pressDoubleDown(user_id) {
     socket.emit('double_down', user_id);
 };
 
@@ -124,41 +124,41 @@ function updatePlayerDiv(playerID, player_data, BLACKJACK_MAX) {
 };
 
 function updateHandDiv(playerID, handID, handData, BLACKJACK_MAX) {
-        console.log("Running updateHandDiv with:");
-        console.log(playerID, handID, handData);
+    console.log("Running updateHandDiv with:");
+    console.log(playerID, handID, handData);
 
-        // Update header
-        const sum = document.getElementById('sum-' + playerID + '-' + handID);
-        const message = document.getElementById('win-or-lose-message-' + playerID + '-' + handID);
+    // Update header
+    const sum = document.getElementById('sum-' + playerID + '-' + handID);
+    const message = document.getElementById('win-or-lose-message-' + playerID + '-' + handID);
 
-        sum.innerHTML = handData.sum
-        message.innerHTML = handData.win_or_lose_message
+    sum.innerHTML = handData.sum
+    message.innerHTML = handData.win_or_lose_message
 
-        // Update card images
-        const hand_element = document.getElementById('hand-images-' + playerID + '-' + handID);
-        hand_element.innerHTML = generateCardImages(handData.cards)
+    // Update card images
+    const hand_element = document.getElementById('hand-images-' + playerID + '-' + handID);
+    hand_element.innerHTML = generateCardImages(handData.cards)
 
-        // Update buttons
-        const hit_button = document.getElementById('hit-button-' + playerID + '-' + handID);
-        if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
-            hit_button.disabled = true;
-        } else {
-            hit_button.disabled = false;
-        }
+    // Update buttons
+    const hit_button = document.getElementById('hit-button-' + playerID + '-' + handID);
+    if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
+        hit_button.disabled = true;
+    } else {
+        hit_button.disabled = false;
+    }
 
-        const stay_button = document.getElementById('stay-button-' + playerID + '-'  + handID);
-        if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
-            stay_button.disabled = true;
-        } else {
-            stay_button.disabled = false;
-        }
+    const stay_button = document.getElementById('stay-button-' + playerID + '-' + handID);
+    if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
+        stay_button.disabled = true;
+    } else {
+        stay_button.disabled = false;
+    }
 
-        const double_down_button = document.getElementById('double-down-button-' + playerID + '-'  + handID);
-        if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
-            double_down_button.disabled = true;
-        } else {
-            double_down_button.disabled = false;
-        }
+    const double_down_button = document.getElementById('double-down-button-' + playerID + '-' + handID);
+    if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
+        double_down_button.disabled = true;
+    } else {
+        double_down_button.disabled = false;
+    }
 };
 
 function createPlayerDiv(playerID, playerData) {
@@ -262,7 +262,7 @@ async function initializePlayerDivs() {
 
         playerContainer.innerHTML = '';
 
-        const playersData = data.players_data_object;
+        const playersData = data.players;
         for (const [playerID, playerData] of Object.entries(playersData)) {
             const playerDiv = createPlayerDiv(playerID, playerData);
             playerContainer.appendChild(playerDiv);
