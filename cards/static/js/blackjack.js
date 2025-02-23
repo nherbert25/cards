@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     initializePlayerAddedHandListener();
     initializeButtonCountsListener();
     console.log("DOM fully loaded.");
-    console.log(document.getElementById('dealer-sum')); // Should NOT be null
 });
 
 function initializeOnConnectionListener() {
@@ -36,24 +35,11 @@ function initializePlayerJoinListener() {
 
 function initializePlayerAddedHandListener() {
     socket.on('player_added_hand', function (data) {
-
+        console.log("Running player_added_hand with: ", data);
         const { player_id, player_data } = data;
-        console.log("Running player_added_hand with: ", player_id, player_data);
-        // initializePlayerDivs()
-        // const newPlayerDiv = createPlayerDiv(playerID, playerData);
-        // const newPlayerDiv = createPlayerDiv(data.playerID, data.game_data);
         const existingPlayerDiv = document.getElementById('player-' + player_id);
-
-        console.log("existingPlayerDiv: ", existingPlayerDiv);
-
         const newHandDiv = createHandDiv(player_id, 1, player_data, player_data.hands[1]);
-
-        console.log(newHandDiv);
         existingPlayerDiv.appendChild(newHandDiv);
-
-        console.log(existingPlayerDiv);
-
-        // updatePlayerDiv(playerID, player_data, BLACKJACK_MAX)
     });
 }
 
