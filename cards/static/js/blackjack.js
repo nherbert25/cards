@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     initializeUpdatePageListener();
     initializePlayerJoinListener();
     initializeButtonCountsListener();
+    console.log("DOM fully loaded.");
+    console.log(document.getElementById('dealer-sum')); // Should NOT be null
 });
 
 function initializeOnConnectionListener() {
@@ -45,24 +47,21 @@ function initializeUpdatePageListener() {
         console.log("UpdatePageData returned the following data:");
         console.dir(data);
 
+        const BLACKJACK_MAX = data.BLACKJACK_MAX
+
         for (const [key, value] of Object.entries(data)) {
 
             // replaces python syntax with html syntax. Ex: 'your_coins' to 'your-coins'
             const htmlKey = key.replace(/_/g, '-')
 
-            if (htmlKey === "players") {
-                for (const [playerID, player_value] of Object.entries(value)) {
-                    updatePlayerDiv(playerID, player_value, data.BLACKJACK_MAX);
-                }
+            if (htmlKey === "dealer") {
+                const {cards, sum} = value;
+                updateDealerDiv(cards, sum);
+            }
 
-            } else {
-                const element = document.getElementById(htmlKey);
-                if (element) {
-                    if (htmlKey.includes('cards') || htmlKey.includes('hand')) {
-                        element.innerHTML = generateCardImages(value)
-                    } else {
-                        element.innerText = value;
-                    }
+            if (htmlKey === "players") {
+                for (const [playerID, player_data] of Object.entries(value)) {
+                    updatePlayerDiv(playerID, player_data, BLACKJACK_MAX);
                 }
             }
         }
@@ -97,6 +96,18 @@ function refresh_data() {
 function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 };
+
+function updateDealerDiv(cards, sum) {
+    console.log("Running updateDealerDiv with: ", sum, cards);
+
+    const dealer_sum_element = document.getElementById('dealer-sum');
+    dealer_sum_element.innerText = sum
+
+    // Update card images
+    const dealer_cards_element = document.getElementById('dealer-cards');
+    dealer_cards_element.innerHTML = generateCardImages(cards)
+};
+
 
 function updatePlayerDiv(playerID, player_data, BLACKJACK_MAX) {
     for (const [key, value] of Object.entries(player_data)) {
