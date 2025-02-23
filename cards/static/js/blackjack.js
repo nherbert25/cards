@@ -38,10 +38,11 @@ function initializePlayerJoinListener() {
 // implement something to recreate player divs on new game. \
 // I was working on building this. IT IS NOT CURRENTLY IMPLEMENTED!
 function initializeNewGameListener() {
-    socket.on('initialize_new_game', function () {
+    socket.on('initialize_new_game', function (data) {
         try {
-            const data = requestGameData();
+
             console.log("Attempting to create player divs", data);
+            console.log("BARKBARKBARKBARK", data);
             const playerContainer = document.getElementById('player-container');
 
             playerContainer.innerHTML = '';
@@ -51,6 +52,9 @@ function initializeNewGameListener() {
                 const playerDiv = createPlayerDiv(playerID, playerData);
                 playerContainer.appendChild(playerDiv);
             }
+
+            updatePageData(data);
+
         } catch (error) {
             console.error('Failed to fetch game data:', error);
         }
