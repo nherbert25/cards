@@ -41,10 +41,10 @@ function initializeNewGameListener() {
     socket.on('initialize_new_game', function (data) {
         try {
 
-            console.log("Attempting to create player divs", data);
-            console.log("BARKBARKBARKBARK", data);
-            const playerContainer = document.getElementById('player-container');
+            console.log("Client executing initialize_new_game with: ", data);
 
+            // reset and repopulate player-container
+            const playerContainer = document.getElementById('player-container');
             playerContainer.innerHTML = '';
 
             const playersData = data.players;
@@ -53,6 +53,7 @@ function initializeNewGameListener() {
                 playerContainer.appendChild(playerDiv);
             }
 
+            // start a new game
             updatePageData(data);
 
         } catch (error) {
@@ -84,46 +85,45 @@ function initializeButtonCountsListener() {
 
 function initializeUpdatePageListener() {
     socket.on('update_page_data', function (data) {
-
-        console.log("UpdatePageData returned the following data:");
-        console.dir("TESING MEOW MEOW MEOW MEOW");
-        console.dir(data);
-
-        const {BLACKJACK_MAX, dealer, button_counts, players} = data;
-        console.log("🎲 Blackjack Max:", BLACKJACK_MAX);
-        console.log("🃏 Dealer Cards:", dealer.cards);
-        console.log("🔘 Button Counts:", button_counts);
-        console.log("👥 Players:", Object.keys(players));
-
-        // const BLACKJACK_MAX = data.BLACKJACK_MAX
-
-        for (const [key, value] of Object.entries(data)) {
-
-            // replaces python syntax with html syntax. Ex: 'your_coins' to 'your-coins'
-            const htmlKey = key.replace(/_/g, '-')
-
-            // Update dealer data
-            if (htmlKey === "dealer") {
-                const {cards, sum} = value;
-                updateDealerDiv(cards, sum);
-            }
-
-            // Update player data
-            if (htmlKey === "players") {
-                for (const [playerID, player_data] of Object.entries(value)) {
-                    updatePlayerDiv(playerID, player_data, BLACKJACK_MAX);
-                }
-            }
-
-            // Update button counts
-            if (htmlKey === "button-counts") {
-                const {button1, button2} = value;
-                document.getElementById('button1-count').innerText = button1;
-                document.getElementById('button2-count').innerText = button2;
-            }
-
-        }
+        updatePageData(data);
     })
+};
+
+function updatePageData(data) {
+    console.log("Running UpdatePageData with following data: ");
+    console.dir(data);
+
+    const {BLACKJACK_MAX, dealer, button_counts, players} = data;
+    console.log("🎲 Blackjack Max:", BLACKJACK_MAX);
+    console.log("🃏 Dealer Cards:", dealer.cards);
+    console.log("🔘 Button Counts:", button_counts);
+    console.log("👥 Players:", Object.keys(players));
+
+    for (const [key, value] of Object.entries(data)) {
+
+        // replaces python syntax with html syntax. Ex: 'your_coins' to 'your-coins'
+        const htmlKey = key.replace(/_/g, '-')
+
+        // Update dealer data
+        if (htmlKey === "dealer") {
+            const {cards, sum} = value;
+            updateDealerDiv(cards, sum);
+        }
+
+        // Update player data
+        if (htmlKey === "players") {
+            for (const [playerID, player_data] of Object.entries(value)) {
+                updatePlayerDiv(playerID, player_data, BLACKJACK_MAX);
+            }
+        }
+
+        // Update button counts
+        if (htmlKey === "button-counts") {
+            const {button1, button2} = value;
+            document.getElementById('button1-count').innerText = button1;
+            document.getElementById('button2-count').innerText = button2;
+        }
+    }
 };
 
 function pressSocketTestingButtons(buttonNumber) {
