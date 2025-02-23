@@ -9,6 +9,10 @@ from cards.blackjack.deck_model import Deck
 
 
 class GameConfigs:
+    # TODO: add toggleable configs div in html to change the rules of the game!
+    # TODO: add variant and side bet functionality - DEALER_HITS_ON_SOFT_17, RESTRICTED_DOUBLING, ALLOW_SPLIT_PAIR \
+    #  SPLITTING_ACES_ADDITIONAL_RULES, SPLITTING_RESTRICTIONS, FIVE_CARD_CHARLIE, DEALER_PEEK, ENABLE_PERFECT_PAIR \
+    #  ENABLE_21_PLUS_3, ENABLE_LUCKY_LUCKY, NUMBER_OF_DECKS, BLACKJACK_RATIO
     # Game configs:
     NUMBER_OF_DECKS = 1
     BLACKJACK_RATIO = 1.5  # Standard payouts for a blackjack (Ace + 10-value card) are 3:2, but some tables pay 6:5, which increases the house edge.
@@ -163,8 +167,8 @@ class BlackjackModel:
                     return False
         return True
 
-    # Todo: determine payouts!
-    # Blackjack Payout: 3:2 (e.g., $10 bet wins $15). Some casinos offer 6:5, which is less favorable.
+    # Todo: determine payouts! Specifically blackjack payout and various bets \
+    #  Blackjack Payout: 3:2 (e.g., $10 bet wins $15). Some casinos offer 6:5, which is less favorable.
     def _determine_payout(self, player: Player):
         return player.bet
 

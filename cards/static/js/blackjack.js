@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async (event) => {
     initializePlayerJoinListener();
     initializePlayerAddedHandListener();
     initializeButtonCountsListener();
+    initializeNewGameListener()
     console.log("DOM fully loaded.");
 });
 
@@ -33,10 +34,34 @@ function initializePlayerJoinListener() {
     });
 }
 
+    //TODO: split pairs has a bug where hands are not cleared at new game \
+    // implement something to recreate player divs on new game. \
+    // I was working on building this. IT IS NOT CURRENTLY IMPLEMENTED!
+function initializeNewGameListener() {
+    socket.on('initialize_new_game', function () {
+        try {
+            const data = requestGameData();
+            console.log("Attempting to create player divs", data);
+            const playerContainer = document.getElementById('player-container');
+
+            playerContainer.innerHTML = '';
+
+            const playersData = data.players;
+            for (const [playerID, playerData] of Object.entries(playersData)) {
+                const playerDiv = createPlayerDiv(playerID, playerData);
+                playerContainer.appendChild(playerDiv);
+            }
+        } catch (error) {
+            console.error('Failed to fetch game data:', error);
+        }
+    });
+}
+
+
 function initializePlayerAddedHandListener() {
     socket.on('player_added_hand', function (data) {
         console.log("Running player_added_hand with: ", data);
-        const { player_id, player_data } = data;
+        const {player_id, player_data} = data;
         const existingPlayerDiv = document.getElementById('player-' + player_id);
         const newHandDiv = createHandDiv(player_id, 1, player_data, player_data.hands[1]);
         existingPlayerDiv.appendChild(newHandDiv);
@@ -79,7 +104,7 @@ function initializeUpdatePageListener() {
 
             // Update button counts
             if (htmlKey === "button-counts") {
-                const { button1, button2 } = value;
+                const {button1, button2} = value;
                 document.getElementById('button1-count').innerText = button1;
                 document.getElementById('button2-count').innerText = button2;
             }
@@ -92,19 +117,19 @@ function pressSocketTestingButtons(buttonNumber) {
     socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
 };
 
-function pressHit(user_id, hand_index=0) {
+function pressHit(user_id, hand_index = 0) {
     socket.emit('hit', user_id, hand_index);
 };
 
-function pressStay(user_id, hand_index=0) {
+function pressStay(user_id, hand_index = 0) {
     socket.emit('stay', user_id, hand_index);
 };
 
-function pressDoubleDown(user_id, hand_index=0) {
+function pressDoubleDown(user_id, hand_index = 0) {
     socket.emit('double_down', user_id, hand_index);
 };
 
-function pressSplitPair(user_id, hand_index=0){
+function pressSplitPair(user_id, hand_index = 0) {
     socket.emit('split_pair', user_id, hand_index);
 };
 
@@ -187,14 +212,14 @@ function updateHandDiv(playerID, handID, handData, BLACKJACK_MAX) {
         stay_button.disabled = false;
     }
 
-    const double_down_button = document.getElementById('double-down-button-' + playerID + '-'  + handID);
+    const double_down_button = document.getElementById('double-down-button-' + playerID + '-' + handID);
     if (handData.sum > BLACKJACK_MAX || handData.has_stayed) {
         double_down_button.disabled = true;
     } else {
         double_down_button.disabled = false;
     }
 
-    const split_pair_button = document.getElementById('split-pair-button-' + playerID + '-'  + handID);
+    const split_pair_button = document.getElementById('split-pair-button-' + playerID + '-' + handID);
     if (!handData.can_split_pair || handData.has_stayed) {
         split_pair_button.disabled = true;
     } else {
