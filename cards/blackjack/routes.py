@@ -34,13 +34,11 @@ def double_down(user_id=None, hand_index=0):
 @socketio.on('split_pair')
 def split_pair(user_id=None, hand_index=0):
     if blackjack_controller.split_pair(user_id, hand_index):
-        data = blackjack_controller.serialize_blackjack_data()
 
+        data = blackjack_controller.serialize_blackjack_data()
         player_data = data['players'][user_id]
         emit('player_added_hand', {'player_id': user_id, 'player_data': player_data}, broadcast=True)
 
-        # emit('player_added_hand', blackjack_controller.serialize_blackjack_data(), broadcast=True)
-        # createHandDiv(playerID, index, playerData, handData);
     emit('update_page_data', blackjack_controller.serialize_blackjack_data(), broadcast=True)
 
 

@@ -66,10 +66,11 @@ function initializePlayerAddedHandListener() {
     socket.on('player_added_hand', function (data) {
         console.log("Running player_added_hand with: ", data);
         const {player_id, player_data} = data;
+
+        const handIndex = player_data.hands.length - 1;
+        const newHandDiv = createHandDiv(player_id, handIndex, player_data, player_data.hands[handIndex]);
+
         const existingPlayerDiv = document.getElementById('player-' + player_id);
-        // TODO: need to create new hand dynamically, currently setting the hand-id to 1 which will break
-        //  if hand already exists
-        const newHandDiv = createHandDiv(player_id, 1, player_data, player_data.hands[1]);
         existingPlayerDiv.appendChild(newHandDiv);
     });
 }
