@@ -50,6 +50,10 @@ coverage:
 	coverage run -m pytest
 	coverage report --omit="tests/*" --skip-covered --sort=Cover -m
 
+# compiles all ts to js using the tsconfig.json config file, required after making any changes to ts files
+ts_compile:
+	tsc --project ./tsconfig.json
+
 
 .PHONY: preview-cleanup cleanup
 # Preview merged branches that would be deleted

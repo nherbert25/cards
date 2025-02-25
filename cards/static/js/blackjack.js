@@ -99,31 +99,38 @@ function pressSocketTestingButtons(buttonNumber) {
     socket.emit('press_socket_testing_buttons', { 'buttonNumber': buttonNumber });
 }
 ;
+window.pressSocketTestingButtons = pressSocketTestingButtons;
 function pressHit(user_id, hand_index = 0) {
     socket.emit('hit', user_id, hand_index);
 }
 ;
+window.pressHit = pressHit;
 function pressStay(user_id, hand_index = 0) {
     socket.emit('stay', user_id, hand_index);
 }
 ;
+window.pressStay = pressStay;
 function pressDoubleDown(user_id, hand_index = 0) {
     socket.emit('double_down', user_id, hand_index);
 }
 ;
+window.pressDoubleDown = pressDoubleDown;
 function pressSplitPair(user_id, hand_index = 0) {
     socket.emit('split_pair', user_id, hand_index);
 }
 ;
+window.pressSplitPair = pressSplitPair;
 function pressNewGame() {
     socket.emit('new_game');
 }
 ;
+window.pressNewGame = pressNewGame;
 function refresh_data() {
     socket.emit('update_page_data');
     console.log('Asking server to refresh');
 }
 ;
+window.refresh_data = refresh_data;
 function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 }

@@ -7,11 +7,26 @@
 import { Hand, Player, BlackjackData, Card, Dealer, HandOutcome } from "./schemas";
 
 
-// TODO: convert this js file to a module which allows you to import and export functions
-// import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
-// import { io } from 'socket.io-client';
+// TODO: get the import { io } to work and remove from html
+//  import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
+//  import { io } from 'socket.io-client';
 declare const io: any;
 const socket = io();
+
+// TODO: extending the global window is bad practice. Make the buttons modules and import them
+// Extend the global window interface
+declare global {
+    interface Window {
+        pressHit: (user_id: string, hand_index: number) => void;
+        pressStay: (user_id: string, hand_index: number) => void;
+        pressDoubleDown: (user_id: string, hand_index: number) => void;
+        pressSplitPair: (user_id: string, hand_index: number) => void;
+        pressNewGame: () => void;
+        refresh_data: () => void;
+        pressSocketTestingButtons: (buttonNumber: number) => void;
+    }
+}
+
 
 // after the DOM has loaded, register the following event listeners
 document.addEventListener('DOMContentLoaded', async (event) => {
@@ -130,31 +145,38 @@ function updatePageData(data: BlackjackData) {
 function pressSocketTestingButtons(buttonNumber: number) {
     socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
 };
+window.pressSocketTestingButtons = pressSocketTestingButtons;
 
 function pressHit(user_id: string, hand_index: number = 0) {
     socket.emit('hit', user_id, hand_index);
 };
+window.pressHit = pressHit;
 
 function pressStay(user_id: string, hand_index: number = 0) {
     socket.emit('stay', user_id, hand_index);
 };
+window.pressStay = pressStay;
 
 function pressDoubleDown(user_id: string, hand_index: number = 0) {
     socket.emit('double_down', user_id, hand_index);
 };
+window.pressDoubleDown = pressDoubleDown;
 
 function pressSplitPair(user_id: string, hand_index: number = 0) {
     socket.emit('split_pair', user_id, hand_index);
 };
+window.pressSplitPair = pressSplitPair;
 
 function pressNewGame() {
     socket.emit('new_game');
 };
+window.pressNewGame = pressNewGame;
 
 function refresh_data() {
     socket.emit('update_page_data');
     console.log('Asking server to refresh');
 };
+window.refresh_data = refresh_data;
 
 function generateCardImages(cards: Card[]) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');

@@ -71,5 +71,6 @@ class Player:
         return {
             "hands": [hand.to_dict() for hand in self.hands],
             "bet": self.bet,
+            "coins": self.coins,
             "win_or_lose_message": self.win_or_lose_message,
         }
