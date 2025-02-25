@@ -35,8 +35,10 @@ venv_windows_destroy:
 	rm -r .venv
 
 
-
+####################################################
+####################################################
 # Test commands
+
 flake8.check:
 	flake8 . --count
 
@@ -49,11 +51,26 @@ test_all:
 coverage:
 	coverage run -m pytest
 	coverage report --omit="tests/*" --skip-covered --sort=Cover -m
+####################################################
+####################################################
+
+####################################################
+####################################################
+# Build commands
+
+# Define a build target that calls ts_compile
+build: ts_compile
 
 # compiles all ts to js using the tsconfig.json config file, required after making any changes to ts files
 ts_compile:
 	tsc --project ./tsconfig.json
+####################################################
+####################################################
 
+
+####################################################
+####################################################
+# git shortcuts
 
 .PHONY: preview-cleanup cleanup
 # Preview merged branches that would be deleted

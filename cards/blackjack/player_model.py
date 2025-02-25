@@ -69,6 +69,7 @@ class Player:
     # Serialize for websocket handling
     def to_dict(self) -> dict:
         return {
+            "player_name": self.player_name,
             "hands": [hand.to_dict() for hand in self.hands],
             "bet": self.bet,
             "coins": self.coins,
