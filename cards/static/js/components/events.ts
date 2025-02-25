@@ -19,7 +19,6 @@ export function setUpEventListeners() {
 }
 
 
-
 function initializeOnConnectionListener() {
     socket.on('connect', function () {
         console.log('Connected to server');
@@ -29,7 +28,6 @@ function initializeOnConnectionListener() {
 function initializeUpdatePageListener() {
     socket.on('update_page_data', updatePageData)
 };
-
 
 
 function initializePlayerAddedHandListener() {
@@ -60,7 +58,6 @@ function initializeButtonCountsListener() {
 //         document.getElementById('player-container')!.appendChild(playerDiv);
 //     });
 // }
-
 
 
 function initializeNewGameListener() {

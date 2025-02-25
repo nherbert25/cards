@@ -14,16 +14,12 @@ import {refresh_data} from "./components/buttons.js";
 import './components/buttons.js';  // Ensure side effects still run
 
 
-function main() {
+async function main() {
     setUpEventListeners();
     generateDebuggerElement();
-}
 
-main();
-
-
-// Register event listeners after the DOM has loaded
-document.addEventListener('DOMContentLoaded', async () => {
     await initializePlayerDivs();
     refresh_data();
-});
+}
+
+main().catch(console.error);
