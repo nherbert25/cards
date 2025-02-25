@@ -6,7 +6,7 @@ const socket = io();
 
 
 // gameUI.ts
-import {BlackjackData, Card, Hand, Player} from "./schemas";
+import {BlackjackData, Card, Hand, Player, Dealer, HandOutcome} from "./schemas";
 
 export function initializeGame() {
     // Set up UI elements, initial state, and event listeners

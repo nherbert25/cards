@@ -7,71 +7,16 @@
 import { setUpEventListeners } from './components/events.js';
 import { initializePlayerDivs } from './components/gameUI.js';
 import { generateDebuggerElement } from "./components/debugger.js";
-const socket = io();
-// Main function to initialize everything
+import { refresh_data } from "./components/buttons.js"; // Import button event handlers
+import './components/buttons.js'; // Ensure side effects still run
 function main() {
-    // // Initialize game UI
-    // initializeGame();
-    // Set up event listeners
     setUpEventListeners();
-    // // Setup WebSocket connection with the backend
-    // socketSetup();
-    // window.pressSocketTestingButtons = pressSocketTestingButtons;
-    // window.pressHit = globalFunctions.pressHit;
-    // window.pressStay = globalFunctions.pressStay;
-    // window.pressDoubleDown = pressDoubleDown;
-    // window.pressSplitPair = pressSplitPair;
-    // window.pressNewGame = pressNewGame;
-    // window.refresh_data = refresh_data;
 }
 main();
 generateDebuggerElement();
-// after the DOM has loaded, register the following event listeners
-document.addEventListener('DOMContentLoaded', async (event) => {
+// Register event listeners after the DOM has loaded
+document.addEventListener('DOMContentLoaded', async () => {
     await initializePlayerDivs();
     generateDebuggerElement();
     refresh_data();
-    // initializeOnConnectionListener();
-    // initializeUpdatePageListener();
-    // initializePlayerJoinListener();
-    // initializePlayerAddedHandListener();
-    // initializeButtonCountsListener();
-    // initializeNewGameListener()
-    // console.log("DOM fully loaded.");
 });
-function pressSocketTestingButtons(buttonNumber) {
-    socket.emit('press_socket_testing_buttons', { 'buttonNumber': buttonNumber });
-}
-;
-window.pressSocketTestingButtons = pressSocketTestingButtons;
-function pressHit(user_id, hand_index = 0) {
-    socket.emit('hit', user_id, hand_index);
-}
-;
-window.pressHit = pressHit;
-function pressStay(user_id, hand_index = 0) {
-    socket.emit('stay', user_id, hand_index);
-}
-;
-window.pressStay = pressStay;
-function pressDoubleDown(user_id, hand_index = 0) {
-    socket.emit('double_down', user_id, hand_index);
-}
-;
-window.pressDoubleDown = pressDoubleDown;
-function pressSplitPair(user_id, hand_index = 0) {
-    socket.emit('split_pair', user_id, hand_index);
-}
-;
-window.pressSplitPair = pressSplitPair;
-function pressNewGame() {
-    socket.emit('new_game');
-}
-;
-window.pressNewGame = pressNewGame;
-function refresh_data() {
-    socket.emit('update_page_data');
-    console.log('Asking server to refresh');
-}
-;
-window.refresh_data = refresh_data;
