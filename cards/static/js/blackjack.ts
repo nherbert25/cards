@@ -6,27 +6,24 @@
 // https://www.youtube.com/watch?v=AMp6hlA8xKA   using websockets instead of fetch and callbacks
 
 
-
-
-import { setUpEventListeners } from './components/events.js';
-import { initializePlayerDivs } from './components/gameUI.js';
-import { generateDebuggerElement } from "./components/debugger.js";
-import {refresh_data} from "./components/buttons.js";  // Import button event handlers
+import {setUpEventListeners} from './components/events.js';
+import {initializePlayerDivs} from './components/gameUI.js';
+import {generateDebuggerElement} from "./components/debugger.js";
+import {refresh_data} from "./components/buttons.js";
 
 import './components/buttons.js';  // Ensure side effects still run
 
 
 function main() {
     setUpEventListeners();
+    generateDebuggerElement();
 }
 
 main();
 
-generateDebuggerElement();
 
 // Register event listeners after the DOM has loaded
 document.addEventListener('DOMContentLoaded', async () => {
     await initializePlayerDivs();
-    generateDebuggerElement();
     refresh_data();
 });

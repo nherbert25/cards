@@ -24,14 +24,6 @@ export function updateUI(state: any) {
 }
 
 
-
-
-
-
-
-
-
-
 export function updatePageData(data: BlackjackData) {
     console.log("Running UpdatePageData with following data: ");
     console.dir(data);
@@ -70,7 +62,6 @@ export function updatePageData(data: BlackjackData) {
 };
 
 
-
 export function updateDealerDiv(cards: Card[], sum: number) {
     console.log("Running updateDealerDiv with: ", sum, cards);
 
@@ -81,8 +72,6 @@ export function updateDealerDiv(cards: Card[], sum: number) {
     const dealer_cards_element = document.getElementById('dealer-cards')!;
     dealer_cards_element.innerHTML = generateCardImages(cards)
 };
-
-
 
 
 export function updatePlayerDiv(playerID: string, player_data: Player, BLACKJACK_MAX: number) {
@@ -207,12 +196,9 @@ export function createHandDiv(playerID: string, handID: string, playerData: Play
 }
 
 
-
 function generateCardImages(cards: Card[]) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 };
-
-
 
 
 export async function initializePlayerDivs() {
@@ -232,10 +218,6 @@ export async function initializePlayerDivs() {
         console.error('Failed to fetch game data:', error);
     }
 }
-
-
-
-
 
 
 export function requestGameDataPromise(): Promise<BlackjackData> {

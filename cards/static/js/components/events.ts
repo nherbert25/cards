@@ -9,15 +9,12 @@ const socket = io();
 
 
 export function setUpEventListeners() {
-    // await initializePlayerDivs();
-
-    // Set up the socket connection to the Python backend (probably via WebSocket or HTTP)
     initializeOnConnectionListener();
     initializeUpdatePageListener();
-    // initializePlayerJoinListener();
     initializePlayerAddedHandListener();
     initializeButtonCountsListener();
     initializeNewGameListener()
+    // initializePlayerJoinListener(); // Not implemented
     console.log("DOM fully loaded.");
 }
 
