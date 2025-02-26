@@ -74,10 +74,10 @@ class BlackjackModel:
         self.dealer.cards[0].flip()
         self.dealer.draw_card(self.deck.cards.pop())
 
+        # all players must reset *before* drawing cards, otherwise first player hitting can erroneously proc downstream logic
         for player in self.players.values():
             player.new_round(self.MINIMUM_BET)
 
-        # all players must reset *before* drawing cards, otherwise first player hitting can erroneously proc downstream logic
         for player in self.players.values():
             player.add_hand(Hand(blackjack_max=self.BLACKJACK_MAX))
             self.hit(player, 0)
