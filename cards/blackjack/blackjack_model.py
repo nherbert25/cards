@@ -126,6 +126,8 @@ class BlackjackModel:
         The player can make a side bet of up to half the original bet that the dealer’s hole card is a 10-value card (making blackjack).
         If the dealer has blackjack, the insurance bet pays 2:1, covering the original bet.
         If the dealer does not have blackjack, the insurance bet is lost.
+        Play then continues as normal.
+        Insurance bets are taken from all players before anybody is allowed to hit or stay.
         """
         pass
 
@@ -136,6 +138,8 @@ class BlackjackModel:
         Two variants, early surrender and late surrender.
         Early Surrender: Players can surrender before the dealer checks for blackjack. This is less common and generally more favorable to the player.
         Late Surrender: Players can surrender after the dealer checks for blackjack. If the dealer has blackjack, the surrender option is not available.
+        You are allowed to surrender on any hand, the differnce being, in late surrender, you can only surrender *after the dealer has checked
+        their face-down card but before they reveal it*, aka after everyone is done bettering. If the dealer has a blackjack, you are not allowed to surrender.
         """
         pass
 

@@ -7,9 +7,6 @@ class BlackjackController:
         self.blackjack_model = BlackjackModel(GameConfigs)
         self.counts = {'button1': 0, 'button2': 0}
 
-    # TODO: since the controller should pull variables from the routes and send them to the model, NOT modify it
-    #  directly... it should likely not have logic such as "if not self.blackjack_model.game_exists" either?
-    #  or is it okay to have the 'brain' direct traffic based on the state of the model?
     # https://testdriven.io/blog/flask-server-side-sessions/
     # flask session tutorial:  https://www.youtube.com/watch?v=lvKjQhQ8Fwk&t=14s
     def blackjack(self):
