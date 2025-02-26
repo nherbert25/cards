@@ -1,3 +1,6 @@
+import {BlackjackData, Card, Hand, Player, Dealer, HandOutcome} from "./schemas";
+
+
 // TODO: get the import { io } to work and remove from html
 //  import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
 //  import { io } from 'socket.io-client';
@@ -5,23 +8,20 @@ declare const io: any;
 const socket = io();
 
 
-// gameUI.ts
-import {BlackjackData, Card, Hand, Player, Dealer, HandOutcome} from "./schemas";
-
-export function initializeGame() {
-    // Set up UI elements, initial state, and event listeners
-    const gameContainer = document.getElementById('game-container');
-    // Initialize UI here...
-}
-
-export function updateUI(state: any) {
-    // Modify DOM elements based on the game state
-    const playerHand = document.getElementById('player-hand');
-    const dealerHand = document.getElementById('dealer-hand');
-    const scoreBoard = document.getElementById('score-board');
-
-    // Update the player hand, dealer hand, score, etc.
-}
+// export function initializeGame() {
+//     // Set up UI elements, initial state, and event listeners
+//     const gameContainer = document.getElementById('game-container');
+//     // Initialize UI here...
+// }
+//
+// export function updateUI(state: any) {
+//     // Modify DOM elements based on the game state
+//     const playerHand = document.getElementById('player-hand');
+//     const dealerHand = document.getElementById('dealer-hand');
+//     const scoreBoard = document.getElementById('score-board');
+//
+//     // Update the player hand, dealer hand, score, etc.
+// }
 
 
 export function updatePageData(data: BlackjackData) {
@@ -199,48 +199,3 @@ export function createHandDiv(playerID: string, handID: string, playerData: Play
 function generateCardImages(cards: Card[]) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 };
-
-
-export async function initializePlayerDivs() {
-    try {
-        const data = await requestGameData();
-        console.log("Attempting to create player divs");
-        const playerContainer = document.getElementById('player-container')!;
-
-        playerContainer.innerHTML = '';
-
-        const playersData = data.players;
-        for (const [playerID, playerData] of Object.entries(playersData)) {
-            const playerDiv = createPlayerDiv(playerID, playerData);
-            playerContainer.appendChild(playerDiv);
-        }
-    } catch (error) {
-        console.error('Failed to fetch game data:', error);
-    }
-}
-
-
-export function requestGameDataPromise(): Promise<BlackjackData> {
-    return new Promise((resolve, reject) => {
-        socket.on('request_game_data', function (data: BlackjackData) {
-            console.log("request_game_data returned the following data:");
-            console.dir(data);
-            resolve(data);
-        });
-
-        socket.on('request_game_data_error', function (error: any) {
-            reject(error);
-        });
-    });
-}
-
-export async function requestGameData(): Promise<BlackjackData> {
-    try {
-        socket.emit('request_game_data');
-        const gameData = await requestGameDataPromise();
-        return gameData;
-    } catch (error) {
-        console.error('Error requesting game data:', error);
-        throw error;
-    }
-}

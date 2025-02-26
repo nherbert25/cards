@@ -5,14 +5,13 @@
 // in the definition, aka: "async function myFunction() { ...my code ..  await myPromise() ... my code ..  }"
 // https://www.youtube.com/watch?v=AMp6hlA8xKA   using websockets instead of fetch and callbacks
 import { setUpEventListeners } from './components/events.js';
-import { initializePlayerDivs } from './components/gameUI.js';
 import { generateDebuggerElement } from "./components/debugger.js";
-import { refresh_data } from "./components/buttons.js";
+import { rebuild_entire_page, refresh_data } from "./components/buttons.js";
 import './components/buttons.js'; // Ensure side effects still run
 async function main() {
     setUpEventListeners();
     generateDebuggerElement();
-    await initializePlayerDivs();
+    rebuild_entire_page();
     refresh_data();
 }
 main().catch(console.error);

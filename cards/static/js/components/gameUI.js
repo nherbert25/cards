@@ -1,16 +1,18 @@
 const socket = io();
-export function initializeGame() {
-    // Set up UI elements, initial state, and event listeners
-    const gameContainer = document.getElementById('game-container');
-    // Initialize UI here...
-}
-export function updateUI(state) {
-    // Modify DOM elements based on the game state
-    const playerHand = document.getElementById('player-hand');
-    const dealerHand = document.getElementById('dealer-hand');
-    const scoreBoard = document.getElementById('score-board');
-    // Update the player hand, dealer hand, score, etc.
-}
+// export function initializeGame() {
+//     // Set up UI elements, initial state, and event listeners
+//     const gameContainer = document.getElementById('game-container');
+//     // Initialize UI here...
+// }
+//
+// export function updateUI(state: any) {
+//     // Modify DOM elements based on the game state
+//     const playerHand = document.getElementById('player-hand');
+//     const dealerHand = document.getElementById('dealer-hand');
+//     const scoreBoard = document.getElementById('score-board');
+//
+//     // Update the player hand, dealer hand, score, etc.
+// }
 export function updatePageData(data) {
     console.log("Running UpdatePageData with following data: ");
     console.dir(data);
@@ -166,42 +168,3 @@ function generateCardImages(cards) {
     return cards.map(card => `<img src="/static/${card.image_path}" alt="${card.rank} of ${card.suit}" width="125" height="182">`).join('');
 }
 ;
-export async function initializePlayerDivs() {
-    try {
-        const data = await requestGameData();
-        console.log("Attempting to create player divs");
-        const playerContainer = document.getElementById('player-container');
-        playerContainer.innerHTML = '';
-        const playersData = data.players;
-        for (const [playerID, playerData] of Object.entries(playersData)) {
-            const playerDiv = createPlayerDiv(playerID, playerData);
-            playerContainer.appendChild(playerDiv);
-        }
-    }
-    catch (error) {
-        console.error('Failed to fetch game data:', error);
-    }
-}
-export function requestGameDataPromise() {
-    return new Promise((resolve, reject) => {
-        socket.on('request_game_data', function (data) {
-            console.log("request_game_data returned the following data:");
-            console.dir(data);
-            resolve(data);
-        });
-        socket.on('request_game_data_error', function (error) {
-            reject(error);
-        });
-    });
-}
-export async function requestGameData() {
-    try {
-        socket.emit('request_game_data');
-        const gameData = await requestGameDataPromise();
-        return gameData;
-    }
-    catch (error) {
-        console.error('Error requesting game data:', error);
-        throw error;
-    }
-}

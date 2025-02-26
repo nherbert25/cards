@@ -7,9 +7,8 @@
 
 
 import {setUpEventListeners} from './components/events.js';
-import {initializePlayerDivs} from './components/gameUI.js';
 import {generateDebuggerElement} from "./components/debugger.js";
-import {refresh_data} from "./components/buttons.js";
+import {rebuild_entire_page, refresh_data} from "./components/buttons.js";
 
 import './components/buttons.js';  // Ensure side effects still run
 
@@ -18,8 +17,8 @@ async function main() {
     setUpEventListeners();
     generateDebuggerElement();
 
-    await initializePlayerDivs();
-    refresh_data();
+    rebuild_entire_page();
+    refresh_data()
 }
 
 main().catch(console.error);

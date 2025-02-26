@@ -51,7 +51,17 @@ def bet(user_id=None, hand_index=0):
 @socketio.on('new_game')
 def new_game():
     blackjack_controller.new_game()
-    emit('initialize_new_game', blackjack_controller.serialize_blackjack_data(), broadcast=True)
+    emit('rebuild_entire_page', blackjack_controller.serialize_blackjack_data(), broadcast=True)
+
+
+
+@socketio.on('rebuild_entire_page')
+def handle_request_game_data():
+    try:
+        emit('rebuild_entire_page', blackjack_controller.serialize_blackjack_data(), broadcast=True)
+    except Exception as e:
+        emit('request_game_data_error', str(e))
+
 
 
 @socketio.on('request_game_data')

@@ -5,7 +5,7 @@ export function setUpEventListeners() {
     initializeUpdatePageListener();
     initializePlayerAddedHandListener();
     initializeButtonCountsListener();
-    initializeNewGameListener();
+    initializeRebuildEntirePage();
     // initializePlayerJoinListener(); // Not implemented
     console.log("DOM fully loaded.");
 }
@@ -41,10 +41,10 @@ function initializeButtonCountsListener() {
 //         document.getElementById('player-container')!.appendChild(playerDiv);
 //     });
 // }
-function initializeNewGameListener() {
-    socket.on('initialize_new_game', function (data) {
+function initializeRebuildEntirePage() {
+    socket.on('rebuild_entire_page', function (data) {
         try {
-            console.log("initializeNewGameListener triggered with: ", data);
+            console.log("initializeRebuildEntirePage triggered with: ", data);
             // reset and repopulate player-container
             const playerContainer = document.getElementById('player-container');
             playerContainer.innerHTML = '';
@@ -53,7 +53,6 @@ function initializeNewGameListener() {
                 const playerDiv = createPlayerDiv(playerID, playerData);
                 playerContainer.appendChild(playerDiv);
             }
-            // start a new game
             updatePageData(data);
         }
         catch (error) {

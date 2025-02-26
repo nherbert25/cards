@@ -3,7 +3,7 @@ const socket = io();
 
 // Define button event functions
 function pressSocketTestingButtons(buttonNumber: number) {
-    socket.emit('press_socket_testing_buttons', { 'buttonNumber': buttonNumber });
+    socket.emit('press_socket_testing_buttons', {'buttonNumber': buttonNumber});
 }
 
 function pressHit(user_id: string, hand_index: number = 0) {
@@ -30,6 +30,12 @@ function refresh_data() {
     socket.emit('update_page_data');
     console.log('Asking server to refresh');
 }
+
+function rebuild_entire_page() {
+    socket.emit('rebuild_entire_page');
+    console.log('Asking server to refresh');
+}
+
 
 // Attach functions to the window object
 declare global {
@@ -59,5 +65,6 @@ export {
     pressSplitPair,
     pressNewGame,
     refresh_data,
+    rebuild_entire_page,
     pressSocketTestingButtons
 };

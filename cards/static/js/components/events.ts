@@ -1,5 +1,5 @@
 import {BlackjackData, Card, Hand, Player} from "./schemas.js";
-import {createHandDiv, createPlayerDiv, initializePlayerDivs, updatePageData} from "./gameUI.js";
+import {createHandDiv, createPlayerDiv, updatePageData} from "./gameUI.js";
 
 // TODO: get the import { io } to work and remove from html
 //  import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
@@ -13,7 +13,7 @@ export function setUpEventListeners() {
     initializeUpdatePageListener();
     initializePlayerAddedHandListener();
     initializeButtonCountsListener();
-    initializeNewGameListener()
+    initializeRebuildEntirePage()
     // initializePlayerJoinListener(); // Not implemented
     console.log("DOM fully loaded.");
 }
@@ -60,10 +60,10 @@ function initializeButtonCountsListener() {
 // }
 
 
-function initializeNewGameListener() {
-    socket.on('initialize_new_game', function (data: BlackjackData) {
+function initializeRebuildEntirePage() {
+    socket.on('rebuild_entire_page', function (data: BlackjackData) {
         try {
-            console.log("initializeNewGameListener triggered with: ", data);
+            console.log("initializeRebuildEntirePage triggered with: ", data);
 
             // reset and repopulate player-container
             const playerContainer = document.getElementById('player-container')!;
@@ -75,7 +75,6 @@ function initializeNewGameListener() {
                 playerContainer.appendChild(playerDiv);
             }
 
-            // start a new game
             updatePageData(data);
 
         } catch (error) {
