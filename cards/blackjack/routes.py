@@ -34,7 +34,6 @@ def double_down(user_id=None, hand_index=0):
 @socketio.on('split_pair')
 def split_pair(user_id=None, hand_index=0):
     if blackjack_controller.split_pair(user_id, hand_index):
-
         data = blackjack_controller.serialize_blackjack_data()
         player_data = data['players'][user_id]
         emit('player_added_hand', {'player_id': user_id, 'player_data': player_data}, broadcast=True)
@@ -54,14 +53,12 @@ def new_game():
     emit('rebuild_entire_page', blackjack_controller.serialize_blackjack_data(), broadcast=True)
 
 
-
 @socketio.on('rebuild_entire_page')
-def handle_request_game_data():
+def handle_rebuild_entire_page():
     try:
         emit('rebuild_entire_page', blackjack_controller.serialize_blackjack_data(), broadcast=True)
     except Exception as e:
         emit('request_game_data_error', str(e))
-
 
 
 @socketio.on('request_game_data')

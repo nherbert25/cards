@@ -1,8 +1,3 @@
-// // TODO: get the import { io } to work and remove from html
-// //  import { io } from "https://cdn.socket.io/4.7.4/socket.io.esm.min.js";
-// //  import { io } from 'socket.io-client';
-// declare const io: any;
-// const socket = io();
 // export function initializeGame() {
 //     // Set up UI elements, initial state, and event listeners
 //     const gameContainer = document.getElementById('game-container');
