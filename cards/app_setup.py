@@ -12,9 +12,6 @@ socketio = SocketIO(ping_interval=50, ping_timeout=50)
 def create_app():
     """Create an application."""
     app = Flask(__name__)
-    app.config["DEBUG"] = True  # comment out for pycharm debug mode (ironic, isn't it?)
-    app.config["SECRET_KEY"] = 'anA194$38@na.dn0832A'
-    app.config['SESSION_TYPE'] = 'sqlalchemy'
 
     # Load configuration based on environment
     env = os.environ.get('FLASK_ENV', 'development')
@@ -22,10 +19,10 @@ def create_app():
         app.config.from_object(ProductionConfig)
     elif env == 'testing':
         app.config.from_object(TestingConfig)
-        app.config['WTF_CSRF_ENABLED'] = False
     elif env == 'development':
         app.config.from_object(DevelopmentConfig)
-        app.config['WTF_CSRF_ENABLED'] = False
+    else:
+        app.config.from_object(DevelopmentConfig)
 
     # Load database configurations
     from cards.database.models import db
