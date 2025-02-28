@@ -2,6 +2,10 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+db_path = os.path.join(basedir, '..', 'instance', 'development_database.db')
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.abspath(db_path)
+
 
 class Config:
     SECRET_KEY = 'your_secret_key_here'
@@ -13,12 +17,6 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '..', 'instance', 'development_database.db')
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '../instance', 'development_database.db')
-
-import os
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-db_path = os.path.join(basedir, '..', 'instance', 'development_database.db')
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.abspath(db_path)
 
 
 # running test suite (clean database, etc.)

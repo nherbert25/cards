@@ -8,3 +8,4 @@ venv/
 .coverage
 cards/instance/
 .python-version
+identifier.sqlite
