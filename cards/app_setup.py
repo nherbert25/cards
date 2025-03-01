@@ -33,9 +33,9 @@ def create_app() -> Flask:
 
     # Blueprints must be imported here to avoid circular imports. See Flask documentation
     from cards.blackjack.routes import blackjack_blueprint
-    from cards.app import main_blueprint
+    from cards.landing_page_blueprint import landing_page_blueprint
     app.register_blueprint(blackjack_blueprint)
-    app.register_blueprint(main_blueprint)
+    app.register_blueprint(landing_page_blueprint)
 
     return app
 
@@ -65,7 +65,7 @@ def initialize_socketio(app):
     socketio.init_app(app)
 
 
-if __name__ == '__main__':
-    # socketio.run encapsulates app.run but includes web socket functionality
-    app = create_app()
-    socketio.run(app, allow_unsafe_werkzeug=True)
+# if __name__ == '__main__':
+#     # socketio.run encapsulates app.run but includes web socket functionality
+#     app = create_app()
+#     socketio.run(app, allow_unsafe_werkzeug=True)
