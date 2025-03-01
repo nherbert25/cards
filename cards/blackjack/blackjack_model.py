@@ -45,10 +45,9 @@ class BlackjackModel:
     DOUBLE_DOWN_RATIO = 2  # How much a player wins/loses if they double down on a bet
 
     def __init__(self, game_configs: GameConfigs):
-        self.MINIMUM_BET = 50
-        self.dealer = None
-
-        self.deck = Deck()
+        self.MINIMUM_BET: int = 50
+        self.deck: Optional[Deck] = Deck()
+        self.dealer: Optional[Hand] = None
         self.game_exists: bool = False
 
         # Unpack the game_configs attributes into the class instance
@@ -70,9 +69,9 @@ class BlackjackModel:
         self.deck.shuffle()
 
         self.dealer = Hand(blackjack_max=self.BLACKJACK_MAX)
-        self.dealer.draw_card(self.deck.cards.pop())
+        for _ in range(2):
+            self.dealer.draw_card(self.deck.cards.pop())
         self.dealer.cards[0].flip()
-        self.dealer.draw_card(self.deck.cards.pop())
 
         # all players must reset *before* drawing cards, otherwise first player hitting can erroneously proc downstream logic
         for player in self.players.values():
