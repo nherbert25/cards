@@ -6,11 +6,11 @@ import os
 from cards.database.models import db
 from cards.configs.config import DevelopmentConfig, TestingConfig, ProductionConfig
 
-socketio = SocketIO(ping_interval=50, ping_timeout=50)
 
 # Initialize extensions
 bcrypt = Bcrypt()
 sess = Session()
+socketio = SocketIO(ping_interval=50, ping_timeout=50)
 
 
 # create app pattern:  https://flask.palletsprojects.com/en/3.0.x/patterns/appfactories/
@@ -43,9 +43,10 @@ def create_app():
     with app.app_context():
         db.create_all()
 
+    socketio.init_app(app)
+
     # Load blueprints, these must be imported here to avoid circular imports. See Flask documentation
     from cards.blackjack.routes import blackjack_blueprint
     app.register_blueprint(blackjack_blueprint)
 
-    socketio.init_app(app)
     return app, db, sess, bcrypt
