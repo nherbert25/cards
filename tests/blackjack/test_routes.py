@@ -1,5 +1,6 @@
 import pytest
-from cards.app import app, socketio
+from cards.app_setup import socketio
+from cards.app import app
 from tests.blackjack.test_configs import initial_game_blackjack
 
 
