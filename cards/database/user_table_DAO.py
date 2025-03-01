@@ -1,11 +1,12 @@
 from cards.database.models import User
 from sqlalchemy.orm import Session
 from flask_bcrypt import check_password_hash
+from cards.database.database import db
 
 
 class UserTableDAO:
-    def __init__(self, db_session: Session):
-        self.db_session = db_session
+    def __init__(self, db_session: Session = None):
+        self.db_session = db_session or db.session
 
     def get_user_by_username(self, username: str):
         return self.db_session.query(User).filter_by(username=username).first()

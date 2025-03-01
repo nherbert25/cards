@@ -5,11 +5,11 @@ from cards.database.user_table_DAO import UserTableDAO
 from cards.forms import RegistrationForm, LoginForm
 from cards.database.models import User
 
-# application factory pattern
+# Creating application
 app = create_app()
 
-# initializing local classes
-MyUserTableDAO = UserTableDAO(db.session)
+# initializing local class objects
+user_table_dao = UserTableDAO(db.session)
 
 
 @app.route('/health_check')
@@ -28,18 +28,18 @@ def register():
     form = RegistrationForm()
 
     if request.method == 'POST' and form.validate_on_submit():
-        if MyUserTableDAO.get_user_by_username(username=form.username.data):
+        if user_table_dao.get_user_by_username(username=form.username.data):
             flash('Username has already been taken', 'danger')
             return render_template('register.html', title='Register', form=form)
 
-        elif MyUserTableDAO.get_user_by_email(email=form.email.data):
+        elif user_table_dao.get_user_by_email(email=form.email.data):
             flash('Email has already been taken', 'danger')
             return render_template('register.html', title='Register', form=form)
 
         else:
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-            MyUserTableDAO.add_user_to_database(user)
+            user_table_dao.add_user_to_database(user)
             flash('Account created, please login!', 'success')
             return redirect(url_for('login'))
     else:
@@ -57,7 +57,7 @@ def login():
 
     if request.method == 'POST':
         if form.validate():
-            db_user = MyUserTableDAO.get_user_by_email(email=form.email.data)
+            db_user = user_table_dao.get_user_by_email(email=form.email.data)
 
             if db_user is not None and check_password_hash(db_user.password, form.password.data):
                 flash('You have been logged in!', 'success')

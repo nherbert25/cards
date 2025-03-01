@@ -1,13 +1,6 @@
 from flask_login import UserMixin
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase
 
-
-class Base(DeclarativeBase):
-    pass
-
-
-db = SQLAlchemy(model_class=Base)
+from cards.database.database import db
 
 
 class User(db.Model, UserMixin):
