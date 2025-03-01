@@ -45,12 +45,12 @@ export function updatePageData(data: BlackjackData) {
             }
         }
 
-        // Update button counts
-        if (htmlKey === "button-counts") {
-            const {button1, button2} = value;
-            document.getElementById('button1-count')!.innerText = button1;
-            document.getElementById('button2-count')!.innerText = button2;
-        }
+        // // Update button counts
+        // if (htmlKey === "button-counts") {
+        //     const {button1, button2} = value;
+        //     document.getElementById('button1-count')!.innerText = button1;
+        //     document.getElementById('button2-count')!.innerText = button2;
+        // }
     }
 };
 

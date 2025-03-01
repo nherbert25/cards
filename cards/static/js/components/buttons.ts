@@ -36,7 +36,7 @@ function rebuild_entire_page() {
     console.log('Asking server to refresh');
 }
 
-
+// TODO: this should be cleaned up
 // Attach functions to the window object
 declare global {
     interface Window {

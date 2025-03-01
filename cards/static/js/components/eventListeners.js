@@ -4,7 +4,6 @@ export function setUpEventListeners() {
     initializeOnConnectionListener();
     initializeUpdatePageListener();
     initializePlayerAddedHandListener();
-    initializeButtonCountsListener();
     initializeRebuildEntirePage();
     // initializePlayerJoinListener(); // Not implemented
     console.log("DOM fully loaded.");
@@ -26,13 +25,6 @@ function initializePlayerAddedHandListener() {
         const newHandDiv = createHandDiv(player_id, handIndex.toString(), player_data, player_data.hands[handIndex]);
         const existingPlayerDiv = document.getElementById('player-' + player_id);
         existingPlayerDiv.appendChild(newHandDiv);
-    });
-}
-function initializeButtonCountsListener() {
-    socket.on('update_button_counts', function (data) {
-        // Handle button count updates for the selected game
-        document.getElementById('button1-count').innerText = data.counts.button1.toString();
-        document.getElementById('button2-count').innerText = data.counts.button2.toString();
     });
 }
 // function initializePlayerJoinListener() {

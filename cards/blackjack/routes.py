@@ -1,4 +1,6 @@
-from flask import Blueprint
+import os
+
+from flask import Blueprint, send_from_directory
 from cards.app_setup import socketio
 
 from cards.blackjack.controller import BlackjackController
@@ -81,6 +83,14 @@ def press_socket_testing_buttons(button_data_from_client):
     button_number = button_data_from_client['buttonNumber']
     blackjack_controller.counts[f'button{button_number}'] += 1
     socketio.emit('update_button_counts', {'counts': blackjack_controller.counts}, to=None)
+
+
+@blackjack_blueprint.route('/static/js/components/debugger.js')
+def debug_js():
+    if os.environ.get('FLASK_ENV') == 'development':
+        return send_from_directory('static/js/components', 'debugger.js')
+    else:
+        return "Forbidden", 403
 
 
 @socketio.on("connect")

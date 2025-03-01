@@ -12,7 +12,6 @@ export function setUpEventListeners() {
     initializeOnConnectionListener();
     initializeUpdatePageListener();
     initializePlayerAddedHandListener();
-    initializeButtonCountsListener();
     initializeRebuildEntirePage()
     // initializePlayerJoinListener(); // Not implemented
     console.log("DOM fully loaded.");
@@ -44,13 +43,6 @@ function initializePlayerAddedHandListener() {
 }
 
 
-function initializeButtonCountsListener() {
-    socket.on('update_button_counts', function (data: { counts: { button1: number; button2: number } }) {
-        // Handle button count updates for the selected game
-        document.getElementById('button1-count')!.innerText = data.counts.button1.toString();
-        document.getElementById('button2-count')!.innerText = data.counts.button2.toString();
-    });
-}
 
 // function initializePlayerJoinListener() {
 //     socket.on('player_joined', function (data: Player) {

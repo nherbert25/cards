@@ -1,4 +1,6 @@
-from flask import render_template
+import os
+
+from flask import render_template, current_app
 from cards.blackjack.blackjack_model import BlackjackModel, GameConfigs
 
 
@@ -13,10 +15,12 @@ class BlackjackController:
         # blackjack_controller = session['blackjack_controller']
         if not self.blackjack_model.game_exists:
             self.blackjack_model.start_new_game()
-        return render_template("blackjack.html", **self.serialize_blackjack_data())
+        flask_env = os.getenv('FLASK_ENV', 'production')
+        return render_template("blackjack.html", **self.serialize_blackjack_data(), flask_env=flask_env)
 
     def update_page_data(self):
-        return render_template("blackjack.html", **self.serialize_blackjack_data())
+        flask_env = os.getenv('FLASK_ENV', 'production')
+        return render_template("blackjack.html", **self.serialize_blackjack_data(), flask_env=flask_env)
 
     def serialize_blackjack_data(self) -> dict:
         return {

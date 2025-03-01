@@ -15,7 +15,7 @@ import './components/buttons.js';  // Ensure side effects still run
 
 async function main() {
     setUpEventListeners();
-    generateDebuggerElement();
+    // generateDebuggerElement();
 
     rebuild_entire_page();
     refresh_data()

@@ -23,10 +23,14 @@
         <div id="player-container" class="row player-container"></div>
 
         <div id="socket-button-testing-container" class="row"></div>
+
     </div>
     {#  // TODO: get the import { io } to work and remove from html #}
     <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"
             integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4"
             crossorigin="anonymous"></script>
     <script type="module" src="{{ url_for('static', filename='js/blackjack.js') }}"></script>
+    {% if flask_env == 'development' %}
+        <script src="{{ url_for('blackjack.debug_js') }}" type="module"></script>
+    {% endif %}
 {% endblock content %}
