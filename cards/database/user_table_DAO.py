@@ -14,8 +14,8 @@ class UserTableDAO:
     def get_user_by_email(self, email: str) -> User | None:
         return self.db_session.query(User).filter_by(email=email).first()
 
-    def verify_password(self, user: User, password: str) -> bool:
-        return bcrypt.check_password_hash(user.password, password)
+    def verify_password(self, pw_hash: str, password: str) -> bool:
+        return bcrypt.check_password_hash(pw_hash, password)
 
     def add_user_to_database(self, user: User) -> None:
         self.db_session.add(user)

@@ -57,8 +57,7 @@ def login():
         if form.validate():
             db_user = user_table_dao.get_user_by_email(email=form.email.data)
 
-            # TODO: make check_password_hash pull from user_table_dao.verify_password
-            if db_user is not None and bcrypt.check_password_hash(db_user.password, form.password.data):
+            if db_user is not None and user_table_dao.verify_password(db_user.password, form.password.data):
                 flash('You have been logged in!', 'success')
                 return redirect(url_for('landing_page.home')), 302
             else:
