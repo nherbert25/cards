@@ -31,9 +31,11 @@ def create_app() -> Flask:
     initialize_bcrypt(app)
     initialize_socketio(app)
 
-    # Load blueprints, these must be imported here to avoid circular imports. See Flask documentation
+    # Blueprints must be imported here to avoid circular imports. See Flask documentation
     from cards.blackjack.routes import blackjack_blueprint
+    from cards.app import main_blueprint
     app.register_blueprint(blackjack_blueprint)
+    app.register_blueprint(main_blueprint)
 
     return app
 
@@ -61,3 +63,9 @@ def initialize_bcrypt(app):
 def initialize_socketio(app):
     """Initialize SocketIO."""
     socketio.init_app(app)
+
+
+if __name__ == '__main__':
+    # socketio.run encapsulates app.run but includes web socket functionality
+    app = create_app()
+    socketio.run(app, allow_unsafe_werkzeug=True)

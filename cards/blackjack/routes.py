@@ -1,4 +1,5 @@
 from flask import Blueprint
+# TODO: I think this socketio should be from app_setup instead
 from flask_socketio import emit
 from cards.app_setup import socketio
 
