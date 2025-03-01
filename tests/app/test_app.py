@@ -37,10 +37,6 @@ class TestApp:
         assert response.status_code == 200
 
     def test_login_get(self, client):
-        response = client.get('/blackjack')
-        assert response.status_code == 200
-
-    def test_login_get(self, client):
         response = client.get('/login')
         assert response.status_code == 200
 
