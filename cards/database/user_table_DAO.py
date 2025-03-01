@@ -1,7 +1,7 @@
-from cards.database.models import User
 from sqlalchemy.orm import Session
-from flask_bcrypt import check_password_hash
 from cards.database.database import db
+from cards.database.models import User
+from cards.app_setup import bcrypt
 
 
 class UserTableDAO:
@@ -15,7 +15,7 @@ class UserTableDAO:
         return self.db_session.query(User).filter_by(email=email).first()
 
     def verify_password(self, user: User, password: str) -> bool:
-        return check_password_hash(user.password, password)
+        return bcrypt.check_password_hash(user.password, password)
 
     def add_user_to_database(self, user: User):
         self.db_session.add(user)
