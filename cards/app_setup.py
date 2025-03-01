@@ -29,19 +29,17 @@ def create_app():
 
     # Load database configurations
     db.init_app(app)
+    with app.app_context():
+        db.create_all()
 
     # Load Session configurations
     app.config['SESSION_SQLALCHEMY'] = db
-    sess = Session()
+    app.config['SESSION_TYPE'] = 'sqlalchemy'
     sess.init_app(app)
 
     # Load bcrypt configurations
-    bcrypt = Bcrypt()
     bcrypt.init_app(app)
 
-    # Not sure how app_context works
-    with app.app_context():
-        db.create_all()
 
     socketio.init_app(app)
 

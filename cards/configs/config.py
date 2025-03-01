@@ -4,8 +4,8 @@ import os
 class Config:
     BASEDIR = os.path.abspath(os.path.dirname(__file__))
     SECRET_KEY = 'your_secret_key_here'
-    SESSION_TYPE = 'sqlalchemy'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SESSION_TYPE = 'sqlalchemy'
 
 
 # running application locally
