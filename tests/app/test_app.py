@@ -1,5 +1,5 @@
 import pytest
-from cards.landing_page_blueprint import app
+from cards.app import app
 
 
 class TestApp:
