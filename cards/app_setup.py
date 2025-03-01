@@ -8,12 +8,12 @@ from cards.configs.config import DevelopmentConfig, TestingConfig, ProductionCon
 
 # Initialize extensions
 bcrypt = Bcrypt()
-sess = Session()
+session = Session()
 socketio = SocketIO(ping_interval=50, ping_timeout=50)
 
 
-# application factory pattern:  https://flask.palletsprojects.com/en/3.0.x/patterns/appfactories/
-def create_app():
+# Application factory pattern:  https://flask.palletsprojects.com/en/3.0.x/patterns/appfactories/
+def create_app() -> Flask:
     """Create an application."""
     app = Flask(__name__)
 
@@ -35,7 +35,7 @@ def create_app():
     from cards.blackjack.routes import blackjack_blueprint
     app.register_blueprint(blackjack_blueprint)
 
-    return app, db, sess, bcrypt
+    return app
 
 
 def initialize_db(app):
@@ -50,7 +50,7 @@ def initialize_session(app, session_db):
     # Load Session configurations
     app.config['SESSION_SQLALCHEMY'] = session_db
     app.config['SESSION_TYPE'] = 'sqlalchemy'
-    sess.init_app(app)
+    session.init_app(app)
 
 
 def initialize_bcrypt(app):

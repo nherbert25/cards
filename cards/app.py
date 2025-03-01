@@ -1,12 +1,12 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_bcrypt import check_password_hash
-from cards.app_setup import create_app, socketio
+from cards.app_setup import create_app, socketio, db, bcrypt
 from cards.database.user_table_DAO import UserTableDAO
 from cards.forms import RegistrationForm, LoginForm
 from cards.database.models import User
 
 # application factory pattern
-app, db, sess, bcrypt = create_app()
+app = create_app()
 
 # initializing local classes
 MyUserTableDAO = UserTableDAO(db.session)
@@ -73,4 +73,3 @@ def login():
 if __name__ == '__main__':
     # socketio.run encapsulates app.run but includes web socket functionality
     socketio.run(app, allow_unsafe_werkzeug=True)
-    # app.run(debug=True)
