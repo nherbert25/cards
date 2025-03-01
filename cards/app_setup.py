@@ -3,9 +3,14 @@ from flask_socketio import SocketIO
 from flask_session import Session
 from flask_bcrypt import Bcrypt
 import os
+from cards.database.models import db
 from cards.configs.config import DevelopmentConfig, TestingConfig, ProductionConfig
 
 socketio = SocketIO(ping_interval=50, ping_timeout=50)
+
+# Initialize extensions
+bcrypt = Bcrypt()
+sess = Session()
 
 
 # create app pattern:  https://flask.palletsprojects.com/en/3.0.x/patterns/appfactories/
@@ -19,17 +24,14 @@ def create_app():
         app.config.from_object(ProductionConfig)
     elif env == 'testing':
         app.config.from_object(TestingConfig)
-    elif env == 'development':
-        app.config.from_object(DevelopmentConfig)
     else:
         app.config.from_object(DevelopmentConfig)
 
     # Load database configurations
-    from cards.database.models import db
     db.init_app(app)
-    app.config['SESSION_SQLALCHEMY'] = db
 
     # Load Session configurations
+    app.config['SESSION_SQLALCHEMY'] = db
     sess = Session()
     sess.init_app(app)
 

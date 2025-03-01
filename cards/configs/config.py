@@ -1,13 +1,8 @@
 import os
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-db_path = os.path.join(basedir, '..', 'instance', 'development_database.db')
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.abspath(db_path)
-
 
 class Config:
+    BASEDIR = os.path.abspath(os.path.dirname(__file__))
     SECRET_KEY = 'your_secret_key_here'
     SESSION_TYPE = 'sqlalchemy'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -23,7 +18,7 @@ class DevelopmentConfig(Config):
     """
     # DEBUG = True
     WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '..', 'instance', 'development_database.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(Config.BASEDIR, '..', 'instance', 'development_database.db')
 
 
 # running test suite (clean database, etc.)
@@ -35,4 +30,4 @@ class TestingConfig(Config):
 
 # running production application
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, '..', 'instance', 'production_database.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(Config.BASEDIR, '..', 'instance', 'production_database.db')
