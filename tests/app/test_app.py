@@ -32,14 +32,18 @@ class TestApp:
         response = client.get('/register')
         assert response.status_code == 200
 
+    # TODO: change this test to actually register a user (right now it returns 200 even though it doesn't even
+    #  contain the correct data to create an account)
     def test_register_post(self, client):
-        response = client.post('/register')
+        data = {'email': 'fakeemail123@gmail.com', 'password': 'password'}
+        response = client.post('/register', data=data)
         assert response.status_code == 200
 
     def test_login_get(self, client):
         response = client.get('/login')
         assert response.status_code == 200
 
+    # TODO: make tests create in memory DBs
     def test_login_post_success(self, client):
         data = {'email': 'fakeemail123@gmail.com', 'password': 'password'}
         response = client.post('/login', data=data)
