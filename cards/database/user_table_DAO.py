@@ -14,10 +14,11 @@ class UserTableDAO:
     def get_user_by_email(self, email: str) -> User | None:
         return self.db_session.query(User).filter_by(email=email).first()
 
-    def verify_password(self, pw_hash: str, password: str) -> bool:
-        return bcrypt.check_password_hash(pw_hash, password)
-
     def add_user_to_database(self, user: User) -> None:
         self.db_session.add(user)
         self.db_session.commit()
         return
+
+    @staticmethod
+    def verify_password(pw_hash: str, password: str) -> bool:
+        return bcrypt.check_password_hash(pw_hash, password)
