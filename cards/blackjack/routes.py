@@ -4,11 +4,17 @@ from cards.app_setup import socketio
 from cards.blackjack.controller import BlackjackController
 
 blackjack_blueprint = Blueprint('blackjack', __name__)
-blackjack_controller = BlackjackController()
+blackjack_controller = None
 
 
 @blackjack_blueprint.route('/blackjack')
 def blackjack():
+    # todo: added this garbage because the controller is creating a blackjack instance which is creating a player
+    #  instance which is querying the database. This fails because the application context can't be found during setup
+    #  ACTIVELY WORKING ON THIS, THIS IS THE MAIN PROBLEM, FIX THIS.
+    global blackjack_controller
+    if blackjack_controller is None:
+        blackjack_controller = BlackjackController()
     return blackjack_controller.blackjack()
 
 

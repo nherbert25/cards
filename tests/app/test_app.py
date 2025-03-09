@@ -43,6 +43,7 @@ class TestApp:
         response = client.get('/login')
         assert response.status_code == 200
 
+    # TODO: add test that confirms that a session is created when a user logs in
     # TODO: make tests create in memory DBs
     def test_login_post_success(self, client):
         data = {'email': 'fakeemail123@gmail.com', 'password': 'password'}

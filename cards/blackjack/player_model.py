@@ -4,18 +4,35 @@ from uuid import UUID, uuid4
 from cards.blackjack.hand_model import Hand, HandOutcome
 from typing import List, Tuple
 
+from cards.database.models import Blackjack
+from database.blackjack_table_DAO import BlackjackTableDAO
+
 
 class Player:
-    def __init__(self, user_id: UUID = None, player_name: str = 'Guest', coins: int = 500, bet: int = 50):
+    def __init__(self, user_id: UUID = None, player_name: str = 'Guest', bet: int = 50, dao=None):
         self.user_id = user_id or uuid4()
+        self.dao = dao or BlackjackTableDAO()
         self.player_name = player_name
-        self.coins = coins
+        self.coins = self._get_coins_from_db
         self.hands: List[Hand] = []
         self.bet = bet
         self.win_or_lose_message: str = f'Current bet: {bet}'
+        self._add_new_user_to_blackjack_table()
 
     def __repr__(self):
         return f'user_id={self.user_id}, name={self.player_name}'
+
+    def _add_new_user_to_blackjack_table(self) -> None:
+        database_entry = self.dao.get_user_by_uuid(str(self.user_id))
+        if not database_entry:
+            new_user = Blackjack(user_uuid=str(self.user_id), coins=500)
+            self.dao.add_user_to_database(new_user)
+
+    def _get_coins_from_db(self) -> int:
+        database_entry = self.dao.get_user_by_uuid(str(self.user_id))
+        if database_entry:
+            return database_entry.coins
+        return 500
 
     def get_hand(self, hand_index: int) -> Hand:
         if 0 <= hand_index < len(self.hands):
@@ -32,7 +49,9 @@ class Player:
         try:
             self.get_hand(hand_index).stay()
         except IndexError:
-            logging.error(f"Attempted to locate hand: {hand_index}. Hand index doesn't exist. {len(self.hands)} in hand.", exc_info=True)  # Log error + traceback
+            logging.error(
+                f"Attempted to locate hand: {hand_index}. Hand index doesn't exist. {len(self.hands)} in hand.",
+                exc_info=True)  # Log error + traceback
             print(f"Attempted to locate hand: {hand_index}. Hand index doesn't exist. {len(self.hands)} in hand.")
         except Exception as e:
             logging.error(f"Unexpected error locating hand index: {hand_index}", exc_info=True)
@@ -42,7 +61,7 @@ class Player:
         current_hand = self.get_hand(hand_index)
         if current_hand.can_split_pair:
             hand_1, hand_2 = current_hand.split_pair()
-            self.add_hand(hand_2, hand_index+1)
+            self.add_hand(hand_2, hand_index + 1)
             return True
         return False
 
