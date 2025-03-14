@@ -13,30 +13,12 @@ blackjack_blueprint = Blueprint('blackjack', __name__)
 
 blackjack_controller = None
 
+
 def get_blackjack_controller():
     global blackjack_controller
     if not blackjack_controller:
         blackjack_controller = BlackjackController()
-        blackjack_controller.new_game()
     return blackjack_controller
-
-# blackjack_controller = BlackjackController()
-
-# This will ensure the game state is loaded before the first request is made
-# @blackjack_blueprint.before_app_first_request
-# def initialize_game_data():
-#     """ This function runs before the first request to initialize the game state. """
-#     # Load data from the database
-#     blackjack_controller = BlackjackController()
-#
-#     # game_data = db.session.query(GameData).all()  # Example DB query
-#     # blackjack_game = BlackjackGame(data=game_data)  # Initialize your game
-#
-#     # Store it in the application config or g
-#     current_app.config['BLACKJACK_GAME'] = blackjack_game
-#
-#
-# with current_app.app_context():
 
 
 @blackjack_blueprint.route('/blackjack')
