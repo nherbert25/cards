@@ -21,4 +21,6 @@ class BlackjackTableDAO:
         user_blackjack = self.get_user_by_uuid(user_uuid)
         if user_blackjack:
             user_blackjack.coins += coin_change
+            self.db_session.add(user_blackjack)
             self.db_session.commit()
+            return
