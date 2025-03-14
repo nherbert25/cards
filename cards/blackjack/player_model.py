@@ -13,7 +13,7 @@ class Player:
         self.user_id = user_id or uuid4()
         self.dao = dao or BlackjackTableDAO()
         self.player_name = player_name
-        self.coins = self._get_coins_from_db
+        self.coins = self._get_coins_from_db()
         self.hands: List[Hand] = []
         self.bet = bet
         self.win_or_lose_message: str = f'Current bet: {bet}'
