@@ -5,7 +5,7 @@ from cards.blackjack.hand_model import Hand, HandOutcome
 from typing import List, Tuple
 
 from cards.database.models import Blackjack
-from database.blackjack_table_DAO import BlackjackTableDAO
+from cards.database.blackjack_table_DAO import BlackjackTableDAO
 
 
 class Player:
