@@ -8,6 +8,17 @@ from cards.blackjack.card_model import Card
 from cards.blackjack.deck_model import Deck
 
 
+def get_default_players() -> Dict[UUID, Player]:
+    return {
+        player.user_id: player for player in
+        [
+            Player(player_name='Taylor', user_id=UUID("11111111-1111-1111-1111-111111111111"), bet=50),
+            Player(player_name='Nate', user_id=UUID("22222222-2222-2222-2222-222222222222"), bet=50),
+            Player(player_name='Travis', user_id=UUID("33333333-3333-3333-3333-333333333333"), bet=50),
+        ]
+    }
+
+
 class GameConfigs:
     # TODO: add toggleable configs div in html to change the rules of the game!
     # TODO: add variant and side bet functionality - DEALER_HITS_ON_SOFT_17, RESTRICTED_DOUBLING, ALLOW_SPLIT_PAIR \
@@ -44,25 +55,15 @@ class BlackjackModel:
     DEALER_HOLD_THRESHOLD = 17
     DOUBLE_DOWN_RATIO = 2  # How much a player wins/loses if they double down on a bet
 
-    def __init__(self, game_configs: GameConfigs):
+    def __init__(self, game_configs: GameConfigs, players: Optional[Dict[UUID, Player]] = None):
         self.MINIMUM_BET: int = 50
         self.deck: Optional[Deck] = Deck()
         self.dealer: Optional[Hand] = None
         self.game_exists: bool = False
+        self.players = players if players is not None else {}
 
         # Unpack the game_configs attributes into the class instance
         self.__dict__.update(game_configs.__dict__)
-
-        self.players: Dict[UUID, Player] = {
-            player.user_id: player for player in
-            [
-                Player(player_name='Taylor', user_id=UUID("11111111-1111-1111-1111-111111111111"),
-                       bet=self.MINIMUM_BET),
-                Player(player_name='Nate', user_id=UUID("22222222-2222-2222-2222-222222222222"), bet=self.MINIMUM_BET),
-                Player(player_name='Travis', user_id=UUID("33333333-3333-3333-3333-333333333333"),
-                       bet=self.MINIMUM_BET),
-            ]
-        }
 
     def start_new_game(self) -> None:
         self.deck = Deck()

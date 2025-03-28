@@ -1,10 +1,10 @@
 from flask import render_template
-from cards.blackjack.blackjack_model import BlackjackModel, GameConfigs
+from cards.blackjack.blackjack_model import BlackjackModel, GameConfigs, get_default_players
 
 
 class BlackjackController:
     def __init__(self):
-        self.blackjack_model = BlackjackModel(GameConfigs)
+        self.blackjack_model = BlackjackModel(GameConfigs, get_default_players())
         self.counts = {'button1': 0, 'button2': 0}
 
     # https://testdriven.io/blog/flask-server-side-sessions/
