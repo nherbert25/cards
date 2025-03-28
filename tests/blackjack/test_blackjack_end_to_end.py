@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-APP_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "cards", "landing_page_blueprint.py"))
+APP_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "cards", "app.py"))
 PORT = 5050
 
 
