@@ -5,10 +5,6 @@ from cards.blackjack.card_model import Card
 
 
 class TestHandModel:
-    # @pytest.fixture(autouse=True)  #  autouse=True means you do not have to explicitly input the fixture
-    # def mock_game(self, mocker):
-    #     self.hand_KK = example_hand_KK()
-    #     self.hand_KQ = example_hand_KQ()
 
     @pytest.mark.parametrize('hand_name, expected_output', [
         ("empty_hand", 0),
@@ -43,10 +39,10 @@ class TestHandModel:
         assert test_hand.can_split_pair == expected_output
 
     @pytest.mark.parametrize('hand_name, expected_output', [
-            ("KK", (Card('K', 'C'), Card('K', 'D'))),
-            ("KQ", None),
-            ("33", (Card('3', 'C'), Card('3', 'C'))),
-            ("333", None),
+        ("KK", (Card('K', 'C'), Card('K', 'D'))),
+        ("KQ", None),
+        ("33", (Card('3', 'C'), Card('3', 'C'))),
+        ("333", None),
     ])
     def test_split_pair(self, hand_factory, hand_name, expected_output):
         test_hand = hand_factory(hand_name)
