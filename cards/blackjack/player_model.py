@@ -76,7 +76,6 @@ class Player:
             if hand.outcome == HandOutcome.LOSE:
                 payout -= hand.bet
         self.coins += payout
-        # TODO: push change in coins to DB
         self._push_coins_to_db(payout)
         self.coins = self._get_coins_from_db()
         if payout > 0:
