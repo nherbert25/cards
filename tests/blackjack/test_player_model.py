@@ -12,11 +12,11 @@ from cards.app_setup import create_app, db  # Import your Flask app factory and 
 class TestPlayerModel:
 
     @pytest.fixture
-    def mock_db_session(mocker):
+    def mock_db_session(self, mocker):
         return mocker.Mock()
 
     @pytest.fixture
-    def mock_player(mock_db_session, mocker):
+    def mock_player(self, mock_db_session, mocker):
         """Mock Player instance with a mocked database session."""
         """Create a real Player instance but mock only its database dependencies."""
         from cards.blackjack.player_model import Player
