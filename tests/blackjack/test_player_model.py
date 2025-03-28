@@ -30,14 +30,12 @@ class TestPlayerModel:
 
         return mock_player
 
-    # TODO: Test is breaking, I believe it's because example_hand_total_KK is one instance, manipulated across tests.
-    @pytest.mark.parametrize('test_input, expected_output', (
-            (example_hand_total_KK, 2),
-            (example_hand_total_KQ, 1),
+    @pytest.mark.parametrize('hand_name, expected_output', (
+            ("KK", 2),
+            ("KQ", 1),
 
     ))
-    def test_split_pair(self, test_input, expected_output, mock_player):
-        # print(f"Hand before adding: {test_input.cards}")
-        mock_player.add_hand(test_input)
+    def test_split_pair(self, hand_factory, hand_name, expected_output, mock_player):
+        mock_player.add_hand(hand_factory(hand_name))
         mock_player.split_pair(0)
         assert len(mock_player.hands) == expected_output
