@@ -28,15 +28,9 @@ def test_square(square):
 ################################################
 ################################################
 
-@pytest.fixture(scope="session", autouse=True)
-def set_testing_env():
-    os.environ["FLASK_ENV"] = "testing"
-
 
 @pytest.fixture(scope="session")
 def hand_factory():
-    """scope defaults to "function" which means this would get ran during every single unit test. hand_factory is only
-    defining *how* to create hands, so it only needs to be defined once."""
 
     def _create_hand(name):
         hands = {
