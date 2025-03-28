@@ -74,9 +74,7 @@ def test_get_user_by_email(user_table_dao, mock_db_session):
     mock_query.filter_by.return_value.first.assert_called_once()
 
 
-# TODO: Actually integrate this with the database? There's no point in mocking a successful upsert.
-#  For now just make sure the type is correct.
-def test_add_user_to_database(user_table_dao, mock_db_session):
+def test_mock_user_is_of_type_user(user_table_dao, mock_db_session):
     # Arrange
     mock_username = 'my_test_username'
     mock_email = 'testuser@gmail.com'
