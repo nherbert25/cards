@@ -54,7 +54,16 @@ def start_flask_app():
 
 @pytest.fixture
 def driver():
-    driver = webdriver.Chrome()
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")  # Run Chrome in headless mode
+    options.add_argument("--disable-gpu")  # Required for headless mode on some systems
+    options.add_argument("--window-size=1920x1080")  # Ensure a standard resolution
+    options.add_argument("--disable-dev-shm-usage")  # Overcomes limited resource problems in Docker
+    options.add_argument("--no-sandbox")  # Bypass OS security model (useful for CI/CD)
+    options.add_argument("--disable-extensions")  # Disable unnecessary extensions
+    options.add_argument("--disable-infobars")  # Prevent 'Chrome is being controlled by automated software' message
+    options.add_argument("--disable-blink-features=AutomationControlled")  # Avoid detection by anti-bot scripts
+    driver = webdriver.Chrome(options=options)
     yield driver
     driver.quit()
 
