@@ -1,3 +1,4 @@
+import os
 import pytest
 from cards.blackjack.hand_model import Hand
 from cards.blackjack.card_model import Card
@@ -26,6 +27,10 @@ def test_square(square):
 
 ################################################
 ################################################
+
+@pytest.fixture(scope="session", autouse=True)
+def set_testing_env():
+    os.environ["FLASK_ENV"] = "testing"
 
 
 @pytest.fixture(scope="session")

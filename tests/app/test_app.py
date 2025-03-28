@@ -1,5 +1,7 @@
 import pytest
 from cards.app import app
+from cards.database.models import User
+from cards.database.database import db
 
 
 class TestApp:
@@ -7,6 +9,14 @@ class TestApp:
     def client(self):
         with app.test_client() as client:
             yield client
+
+    @pytest.fixture
+    def cleanup_db(self):
+        yield  # The yield is just a placeholder here to indicate the point where the test will run.
+        user = User.query.filter_by(username="test_user").first()
+        if user:
+            db.session.delete(user)
+            db.session.commit()
 
     def test_home(self, client):
         response = client.get('/')
@@ -32,22 +42,36 @@ class TestApp:
         response = client.get('/register')
         assert response.status_code == 200
 
-    # TODO: change this test to actually register a user (right now it returns 200 even though it doesn't even
-    #  contain the correct data to create an account)
-    def test_register_post(self, client):
+    def test_register_post_success(self, client, cleanup_db):
+        data = {'email': 'fakeemail123@gmail.com', 'username': 'test_user', 'password': 'password',
+                'confirm_password': 'password'}
+        response = client.post('/register', data=data)
+        assert response.status_code == 302
+
+    def test_register_post_fails_on_existing_user(self, client, cleanup_db):
+        data = {'email': 'fakeemail123@gmail.com', 'username': 'test_user', 'password': 'password',
+                'confirm_password': 'password'}
+        register_1 = client.post('/register', data=data)
+        register_2 = client.post('/register', data=data)
+        assert register_1.status_code == 302
+        assert register_2.status_code == 400
+
+    def test_register_post_invalid_data(self, client):
         data = {'email': 'fakeemail123@gmail.com', 'password': 'password'}
         response = client.post('/register', data=data)
-        assert response.status_code == 200
+        assert response.status_code == 400
 
     def test_login_get(self, client):
         response = client.get('/login')
         assert response.status_code == 200
 
-    # TODO: add test that confirms that a session is created when a user logs in
-    # TODO: make tests create in memory DBs
-    def test_login_post_success(self, client):
-        data = {'email': 'fakeemail123@gmail.com', 'password': 'password'}
-        response = client.post('/login', data=data)
+    def test_login_post_success(self, client, cleanup_db):
+        register_data = {'email': 'fakeemail123@gmail.com', 'username': 'test_user', 'password': 'password',
+                         'confirm_password': 'password'}
+        client.post('/register', data=register_data)
+
+        login_data = {'email': 'fakeemail123@gmail.com', 'password': 'password'}
+        response = client.post('/login', data=login_data)
         assert response.status_code == 302
 
     def test_login_post_invalid_data(self, client):
