@@ -15,6 +15,11 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
 
+    def __eq__(self, other):
+        if isinstance(other, User):
+            return self.user_uuid == other.user_uuid
+        return False
+
 
 class Blackjack(db.Model):
     __tablename__ = "blackjack"
@@ -24,3 +29,8 @@ class Blackjack(db.Model):
 
     def __repr__(self):
         return f"User('{self.user_uuid}', '{self.coins}')"
+
+    def __eq__(self, other):
+        if isinstance(other, User):
+            return self.user_uuid == other.user_uuid
+        return False

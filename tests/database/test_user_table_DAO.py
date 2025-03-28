@@ -43,7 +43,7 @@ def user_table_dao(mock_db_session):
 def test_get_user_by_username(user_table_dao, mock_db_session):
     # Arrange
     mock_username = 'testuser'
-    mock_user = User(username=mock_username, email='testuser@example.com', password='hashedpassword')
+    mock_user = User(username='testuser', email='testuser@example.com', password='hashedpassword')
     mock_query = mock_db_session.query.return_value
     mock_query.filter_by.return_value.first.return_value = mock_user
 
