@@ -52,6 +52,7 @@ def initialize_session(app, session_db):
     # Load Session configurations
     app.config['SESSION_SQLALCHEMY'] = session_db
     app.config['SESSION_TYPE'] = 'sqlalchemy'
+    app.secret_key = 'your_secret_key'  # Required for session storage
     session.init_app(app)
 
 

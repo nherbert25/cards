@@ -1,5 +1,5 @@
-from flask import render_template, request, redirect, url_for, flash, Blueprint
-from cards.app_setup import db, bcrypt, session
+from flask import render_template, request, redirect, url_for, flash, Blueprint, session
+from cards.app_setup import db, bcrypt
 from cards.forms import RegistrationForm, LoginForm
 from cards.database.models import User
 from cards.database.user_table_DAO import UserTableDAO
