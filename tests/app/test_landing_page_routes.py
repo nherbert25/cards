@@ -42,6 +42,7 @@ class TestApp:
         response = client.get('/register')
         assert response.status_code == 200
 
+    # TODO: failing for some reason since this already exists when you run "make test"... but passes when you run the class?
     def test_register_post_success(self, client, cleanup_db):
         data = {'email': 'fakeemail123@gmail.com', 'username': 'test_user', 'password': 'password',
                 'confirm_password': 'password'}
