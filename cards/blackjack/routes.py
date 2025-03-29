@@ -1,4 +1,6 @@
-from flask import Blueprint, current_app
+from functools import wraps
+
+from flask import Blueprint, current_app, session
 from cards.app_setup import socketio
 
 from cards.blackjack.controller import BlackjackController
@@ -10,7 +12,6 @@ blackjack_blueprint = Blueprint('blackjack', __name__)
 # def initialize_blackjack():
 #     current_app.config['BLACKJACK_GAME'] = BlackjackController()
 
-
 blackjack_controller = None
 
 
@@ -21,6 +22,22 @@ def get_blackjack_controller():
     return blackjack_controller
 
 
+@blackjack_blueprint.before_request
+def before_request():
+    user_uuid = session.get('user_uuid')
+    print(user_uuid)
+
+
+def require_login(f):
+    """Decorator to ensure user is logged in before handling the event."""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        user_uuid = session.get('user_uuid')
+        print(user_uuid)
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 @blackjack_blueprint.route('/blackjack')
 def blackjack():
     get_blackjack_controller()
@@ -28,18 +45,21 @@ def blackjack():
 
 
 @socketio.on('hit')
+@require_login
 def hit(user_id=None, hand_index=0):
     blackjack_controller.hit(user_id, hand_index)
     socketio.emit('update_page_data', blackjack_controller.serialize_blackjack_data(), to=None)
 
 
 @socketio.on('stay')
+@require_login
 def stay(user_id=None, hand_index=0):
     blackjack_controller.stay(user_id, hand_index)
     socketio.emit('update_page_data', blackjack_controller.serialize_blackjack_data(), to=None)
 
 
 @socketio.on('double_down')
+@require_login
 def double_down(user_id=None, hand_index=0):
     blackjack_controller.double_down(user_id, hand_index)
     socketio.emit('update_page_data', blackjack_controller.serialize_blackjack_data(), to=None)
@@ -62,6 +82,7 @@ def bet(user_id=None, hand_index=0):
 
 
 @socketio.on('new_game')
+@require_login
 def new_game():
     blackjack_controller.new_game()
     socketio.emit('rebuild_entire_page', blackjack_controller.serialize_blackjack_data(), to=None)
@@ -92,6 +113,7 @@ def update_page_data():
 
 
 @socketio.on('press_socket_testing_buttons')
+@require_login
 def press_socket_testing_buttons(button_data_from_client):
     button_number = button_data_from_client['buttonNumber']
     blackjack_controller.counts[f'button{button_number}'] += 1
