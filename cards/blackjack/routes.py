@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import Blueprint, current_app, session
+from flask import Blueprint, current_app, session, request
 from cards.app_setup import socketio
 
 from cards.blackjack.controller import BlackjackController
@@ -13,7 +13,7 @@ blackjack_blueprint = Blueprint('blackjack', __name__)
 #     current_app.config['BLACKJACK_GAME'] = BlackjackController()
 
 blackjack_controller = None
-
+user_sessions = {}
 
 def get_blackjack_controller():
     global blackjack_controller
@@ -33,7 +33,8 @@ def require_login(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         user_uuid = session.get('user_uuid')
-        print(user_uuid)
+        print(f"decorated_function: User {user_uuid} connected")
+        print(f"decorated_function: request.sid {request.sid} connected")
         return f(*args, **kwargs)
     return decorated_function
 
@@ -123,3 +124,17 @@ def press_socket_testing_buttons(button_data_from_client):
 @socketio.on("connect")
 def handle_connection():
     print("Client connected!")
+    user_uuid = session.get('user_uuid')
+    user_sessions[request.sid] = user_uuid
+    print('LOGGED IN YEEEEHAWWWWW', user_uuid)
+    # Proceed with the connection if user is authenticated
+    print(f"User_id {user_uuid} connected")
+    print(f"request.sid {request.sid} connected")
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    # Clean up the user_sessions dictionary when the user disconnects
+    print("Client disconnected!")
+    # if request.sid in user_sessions:
+    #     user_uuid = user_sessions.pop(request.sid)
+    #     print(f"User {user_uuid} disconnected.")
