@@ -43,10 +43,10 @@ flake8.check:
 	flake8 . --count
 
 test:
-	pytest --ignore=tests/blackjack/test_blackjack_end_to_end.py
+	pytest -c tests/pytest.ini --ignore=tests/blackjack/test_blackjack_end_to_end.py
 
 test_all:
-	pytest
+	pytest -c tests/pytest.ini
 
 coverage:
 	coverage run -m pytest
