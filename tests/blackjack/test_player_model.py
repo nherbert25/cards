@@ -10,7 +10,6 @@ from cards.app_setup import create_app, db  # Import your Flask app factory and 
 
 
 class TestPlayerModel:
-
     @pytest.fixture
     def mock_db_session(self, mocker):
         return mocker.Mock()

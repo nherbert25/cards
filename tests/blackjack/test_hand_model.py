@@ -5,7 +5,6 @@ from cards.blackjack.card_model import Card
 
 
 class TestHandModel:
-
     @pytest.mark.parametrize('hand_name, expected_output', [
         ("empty_hand", 0),
         ("9", 9),
