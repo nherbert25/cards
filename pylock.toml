@@ -1,0 +1,893 @@
+lock-version = "1.0"
+created-by = "pip"
+
+[[packages]]
+name = "attrs"
+version = "24.3.0"
+
+[[packages.wheels]]
+name = "attrs-24.3.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/attrs/24.3.0/attrs-24.3.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "ac96cd038792094f438ad1f6ff80837353805ac950cd2aa0e0625ef19850c308"
+
+[[packages]]
+name = "authlib"
+version = "1.3.1"
+
+[[packages.wheels]]
+name = "Authlib-1.3.1-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/authlib/1.3.1/Authlib-1.3.1-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "d35800b973099bbadc49b42b256ecb80041ad56b7fe1216a362c7943c088f377"
+
+[[packages]]
+name = "autopep8"
+version = "2.0.4"
+
+[[packages.wheels]]
+name = "autopep8-2.0.4-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/autopep8/2.0.4/autopep8-2.0.4-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "067959ca4a07b24dbd5345efa8325f5f58da4298dab0dde0443d5ed765de80cb"
+
+[[packages]]
+name = "bcrypt"
+version = "4.1.2"
+
+[[packages.wheels]]
+name = "bcrypt-4.1.2-cp39-abi3-macosx_10_12_universal2.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/bcrypt/4.1.2/bcrypt-4.1.2-cp39-abi3-macosx_10_12_universal2.whl"
+
+[packages.wheels.hashes]
+sha256 = "71b8be82bc46cedd61a9f4ccb6c1a493211d031415a34adde3669ee1b0afbb63"
+
+[[packages]]
+name = "bidict"
+version = "0.22.1"
+
+[[packages.wheels]]
+name = "bidict-0.22.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/bidict/0.22.1/bidict-0.22.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "6ef212238eb884b664f28da76f33f1d28b260f665fc737b413b287d5487d1e7b"
+
+[[packages]]
+name = "blinker"
+version = "1.7.0"
+
+[[packages.wheels]]
+name = "blinker-1.7.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/blinker/1.7.0/blinker-1.7.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "c3f865d4d54db7abc53758a01601cf343fe55b84c1de4e3fa910e420b438d5b9"
+
+[[packages]]
+name = "cachelib"
+version = "0.10.2"
+
+[[packages.wheels]]
+name = "cachelib-0.10.2-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/cachelib/0.10.2/cachelib-0.10.2-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "42d49f2fad9310dd946d7be73d46776bcd4d5fde4f49ad210cfdd447fbdfc346"
+
+[[packages]]
+name = "certifi"
+version = "2022.6.15"
+
+[[packages.wheels]]
+name = "certifi-2022.6.15-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/certifi/2022.6.15/certifi-2022.6.15-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "fe86415d55e84719d75f8b69414f6438ac3547d2078ab91b67e779ef69378412"
+
+[[packages]]
+name = "cffi"
+version = "1.16.0"
+
+[[packages.wheels]]
+name = "cffi-1.16.0-cp311-cp311-macosx_11_0_arm64.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/cffi/1.16.0/cffi-1.16.0-cp311-cp311-macosx_11_0_arm64.whl"
+
+[packages.wheels.hashes]
+sha256 = "1b8ebc27c014c59692bb2664c7d13ce7a6e9a629be20e54e7271fa696ff2b417"
+
+[[packages]]
+name = "charset-normalizer"
+version = "2.1.0"
+
+[[packages.wheels]]
+name = "charset_normalizer-2.1.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/charset-normalizer/2.1.0/charset_normalizer-2.1.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "5189b6f22b01957427f35b6a08d9a0bc45b46d3788ef5a92e978433c7a35f8a5"
+
+[[packages]]
+name = "click"
+version = "8.1.7"
+
+[[packages.wheels]]
+name = "click-8.1.7-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/click/8.1.7/click-8.1.7-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28"
+
+[[packages]]
+name = "colorama"
+version = "0.4.6"
+
+[[packages.wheels]]
+name = "colorama-0.4.6-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/colorama/0.4.6/colorama-0.4.6-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
+
+[[packages]]
+name = "commonmark"
+version = "0.9.1"
+
+[[packages.wheels]]
+name = "commonmark-0.9.1-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/commonmark/0.9.1/commonmark-0.9.1-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9"
+
+[[packages]]
+name = "coverage"
+version = "7.6.9"
+
+[[packages.wheels]]
+name = "coverage-7.6.9-cp311-cp311-macosx_11_0_arm64.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/coverage/7.6.9/coverage-7.6.9-cp311-cp311-macosx_11_0_arm64.whl"
+
+[packages.wheels.hashes]
+sha256 = "085161be5f3b30fd9b3e7b9a8c301f935c8313dcf928a07b116324abea2c1c2c"
+
+[[packages]]
+name = "cryptography"
+version = "43.0.0"
+
+[[packages.wheels]]
+name = "cryptography-43.0.0-cp39-abi3-macosx_10_9_universal2.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/cryptography/43.0.0/cryptography-43.0.0-cp39-abi3-macosx_10_9_universal2.whl"
+
+[packages.wheels.hashes]
+sha256 = "7b3f5fe74a5ca32d4d0f302ffe6680fcc5c28f8ef0dc0ae8f40c0f3a1b4fca66"
+
+[[packages]]
+name = "dnspython"
+version = "2.5.0"
+
+[[packages.wheels]]
+name = "dnspython-2.5.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/dnspython/2.5.0/dnspython-2.5.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "6facdf76b73c742ccf2d07add296f178e629da60be23ce4b0a9c927b1e02c3a6"
+
+[[packages]]
+name = "docopt"
+version = "0.6.2"
+
+[packages.sdist]
+name = "docopt-0.6.2.tar.gz"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/docopt/0.6.2/docopt-0.6.2.tar.gz"
+
+[packages.sdist.hashes]
+sha256 = "49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"
+
+[[packages]]
+name = "email-validator"
+version = "2.1.0.post1"
+
+[[packages.wheels]]
+name = "email_validator-2.1.0.post1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/email-validator/2.1.0.post1/email_validator-2.1.0.post1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "c973053efbeddfef924dc0bd93f6e77a1ea7ee0fce935aea7103c7a3d6d2d637"
+
+[[packages]]
+name = "eventlet"
+version = "0.35.1"
+
+[[packages.wheels]]
+name = "eventlet-0.35.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/eventlet/0.35.1/eventlet-0.35.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "7ed9493b26e02f575f4804ef263190839e9651989523f6f8f9c2866a05c12c83"
+
+[[packages]]
+name = "exceptiongroup"
+version = "1.2.0"
+
+[[packages.wheels]]
+name = "exceptiongroup-1.2.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/exceptiongroup/1.2.0/exceptiongroup-1.2.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "4bfd3996ac73b41e9b9628b04e079f193850720ea5945fc96a08633c66912f14"
+
+[[packages]]
+name = "flask"
+version = "3.0.1"
+
+[[packages.wheels]]
+name = "flask-3.0.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/flask/3.0.1/flask-3.0.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "ca631a507f6dfe6c278ae20112cea3ff54ff2216390bf8880f6b035a5354af13"
+
+[[packages]]
+name = "flask-bcrypt"
+version = "1.0.1"
+
+[[packages.wheels]]
+name = "Flask_Bcrypt-1.0.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/flask-bcrypt/1.0.1/Flask_Bcrypt-1.0.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "062fd991dc9118d05ac0583675507b9fe4670e44416c97e0e6819d03d01f808a"
+
+[[packages]]
+name = "flask-dance"
+version = "7.1.0"
+
+[[packages.wheels]]
+name = "flask_dance-7.1.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/flask-dance/7.1.0/flask_dance-7.1.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "81599328a2b3604fd4332b3d41a901cf36980c2067e5e38c44ce3b85c4e1ae9c"
+
+[[packages]]
+name = "flask-login"
+version = "0.6.3"
+
+[[packages.wheels]]
+name = "Flask_Login-0.6.3-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/flask-login/0.6.3/Flask_Login-0.6.3-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "849b25b82a436bf830a054e74214074af59097171562ab10bfa999e6b78aae5d"
+
+[[packages]]
+name = "flask-session"
+version = "0.6.0"
+
+[[packages.wheels]]
+name = "flask_session-0.6.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/flask-session/0.6.0/flask_session-0.6.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "dd77b6c5916021a540a8c188731c529596ad9ea382c07a24f9654355fa40c9ad"
+
+[[packages]]
+name = "flask-socketio"
+version = "5.3.6"
+
+[[packages.wheels]]
+name = "Flask_SocketIO-5.3.6-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/flask-socketio/5.3.6/Flask_SocketIO-5.3.6-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "9e62d2131842878ae6bfdd7067dfc3be397c1f2b117ab1dc74e6fe74aad7a579"
+
+[[packages]]
+name = "flask-sqlalchemy"
+version = "3.1.1"
+
+[[packages.wheels]]
+name = "flask_sqlalchemy-3.1.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/flask-sqlalchemy/3.1.1/flask_sqlalchemy-3.1.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "4ba4be7f419dc72f4efd8802d69974803c37259dd42f3913b0dcf75c9447e0a0"
+
+[[packages]]
+name = "flask-wtf"
+version = "1.2.1"
+
+[[packages.wheels]]
+name = "flask_wtf-1.2.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/flask-wtf/1.2.1/flask_wtf-1.2.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "fa6793f2fb7e812e0fe9743b282118e581fb1b6c45d414b8af05e659bd653287"
+
+[[packages]]
+name = "greenlet"
+version = "3.0.3"
+
+[[packages.wheels]]
+name = "greenlet-3.0.3-cp311-cp311-macosx_11_0_universal2.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/greenlet/3.0.3/greenlet-3.0.3-cp311-cp311-macosx_11_0_universal2.whl"
+
+[packages.wheels.hashes]
+sha256 = "b1b5667cced97081bf57b8fa1d6bfca67814b0afd38208d52538316e9422fc61"
+
+[[packages]]
+name = "gunicorn"
+version = "21.2.0"
+
+[[packages.wheels]]
+name = "gunicorn-21.2.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/gunicorn/21.2.0/gunicorn-21.2.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "3213aa5e8c24949e792bcacfc176fef362e7aac80b76c56f6b5122bf350722f0"
+
+[[packages]]
+name = "h11"
+version = "0.14.0"
+
+[[packages.wheels]]
+name = "h11-0.14.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/h11/0.14.0/h11-0.14.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761"
+
+[[packages]]
+name = "idna"
+version = "3.6"
+
+[[packages.wheels]]
+name = "idna-3.6-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/idna/3.6/idna-3.6-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "c05567e9c24a6b9faaa835c4821bad0590fbb9d5779e7caa6e1cc4978e7eb24f"
+
+[[packages]]
+name = "importlib-metadata"
+version = "7.0.1"
+
+[[packages.wheels]]
+name = "importlib_metadata-7.0.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/importlib-metadata/7.0.1/importlib_metadata-7.0.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "4805911c3a4ec7c3966410053e9ec6a1fecd629117df5adee56dfc9432a1081e"
+
+[[packages]]
+name = "iniconfig"
+version = "2.0.0"
+
+[[packages.wheels]]
+name = "iniconfig-2.0.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/iniconfig/2.0.0/iniconfig-2.0.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"
+
+[[packages]]
+name = "itsdangerous"
+version = "2.1.2"
+
+[[packages.wheels]]
+name = "itsdangerous-2.1.2-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/itsdangerous/2.1.2/itsdangerous-2.1.2-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "2c2349112351b88699d8d4b6b075022c0808887cb7ad10069318a8b0bc88db44"
+
+[[packages]]
+name = "jinja2"
+version = "3.1.2"
+
+[[packages.wheels]]
+name = "Jinja2-3.1.2-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/jinja2/3.1.2/Jinja2-3.1.2-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "6088930bfe239f0e6710546ab9c19c9ef35e29792895fed6e6e31a023a182a61"
+
+[[packages]]
+name = "markdown-it-py"
+version = "3.0.0"
+
+[[packages.wheels]]
+name = "markdown_it_py-3.0.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/markdown-it-py/3.0.0/markdown_it_py-3.0.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "355216845c60bd96232cd8d8c40e8f9765cc86f46880e43a8fd22dc1a1a8cab1"
+
+[[packages]]
+name = "markupsafe"
+version = "2.1.4"
+
+[[packages.wheels]]
+name = "MarkupSafe-2.1.4-cp311-cp311-macosx_10_9_universal2.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/markupsafe/2.1.4/MarkupSafe-2.1.4-cp311-cp311-macosx_10_9_universal2.whl"
+
+[packages.wheels.hashes]
+sha256 = "9e9e3c4020aa2dc62d5dd6743a69e399ce3de58320522948af6140ac959ab863"
+
+[[packages]]
+name = "mccabe"
+version = "0.7.0"
+
+[[packages.wheels]]
+name = "mccabe-0.7.0-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/mccabe/0.7.0/mccabe-0.7.0-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "6c2d30ab6be0e4a46919781807b4f0d834ebdd6c6e3dca0bda5a15f863427b6e"
+
+[[packages]]
+name = "mdurl"
+version = "0.1.2"
+
+[[packages.wheels]]
+name = "mdurl-0.1.2-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/mdurl/0.1.2/mdurl-0.1.2-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"
+
+[[packages]]
+name = "oauthlib"
+version = "3.2.2"
+
+[[packages.wheels]]
+name = "oauthlib-3.2.2-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/oauthlib/3.2.2/oauthlib-3.2.2-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "8139f29aac13e25d502680e9e19963e83f16838d48a0d71c287fe40e7067fbca"
+
+[[packages]]
+name = "outcome"
+version = "1.3.0.post0"
+
+[[packages.wheels]]
+name = "outcome-1.3.0.post0-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/outcome/1.3.0.post0/outcome-1.3.0.post0-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "e771c5ce06d1415e356078d3bdd68523f284b4ce5419828922b6871e65eda82b"
+
+[[packages]]
+name = "packaging"
+version = "23.2"
+
+[[packages.wheels]]
+name = "packaging-23.2-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/packaging/23.2/packaging-23.2-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"
+
+[[packages]]
+name = "pipreqs"
+version = "0.4.11"
+
+[[packages.wheels]]
+name = "pipreqs-0.4.11-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/pipreqs/0.4.11/pipreqs-0.4.11-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "1510a91ae73ef6a8e2f24ffc8751132251cd61a01296d61538f37d1491841640"
+
+[[packages]]
+name = "pluggy"
+version = "1.5.0"
+
+[[packages.wheels]]
+name = "pluggy-1.5.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/pluggy/1.5.0/pluggy-1.5.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "44e1ad92c8ca002de6377e165f3e0f1be63266ab4d554740532335b9d75ea669"
+
+[[packages]]
+name = "psycopg2"
+version = "2.9.9"
+
+[packages.sdist]
+name = "psycopg2-2.9.9.tar.gz"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/psycopg2/2.9.9/psycopg2-2.9.9.tar.gz"
+
+[packages.sdist.hashes]
+sha256 = "d1454bde93fb1e224166811694d600e746430c006fbb031ea06ecc2ea41bf156"
+
+[[packages]]
+name = "pycodestyle"
+version = "2.12.1"
+
+[[packages.wheels]]
+name = "pycodestyle-2.12.1-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/pycodestyle/2.12.1/pycodestyle-2.12.1-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "46f0fb92069a7c28ab7bb558f05bfc0110dac69a0cd23c61ea0040283a9d78b3"
+
+[[packages]]
+name = "pycparser"
+version = "2.22"
+
+[[packages.wheels]]
+name = "pycparser-2.22-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/pycparser/2.22/pycparser-2.22-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "c3702b6d3dd8c7abc1afa565d7e63d53a1d0bd86cdc24edd75470f4de499cfcc"
+
+[[packages]]
+name = "pyflakes"
+version = "3.2.0"
+
+[[packages.wheels]]
+name = "pyflakes-3.2.0-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/pyflakes/3.2.0/pyflakes-3.2.0-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "84b5be138a2dfbb40689ca07e2152deb896a65c3a3e24c251c5c62489568074a"
+
+[[packages]]
+name = "pygame"
+version = "2.3.0"
+
+[[packages.wheels]]
+name = "pygame-2.3.0-cp311-cp311-macosx_11_0_arm64.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/pygame/2.3.0/pygame-2.3.0-cp311-cp311-macosx_11_0_arm64.whl"
+
+[packages.wheels.hashes]
+sha256 = "fab0457ab07e8abb99de2b83c0a71f98bdf79afb01ff611873e4333fd8649f02"
+
+[[packages]]
+name = "pygments"
+version = "2.17.2"
+
+[[packages.wheels]]
+name = "pygments-2.17.2-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/pygments/2.17.2/pygments-2.17.2-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "b27c2826c47d0f3219f29554824c30c5e8945175d888647acd804ddd04af846c"
+
+[[packages]]
+name = "pysocks"
+version = "1.7.1"
+
+[[packages.wheels]]
+name = "PySocks-1.7.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/pysocks/1.7.1/PySocks-1.7.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5"
+
+[[packages]]
+name = "pytest"
+version = "8.3.4"
+
+[[packages.wheels]]
+name = "pytest-8.3.4-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/pytest/8.3.4/pytest-8.3.4-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "50e16d954148559c9a74109af1eaf0c945ba2d8f30f0a3d3335edde19788b6f6"
+
+[[packages]]
+name = "pytest-env"
+version = "1.1.5"
+
+[[packages.wheels]]
+name = "pytest_env-1.1.5-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/pytest-env/1.1.5/pytest_env-1.1.5-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "ce90cf8772878515c24b31cd97c7fa1f4481cd68d588419fd45f10ecaee6bc30"
+
+[[packages]]
+name = "pytest-mock"
+version = "3.14.0"
+
+[[packages.wheels]]
+name = "pytest_mock-3.14.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/pytest-mock/3.14.0/pytest_mock-3.14.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "0b72c38033392a5f4621342fe11e9219ac11ec9d375f8e2a0c164539e0d70f6f"
+
+[[packages]]
+name = "python-engineio"
+version = "4.8.2"
+
+[[packages.wheels]]
+name = "python_engineio-4.8.2-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/python-engineio/4.8.2/python_engineio-4.8.2-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "a357f0aba275c311b66f22181472ed5b174bbc541742eea1d16feae2fa1afabd"
+
+[[packages]]
+name = "python-socketio"
+version = "5.11.0"
+
+[[packages.wheels]]
+name = "python_socketio-5.11.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/python-socketio/5.11.0/python_socketio-5.11.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "cfcb0163d77c8d23b98285754e79016786740dd901268654a52823da0bc73382"
+
+[[packages]]
+name = "requests"
+version = "2.32.3"
+
+[[packages.wheels]]
+name = "requests-2.32.3-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/requests/2.32.3/requests-2.32.3-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "70761cfe03c773ceb22aa2f671b4757976145175cdfca038c02654d061d6dcc6"
+
+[[packages]]
+name = "requests-oauthlib"
+version = "2.0.0"
+
+[[packages.wheels]]
+name = "requests_oauthlib-2.0.0-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/requests-oauthlib/2.0.0/requests_oauthlib-2.0.0-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "7dd8a5c40426b779b0868c404bdef9768deccf22749cde15852df527e6269b36"
+
+[[packages]]
+name = "rich"
+version = "13.7.0"
+
+[[packages.wheels]]
+name = "rich-13.7.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/rich/13.7.0/rich-13.7.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "6da14c108c4866ee9520bbffa71f6fe3962e193b7da68720583850cd4548e235"
+
+[[packages]]
+name = "selenium"
+version = "4.27.1"
+
+[[packages.wheels]]
+name = "selenium-4.27.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/selenium/4.27.1/selenium-4.27.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "b89b1f62b5cfe8025868556fe82360d6b649d464f75d2655cb966c8f8447ea18"
+
+[[packages]]
+name = "simple-websocket"
+version = "1.0.0"
+
+[[packages.wheels]]
+name = "simple_websocket-1.0.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/simple-websocket/1.0.0/simple_websocket-1.0.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "1d5bf585e415eaa2083e2bcf02a3ecf91f9712e7b3e6b9fa0b461ad04e0837bc"
+
+[[packages]]
+name = "sniffio"
+version = "1.3.1"
+
+[[packages.wheels]]
+name = "sniffio-1.3.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/sniffio/1.3.1/sniffio-1.3.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2"
+
+[[packages]]
+name = "sortedcontainers"
+version = "2.4.0"
+
+[[packages.wheels]]
+name = "sortedcontainers-2.4.0-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/sortedcontainers/2.4.0/sortedcontainers-2.4.0-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0"
+
+[[packages]]
+name = "sqlalchemy"
+version = "2.0.25"
+
+[[packages.wheels]]
+name = "SQLAlchemy-2.0.25-cp311-cp311-macosx_11_0_arm64.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/sqlalchemy/2.0.25/SQLAlchemy-2.0.25-cp311-cp311-macosx_11_0_arm64.whl"
+
+[packages.wheels.hashes]
+sha256 = "f37c0caf14b9e9b9e8f6dbc81bc56db06acb4363eba5a633167781a48ef036ed"
+
+[[packages]]
+name = "stockfish"
+version = "3.28.0"
+
+[[packages.wheels]]
+name = "stockfish-3.28.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/stockfish/3.28.0/stockfish-3.28.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "e432e57112448fe1271dff402db3a4747bf00d1721815ce0a36cfa26582cf360"
+
+[[packages]]
+name = "tinydb"
+version = "4.8.0"
+
+[[packages.wheels]]
+name = "tinydb-4.8.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/tinydb/4.8.0/tinydb-4.8.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "30c06d12383d7c332e404ca6a6103fb2b32cbf25712689648c39d9a6bd34bd3d"
+
+[[packages]]
+name = "toml"
+version = "0.10.2"
+
+[[packages.wheels]]
+name = "toml-0.10.2-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/toml/0.10.2/toml-0.10.2-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"
+
+[[packages]]
+name = "tomli"
+version = "2.0.1"
+
+[[packages.wheels]]
+name = "tomli-2.0.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/tomli/2.0.1/tomli-2.0.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"
+
+[[packages]]
+name = "trio"
+version = "0.27.0"
+
+[[packages.wheels]]
+name = "trio-0.27.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/trio/0.27.0/trio-0.27.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "68eabbcf8f457d925df62da780eff15ff5dc68fd6b367e2dde59f7aaf2a0b884"
+
+[[packages]]
+name = "trio-websocket"
+version = "0.11.1"
+
+[[packages.wheels]]
+name = "trio_websocket-0.11.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/trio-websocket/0.11.1/trio_websocket-0.11.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "520d046b0d030cf970b8b2b2e00c4c2245b3807853ecd44214acd33d74581638"
+
+[[packages]]
+name = "typer"
+version = "0.9.0"
+
+[[packages.wheels]]
+name = "typer-0.9.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/typer/0.9.0/typer-0.9.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "5d96d986a21493606a358cae4461bd8cdf83cbf33a5aa950ae629ca3b51467ee"
+
+[[packages]]
+name = "typing-extensions"
+version = "4.9.0"
+
+[[packages.wheels]]
+name = "typing_extensions-4.9.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/typing-extensions/4.9.0/typing_extensions-4.9.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd"
+
+[[packages]]
+name = "urllib3"
+version = "1.26.11"
+
+[[packages.wheels]]
+name = "urllib3-1.26.11-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/urllib3/1.26.11/urllib3-1.26.11-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "c33ccba33c819596124764c23a97d25f32b28433ba0dedeb77d873a38722c9bc"
+
+[[packages]]
+name = "urlobject"
+version = "2.4.3"
+
+[packages.sdist]
+name = "URLObject-2.4.3.tar.gz"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/urlobject/2.4.3/URLObject-2.4.3.tar.gz"
+
+[packages.sdist.hashes]
+sha256 = "47b2e20e6ab9c8366b2f4a3566b6ff4053025dad311c4bb71279bbcfa2430caa"
+
+[[packages]]
+name = "websocket-client"
+version = "1.8.0"
+
+[[packages.wheels]]
+name = "websocket_client-1.8.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/websocket-client/1.8.0/websocket_client-1.8.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "17b44cc997f5c498e809b22cdf2d9c7a9e71c02c8cc2b6c56e7c2d1239bfa526"
+
+[[packages]]
+name = "werkzeug"
+version = "3.0.1"
+
+[[packages.wheels]]
+name = "werkzeug-3.0.1-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/werkzeug/3.0.1/werkzeug-3.0.1-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "90a285dc0e42ad56b34e696398b8122ee4c681833fb35b8334a095d82c56da10"
+
+[[packages]]
+name = "wsproto"
+version = "1.2.0"
+
+[[packages.wheels]]
+name = "wsproto-1.2.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/wsproto/1.2.0/wsproto-1.2.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736"
+
+[[packages]]
+name = "wtforms"
+version = "3.1.2"
+
+[[packages.wheels]]
+name = "wtforms-3.1.2-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/wtforms/3.1.2/wtforms-3.1.2-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "bf831c042829c8cdbad74c27575098d541d039b1faa74c771545ecac916f2c07"
+
+[[packages]]
+name = "yarg"
+version = "0.1.9"
+
+[[packages.wheels]]
+name = "yarg-0.1.9-py2.py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/yarg/0.1.9/yarg-0.1.9-py2.py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "4f9cebdc00fac946c9bf2783d634e538a71c7d280a4d806d45fd4dc0ef441492"
+
+[[packages]]
+name = "zipp"
+version = "3.17.0"
+
+[[packages.wheels]]
+name = "zipp-3.17.0-py3-none-any.whl"
+url = "https://nexus-repo.selflender.com/repository/pypi-self/packages/zipp/3.17.0/zipp-3.17.0-py3-none-any.whl"
+
+[packages.wheels.hashes]
+sha256 = "0e923e726174922dce09c53c59ad483ff7bbb8e572e00c7f7c46b88556409f31"
