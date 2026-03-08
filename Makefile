@@ -14,14 +14,16 @@ PROJECT=cards
 ###########################
 # LOCAL PYTHON AND UNIT-TEST ENV
 #
-.PHONY: venv_mac
-venv_mac:
-	pyenv install -s $(PYTHON_VERSION)
-	pyenv uninstall -f $(PROJECT)
-	pyenv virtualenv -f $(PYTHON_VERSION) $(PROJECT)
-	pyenv local $(PROJECT)
-	PYENV_VERSION=$(PROJECT)
-	pip install -r ./requirements.txt
+.PHONY: setup
+setup:
+	python$(PYTHON_VERSION) -m venv venv
+	./venv/bin/pip install --upgrade pip
+	./venv/bin/pip install -r requirements.txt
+	@echo ""
+	@echo "✓ Setup complete!"
+	@echo "Activate the environment with: source venv/bin/activate"
+	@echo "Then compile TypeScript with: make build"
+	@echo "Finally run the app with: python -m cards.app"
 
 .PHONY: venv_windows
 venv_windows:
@@ -33,6 +35,10 @@ venv_windows:
 venv_windows_destroy:
 	deactivate
 	rm -r .venv
+
+.PHONY: venv_destroy
+venv_destroy:
+	rm -rf venv
 
 
 ####################################################

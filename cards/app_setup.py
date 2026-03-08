@@ -43,6 +43,11 @@ def create_app() -> Flask:
 def initialize_db(app):
     """Initialize Database."""
     db.init_app(app)
+
+    # Create instance directory if it doesn't exist (needed for SQLite database file)
+    instance_path = os.path.join(os.path.dirname(__file__), 'instance')
+    os.makedirs(instance_path, exist_ok=True)
+
     with app.app_context():
         db.create_all()
 
