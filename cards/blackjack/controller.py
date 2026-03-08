@@ -34,18 +34,26 @@ class BlackjackController:
 
     def hit(self, user_id: str, hand_index: int = 0) -> None:
         player_object = self.blackjack_model.get_player(user_id)
+        if player_object is None:
+            return None
         self.blackjack_model.hit(player_object, hand_index)
 
     def stay(self, user_id: str, hand_index: int = 0) -> None:
         player_object = self.blackjack_model.get_player(user_id)
+        if player_object is None:
+            return None
         self.blackjack_model.stay(player_object, hand_index)
 
     def double_down(self, user_id: str, hand_index: int = 0) -> None:
         player_object = self.blackjack_model.get_player(user_id)
+        if player_object is None:
+            return None
         self.blackjack_model.double_down(player_object, hand_index)
 
     def split_pair(self, user_id: str, hand_index: int = 0) -> bool:
         player_object = self.blackjack_model.get_player(user_id)
+        if player_object is None:
+            return False
         return self.blackjack_model.split_pair(player_object, hand_index)
 
     def new_game(self) -> None:

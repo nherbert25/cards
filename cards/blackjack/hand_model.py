@@ -98,7 +98,7 @@ class Hand:
     def remove_card(self, card: Optional[Card] = None, index: Optional[int] = None) -> Card:
         if index is not None:
             if index < 0 or index > len(self.cards) - 1:
-                raise IndexError(f"Cannot remove card, index is invalid. Hand size: {len(self.hands)}, Index: {index}")
+                raise IndexError(f"Cannot remove card, index is invalid. Hand size: {len(self.cards)}, Index: {index}")
             return self.cards.pop(index)
         elif card is not None:
             return self.cards.remove(card)
@@ -108,7 +108,7 @@ class Hand:
     def get_card(self, card: Optional[Card] = None, index: Optional[int] = None) -> Card:
         if index is not None:
             if index < 0 or index > len(self.cards) - 1:
-                raise IndexError(f"Cannot find card, index is invalid. Hand size: {len(self.hands)}, Index: {index}")
+                raise IndexError(f"Cannot find card, index is invalid. Hand size: {len(self.cards)}, Index: {index}")
             return self.cards[index]
         elif card is not None:
             return self.cards.remove(card)
