@@ -23,7 +23,15 @@ setup:
 	@echo "✓ Setup complete!"
 	@echo "Activate the environment with: source venv/bin/activate"
 	@echo "Then compile TypeScript with: make build"
-	@echo "Finally run the app with: python -m cards.app"
+	@echo "Finally run the app with: make run"
+
+.PHONY: run
+run:
+	python -m cards.app
+
+.PHONY: run_prod
+run_prod:
+	gunicorn --worker-class eventlet -w 1 cards.app:app
 
 .PHONY: venv_windows
 venv_windows:

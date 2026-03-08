@@ -6,6 +6,10 @@ class Config:
     SECRET_KEY = 'your_secret_key_here'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_TYPE = 'sqlalchemy'
+    # Server configuration
+    SERVER_HOST = os.environ.get('SERVER_HOST', '127.0.0.1')
+    SERVER_PORT = int(os.environ.get('SERVER_PORT', '5000'))
+    DEBUG = False
 
 
 # running application locally
@@ -16,7 +20,7 @@ class DevelopmentConfig(Config):
     In order to set debug mode reliably, use the --debug option on the flask or flask run command
     Aka: enable DEBUG in Pycharm's run/debug config or envoke it on the run command: 'flask --app hello run --debug'
     """
-    # DEBUG = True
+    DEBUG = True
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(Config.BASEDIR, '..', 'instance', 'development_database.db')
 
